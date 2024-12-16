@@ -1,6 +1,6 @@
 import axios from "axios";
 const AxiosInt = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: import.meta.env.VITE_REACT_APP_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

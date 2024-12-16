@@ -1,5 +1,7 @@
 ## React Blog App
 
+[live](https://abhijitdev-blog-app.netlify.app)
+
 **_ Scripts _**
 
 ```
