@@ -4,25 +4,11 @@ import cl from "classnames";
 import style from "./hero.module.scss";
 import Chip from "../../components/chip/Chip";
 import { Link } from "react-router-dom";
-import AxiosInt from "../../services/api/api";
-import { toast } from "react-toastify";
 import { toDateString } from "../../utils/utils";
 const Slider = () => {
   const { data, loading } = useFetchData("/post/trending");
   const [post, setPost] = useState([]);
-  // const getTrending = async () => {
-  //   const res = await AxiosInt.get("/post/trending");
-  //   if (res.status == 200) {
-  //     setPost(res.data?.data[0]);
-  //   } else {
-  //     setPost([]);
-  //     toast.warning("Can't get trending post");
-  //   }
-  // };
   useEffect(() => {
-    // if (!post||post.length > 0) {
-    //   return;
-    // }
     let fillterData = data?.length > 0 ? data[0] : [];
     setPost(fillterData);
   }, [data]);

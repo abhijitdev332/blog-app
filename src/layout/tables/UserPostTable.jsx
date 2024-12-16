@@ -3,7 +3,7 @@ import {
   MdOutlinePublishedWithChanges,
   MdOutlineUnpublished,
 } from "react-icons/md";
-import { UseDataStore, userStore } from "../../services/store/store";
+import { useDataStore, useUserStore } from "../../services/store/store";
 import { useNavigate, useParams } from "react-router-dom";
 
 // style
@@ -18,8 +18,8 @@ const UserPostTable = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [userPosts, setUserPosts] = useState([]);
-  const { user } = userStore();
-  const { setRefetch } = UseDataStore();
+  const { user } = useUserStore();
+  const { setRefetch } = useDataStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
     const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });

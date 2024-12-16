@@ -3,7 +3,6 @@ import { ScrollRestoration, useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import cl from "classnames";
 import style from "./view.module.scss";
-import AxiosInt from "../../services/api/api";
 import { Chip } from "../../components/components";
 import { toDateString } from "../../utils/utils";
 
@@ -11,28 +10,10 @@ const ViewPost = () => {
   const { id } = useParams();
   const { data, loading, err } = useFetchData(`/post/${id}`);
   const [post, setPost] = useState(null);
-  // const fetchData = async () => {
-  //   try {
-  //     // setLoading(true);
-  //     let res = await AxiosInt.get(`/post/${id}`);
-  //     if (res.status == 200 && res.data) {
-  //       console.log(res.data);
-  //       setPost(res.data?.data);
-  //     }
-  //   } catch (errr) {
-  //     // setErr(errr?.cause);
-  //   } finally {
-  //     // setLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     setPost(data);
   }, [data]);
-  // console.log(loading);
-  // useEffect(() => {
-  //   fetchData();
-  // }, [id]);
+
   return (
     <>
       <ScrollRestoration />

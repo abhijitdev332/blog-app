@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaRegEye } from "react-icons/fa";
 import {
@@ -9,18 +7,18 @@ import {
   MdOutlineUnpublished,
 } from "react-icons/md";
 import AxiosInt from "../../services/api/api";
-import { userStore, UseDataStore } from "../../services/store/store";
+import { useUserStore, useDataStore } from "../../services/store/store";
+import { useNavigate } from "react-router-dom";
+import { toDateString } from "../../utils/utils";
 import { toast } from "react-toastify";
 // style
 import cl from "classnames";
 import style from "./table.module.scss";
-import { useNavigate } from "react-router-dom";
-import { toDateString } from "../../utils/utils";
 const PostTable = () => {
   const navigate = useNavigate();
   const [userPosts, setUserPosts] = useState([]);
-  const { user } = userStore();
-  const { setRefetch } = UseDataStore();
+  const { user } = useUserStore();
+  const { setRefetch } = useDataStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig) => {
     const res = await AxiosInt.get(`/post/user/${user._id}`, { signal: sig });

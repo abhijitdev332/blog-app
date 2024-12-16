@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const UseDataStore = create((set) => ({
+const useDataStore = create((set) => ({
   data: [],
   loading: false,
   status: true,
@@ -10,4 +10,4 @@ const UseDataStore = create((set) => ({
   setRefetch: () => set((state) => ({ status: true })),
 }));
 
-export default UseDataStore;
+export default useDataStore;

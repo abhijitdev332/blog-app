@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import cl from "classnames";
 import style from "./header.module.scss";
 import AxiosInt from "../../services/api/api";
-import { userStore } from "../../services/store/store";
+import { useUserStore } from "../../services/store/store";
 import { toast } from "react-toastify";
 const DashHeader = () => {
   const navigate = useNavigate();
-  const { user, removeUser } = userStore();
+  const { user, removeUser } = useUserStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const handleLogout = async () => {
     const res = await AxiosInt.post("/auth/logout");

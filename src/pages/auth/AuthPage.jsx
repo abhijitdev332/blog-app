@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import AuthImage from "../../assets/images/auth.jpg";
 import { ToastContainer } from "react-toastify";
 
 const Auth = () => {
@@ -19,7 +18,7 @@ const Auth = () => {
             <div className="basis-1/2 order-1 md:order-2">
               <div className="img-wrapper h-full ">
                 <img
-                  src={AuthImage}
+                  src="./images/auth.jpg"
                   alt="auth_image"
                   className="w-full h-full object-cover rounded-lg"
                 />

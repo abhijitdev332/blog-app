@@ -1,18 +1,18 @@
 import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { string, z } from "zod";
+import { z } from "zod";
 import "react-quill/dist/quill.snow.css";
 import TagsChip from "./TagsChip";
 import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
-import { userStore } from "../../services/store/store";
+import { useUserStore } from "../../services/store/store";
 import { useNavigate } from "react-router-dom";
 const inital = { title: "", imageUrl: "", content: "", tags: [] };
 const Editor = () => {
   const navigate = useNavigate();
   const [inputvalue, Setinputvalue] = useState(inital);
   const [tagInput, setTagInput] = useState("");
-  const { user } = userStore();
+  const { user } = useUserStore();
   const tagsREf = useRef();
   const handleImageInput = (e) => {
     Setinputvalue((prev) => ({

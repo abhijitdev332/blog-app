@@ -25,7 +25,7 @@ export const headerNav = [
   },
 ];
 
-import bridge from "../assets/images/bridge.jpg";
+import bridge from "../assets/postImages/bridge.jpg";
 import tech from "../assets/postImages/tech.jpg";
 export const articles = [
   {

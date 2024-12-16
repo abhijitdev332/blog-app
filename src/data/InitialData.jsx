@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import UseDataStore from "../services/store/useDataStore";
+import { useDataStore } from "../services/store/store";
 import AxiosInt from "../services/api/api";
 
 const InitialData = () => {
-  const { setData, status } = UseDataStore();
+  const { setData, status } = useDataStore();
   const getData = async () => {
     try {
       const res = await AxiosInt.get("/post");

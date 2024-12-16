@@ -5,9 +5,9 @@ import { PostList } from "../../components/components";
 import { ToastContainer } from "react-toastify";
 import Footer from "../../includes/footer/Footer";
 import InitialData from "../../data/InitialData";
-import UseDataStore from "../../services/store/useDataStore";
+import { useDataStore } from "../../services/store/store";
 const Home = () => {
-  const { data } = UseDataStore();
+  const { data } = useDataStore();
   return (
     <>
       <div className="bg-[#f8f8f8]">

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
 import { Sidebar } from "../../includes/includes.js";
 import { user } from "../../constants/constant";
 import { Outlet } from "react-router-dom";
-import DashHeader from "../../includes/header/DashHeader";
+import { DashHeader } from "../../includes/includes.js";
 import { ToastContainer } from "react-toastify";
 
 const Admin = () => {

@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { headerNav } from "../../constants/constant";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
-import cl from "classnames";
 import AxiosInt from "../../services/api/api";
-import { userStore, UseDataStore } from "../../services/store/store";
+import { useUserStore, useDataStore } from "../../services/store/store";
 import { toast } from "react-toastify";
 
 // style
+import cl from "classnames";
 import style from "./header.module.scss";
 const Header = () => {
-  const { user, removeUser } = userStore();
-  const { data, setRefetch, setData } = UseDataStore();
+  const { user, removeUser } = useUserStore();
+  const { data, setRefetch, setData } = useDataStore();
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = useState("");
   const handleLogout = async () => {

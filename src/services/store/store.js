@@ -1,4 +1,5 @@
-import userStore from "./userStore";
-import UseDataStore from "./useDataStore";
+import useUserStore from "./useUserStore";
+import useDataStore from "./useDataStore";
+import useLoaderStore from "./useLoaderStore";
 
-export { userStore, UseDataStore };
+export { useUserStore, useDataStore, useLoaderStore };

@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { userStore } from "../../services/store/store";
+import { useUserStore } from "../../services/store/store";
 const Register = () => {
   const navigate = useNavigate();
-  const { setUser } = userStore();
+  const { setUser } = useUserStore();
   const [inputState, setInputState] = useState({
     name: "",
     email: "",
