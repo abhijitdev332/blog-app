@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Sidebar } from "../../includes/includes.JS";
+import { Sidebar } from "../../includes/includes.js";
 import { user } from "../../constants/constant";
 import { Outlet } from "react-router-dom";
 import DashHeader from "../../includes/header/DashHeader";
