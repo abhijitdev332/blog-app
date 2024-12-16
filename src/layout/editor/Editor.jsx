@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { z } from "zod";
+import { string, z } from "zod";
 import "react-quill/dist/quill.snow.css";
 import TagsChip from "./TagsChip";
 import { toast } from "react-toastify";
