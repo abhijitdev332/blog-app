@@ -1,0 +1,23 @@
+@use "../../scss/variable.scss" as *;
+
+.list {
+  &__header {
+    padding: 1rem 1.5rem !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr);
+    li {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  }
+}
+.item__list {
+  padding: 1rem 1.5rem !important;
+  .item {
+    padding: 0.5rem 0;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 1.2rem;
+    border-bottom: 2px solid #f8f8f8;
+  }
+}

@@ -1,0 +1,34 @@
+@use "../../scss/variable.scss" as *;
+
+.slider {
+  &__wrapper {
+    overflow-x: hidden !important;
+  }
+}
+.slideItem {
+  width: 100%;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  height: fit-content;
+  min-height: 50vh;
+  display: flex;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  color: $light !important;
+}
+.hero {
+  &__title {
+    font-size: 2rem !important;
+    font-weight: bold !important;
+    color: $primary !important;
+    padding: 0.5rem 1.2rem !important;
+    font-family: "poppins";
+  }
+}
+
+.pop {
+  font-family: "poppins";
+}
+.robo {
+  font-family: "roboto";
+}

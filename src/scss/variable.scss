@@ -1,0 +1,11 @@
+$primary: #414288;
+$active: #f6ae2d;
+$dark: #070707;
+$light: #f6f8ff;
+$success: #73937e;
+
+@mixin logo {
+  font-size: 1.7rem;
+  color: $primary;
+  font-weight: bold;
+}

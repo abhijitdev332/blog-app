@@ -1,0 +1,20 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/responsive.scss" as *;
+
+.footer {
+  background: $light;
+  padding: 2rem 1.8rem;
+  @include md {
+    padding: 3rem 2.5rem;
+  }
+  &__logo {
+    @include logo;
+    padding: 0.3rem 0;
+  }
+}
+.subs {
+  background: $primary;
+  color: $light;
+  font-weight: 500;
+  font-size: 1.2rem !important;
+}

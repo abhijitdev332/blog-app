@@ -1,0 +1,23 @@
+.post {
+  .img {
+    img {
+      width: 100%;
+      height: 25rem;
+      border-radius: 15px;
+      padding: 0.5rem;
+      object-fit: cover;
+      object-position: top center;
+    }
+  }
+}
+
+.list {
+  &__wrapper {
+    height: 80vh;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      display: none !important;
+    }
+  }
+}

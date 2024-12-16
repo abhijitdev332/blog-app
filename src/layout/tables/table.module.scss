@@ -1,0 +1,61 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/responsive.scss" as *;
+
+// .list {
+//   &__header {
+//     padding: 1rem 1.5rem !important;
+//     display: grid !important;
+//     grid-template-columns: repeat(5, 1fr);
+//     li {
+//       font-size: 1.3rem;
+//       font-weight: bold;
+//     }
+//   }
+// }
+// .item__list {
+//   padding: 1rem 1.5rem !important;
+//   .item {
+//     padding: 0.5rem 0;
+//     display: grid !important;
+//     grid-template-columns: repeat(5, 1fr);
+//     font-size: 1.2rem;
+//     border-bottom: 2px solid #f8f8f8;
+//   }
+// }
+
+.table {
+  width: 100% !important;
+  height: auto;
+  gap: 1rem;
+  overflow-x: scroll;
+  thead {
+    background: $light;
+    td {
+      font-weight: bold;
+      font-family: "roboto" !important;
+      text-transform: capitalize;
+      padding: 0.7rem 0.3rem;
+      font-size: 1rem;
+      @include sm {
+        font-size: 1.4rem;
+      }
+    }
+  }
+  tbody {
+    tr {
+      border-bottom: 1px solid $success;
+      td {
+        font-size: 0.9rem;
+        font-weight: 400;
+        padding: 0.7rem 0.3rem;
+        font-family: "poppins" !important;
+        @include sm {
+          font-size: 1.2rem;
+        }
+      }
+      &:nth-child(even) {
+        background-color: #d6eeee;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@use "../../scss/responsive.scss" as *;
+@use "../../scss/variable.scss" as *;
+.hero {
+  &__title {
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 1.7rem;
+    font-family: "coloni";
+    color: $primary;
+    padding: 1rem 1.4rem;
+  }
+}
+
+.post {
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 1.4rem;
+  }
+}

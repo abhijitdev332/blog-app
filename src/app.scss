@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "coloni";
+  src: url("./fonts/coloni.ttf") type("truetype");
+}
+@font-face {
+  font-family: "allieno";
+  src: url("./fonts/allieno.ttf") type("truetype");
+}
+@font-face {
+  font-family: "roboto";
+  src: url("./fonts/roboto.ttf") type("truetype");
+}
+@font-face {
+  font-family: "poppins";
+  src: url("./fonts/popins.ttf") type("truetype");
+}
+
+.pop {
+  font-family: poppins !important;
+}
+.robo {
+  font-family: roboto !important;
+}

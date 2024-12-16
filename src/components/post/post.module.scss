@@ -1,0 +1,36 @@
+.postCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  .postImg {
+    width: 100%;
+    min-width: 20rem;
+    height: max(18rem, 13vh);
+    border-radius: 15px;
+    object-fit: cover;
+  }
+  .postContent {
+    display: flex;
+    padding: 0.2rem 0.7rem;
+    flex-direction: column;
+    .author {
+      display: flex;
+      gap: 0.1rem;
+      padding: 0.4rem 0;
+      font-weight: 500;
+      font-size: 0.7rem;
+      text-transform: capitalize;
+      color: rgba(33, 33, 33, 0.844);
+      font-family: "poppins" !important;
+    }
+    .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      font-family: "roboto" !important;
+    }
+    .content {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+}
