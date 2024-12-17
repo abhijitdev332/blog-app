@@ -1,8 +1,8 @@
 import React from "react";
-import "ldrs/grid";
 import cl from "classnames";
 import { useLoaderStore } from "../../services/store/store";
 import { createPortal } from "react-dom";
+import "ldrs/grid";
 const DataLoader = ({ bg = "#fff" }) => {
   const { status } = useLoaderStore();
   return (
