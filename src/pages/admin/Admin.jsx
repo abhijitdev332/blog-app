@@ -4,10 +4,11 @@ import { user } from "../../constants/constant";
 import { Outlet } from "react-router-dom";
 import { DashHeader } from "../../includes/includes.js";
 import { ToastContainer } from "react-toastify";
+import { DataLoader } from "../../layout/layouts.js";
+import useLoaderStore from "../../services/store/useLoaderStore.js";
 
 const Admin = () => {
   const [showSidebar, setShowSidebar] = useState(user.roles?.includes("admin"));
-
   return (
     <>
       <div className="admin">
@@ -19,6 +20,7 @@ const Admin = () => {
           </section>
         </div>
       </div>
+      <DataLoader />
       <ToastContainer />
     </>
   );

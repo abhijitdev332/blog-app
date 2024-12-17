@@ -1,11 +1,10 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import { DataLoader } from "../../layout/layouts";
 const Auth = () => {
   return (
     <>
-      <ToastContainer />
       <div className="bg-slate-900 md:h-screen">
         <button className="fixed top-[20px] left-[15px] border-2 border-white text-white p-2 rounded">
           <Link to={"/"}>Go Back</Link>
@@ -27,6 +26,8 @@ const Auth = () => {
           </div>
         </div>
       </div>
+      <DataLoader />
+      <ToastContainer />
     </>
   );
 };

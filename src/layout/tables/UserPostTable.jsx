@@ -3,7 +3,11 @@ import {
   MdOutlinePublishedWithChanges,
   MdOutlineUnpublished,
 } from "react-icons/md";
-import { useDataStore, useUserStore } from "../../services/store/store";
+import {
+  useDataStore,
+  useLoaderStore,
+  useUserStore,
+} from "../../services/store/store";
 import { useNavigate, useParams } from "react-router-dom";
 
 // style
@@ -19,46 +23,66 @@ const UserPostTable = () => {
   const navigate = useNavigate();
   const [userPosts, setUserPosts] = useState([]);
   const { user } = useUserStore();
+  const { setLoading, removeLoading } = useLoaderStore();
   const { setRefetch } = useDataStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
-    const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });
-    if (res.status == 200) {
-      setUserPosts(res.data?.data);
-    } else {
-      setUserPosts([]);
+    try {
+      setLoading();
+      const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });
+      if (res.status == 200) {
+        setUserPosts(res.data?.data);
+      } else {
+        setUserPosts([]);
+      }
+    } catch (err) {
+      toast.error("something went wrong");
+    } finally {
+      removeLoading();
     }
   };
   const handlePublishClick = async (e) => {
-    if (e?.status == "published" && isAdmin) {
-      let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-        status: "archived",
-      });
-      if (res.status == 200) {
-        getUserPosts();
-        setRefetch();
-        toast.success("update Successfull");
+    try {
+      setLoading();
+      if (e?.status == "published" && isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "archived",
+        });
+        if (res.status == 200) {
+          getUserPosts();
+          setRefetch();
+          toast.success("update Successfull");
+        }
+      } else if (isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "published",
+        });
+        if (res.status == 200) {
+          getUserPosts();
+          setRefetch();
+          toast.success("update successfull");
+        }
       }
-    } else {
-      let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-        status: "published",
-      });
-      if (res.status == 200) {
-        getUserPosts();
-        setRefetch();
-        toast.success("update successfull");
-      }
+    } catch (err) {
+      toast.error("something went wrong!!");
+    } finally {
+      removeLoading();
     }
   };
 
   const handleDelete = async (e) => {
-    let res = await AxiosInt.delete(`/post/${e}`);
-    if (res.status == 200) {
-      getUserPosts();
-      setRefetch();
-      toast.warning("Delete Successfull");
-    } else {
-      toast.error("something went wrong");
+    try {
+      setLoading();
+      let res = await AxiosInt.delete(`/post/${e}`);
+      if (res.status == 200) {
+        getUserPosts();
+        setRefetch();
+        toast.warning("Delete Successfull");
+      }
+    } catch (err) {
+      toast.error("something went wrong!!");
+    } finally {
+      removeLoading();
     }
   };
   const handleViewPost = (e) => {

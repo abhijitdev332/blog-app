@@ -7,7 +7,11 @@ import {
   MdOutlineUnpublished,
 } from "react-icons/md";
 import AxiosInt from "../../services/api/api";
-import { useUserStore, useDataStore } from "../../services/store/store";
+import {
+  useUserStore,
+  useDataStore,
+  useLoaderStore,
+} from "../../services/store/store";
 import { useNavigate } from "react-router-dom";
 import { toDateString } from "../../utils/utils";
 import { toast } from "react-toastify";
@@ -19,53 +23,80 @@ const PostTable = () => {
   const [userPosts, setUserPosts] = useState([]);
   const { user } = useUserStore();
   const { setRefetch } = useDataStore();
+  const { setLoading, removeLoading } = useLoaderStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig) => {
-    const res = await AxiosInt.get(`/post/user/${user._id}`, { signal: sig });
-    if (res.status == 200) {
-      setUserPosts(res.data?.data);
-    } else {
-      setUserPosts([]);
+    try {
+      setLoading();
+      const res = await AxiosInt.get(`/post/user/${user._id}`, { signal: sig });
+      if (res.status == 200) {
+        setUserPosts(res.data?.data);
+      } else {
+        setUserPosts([]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong");
+    } finally {
+      removeLoading();
     }
   };
   const getAdminPosts = async (sig) => {
-    const res = await AxiosInt.get(`/admin/posts`, { signal: sig });
-    if (res.status == 200) {
-      setUserPosts(res.data?.data);
-    } else {
+    try {
+      setLoading();
+      const res = await AxiosInt.get(`/admin/posts`, { signal: sig });
+      if (res.status == 200) {
+        setUserPosts(res.data?.data);
+      }
+    } catch (err) {
       setUserPosts([]);
+      console.log(err);
+      toast.error("something went wrong!!");
+    } finally {
+      removeLoading();
     }
   };
   const handlePublishClick = async (e) => {
-    if (e?.status == "published" && isAdmin) {
-      let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-        status: "archived",
-      });
-      if (res.status == 200) {
-        getAdminPosts();
-        setRefetch();
-        toast.success("update Successfull");
+    try {
+      setLoading();
+      if (e?.status == "published" && isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "archived",
+        });
+        if (res.status == 200) {
+          getAdminPosts();
+          setRefetch();
+          toast.success("update Successfull");
+        }
+      } else if (isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "published",
+        });
+        if (res.status == 200) {
+          getAdminPosts();
+          setRefetch();
+          toast.success("update successfull");
+        }
       }
-    } else {
-      let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-        status: "published",
-      });
-      if (res.status == 200) {
-        getAdminPosts();
-        setRefetch();
-        toast.success("update successfull");
-      }
+    } catch (err) {
+      toast.error("something went wrong!!");
+    } finally {
+      removeLoading();
     }
   };
 
   const handleDelete = async (e) => {
-    let res = await AxiosInt.delete(`/post/${e}`);
-    if (res.status == 200) {
-      getAdminPosts();
-      setRefetch();
-      toast.warning("Delete Successfull");
-    } else {
-      toast.error("something went wrong");
+    try {
+      setLoading();
+      let res = await AxiosInt.delete(`/post/${e}`);
+      if (res.status == 200) {
+        getAdminPosts();
+        setRefetch();
+        toast.warning("Delete Successfull");
+      }
+    } catch (err) {
+      toast.error("something went wrong!!");
+    } finally {
+      removeLoading();
     }
   };
   const handleViewPost = (e) => {
@@ -78,7 +109,7 @@ const PostTable = () => {
     if (isAdmin) {
       getAdminPosts(abortCon.signal);
     } else {
-      getUserPosts(abortCon.signalsig);
+      getUserPosts(abortCon.signal);
     }
     return () => abortCon.abort();
   }, [user]);

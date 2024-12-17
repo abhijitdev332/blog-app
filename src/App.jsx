@@ -25,7 +25,7 @@ import {
 } from "./layout/layouts";
 import { Dashbroad, Editor, ViewPost } from "./layout/layouts";
 import { UserProtected, ProtectedRoute } from "./utils/ProtectedRoute";
-
+import InitialData from "./data/InitialData";
 // styles
 import "./app.scss";
 import "react-toastify/dist/ReactToastify.css";
@@ -78,6 +78,7 @@ function App() {
   return (
     <Suspense fallback={<Loader />}>
       <RouterProvider router={router} />
+      <InitialData />
     </Suspense>
   );
 }

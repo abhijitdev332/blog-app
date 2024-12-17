@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import useFetchData from "../../hooks/useFetchData";
 import cl from "classnames";
 import style from "./hero.module.scss";
 import Chip from "../../components/chip/Chip";
 import { Link } from "react-router-dom";
 import { toDateString } from "../../utils/utils";
+import { useTrendingData } from "../../services/store/store";
+import useFetchData from "../../hooks/useFetchData";
 const Slider = () => {
+  // const { post: data } = useTrendingData();
   const { data, loading } = useFetchData("/post/trending");
   const [post, setPost] = useState([]);
   useEffect(() => {

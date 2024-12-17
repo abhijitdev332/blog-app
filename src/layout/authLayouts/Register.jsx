@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { useUserStore } from "../../services/store/store";
+import { useLoaderStore, useUserStore } from "../../services/store/store";
 const Register = () => {
   const navigate = useNavigate();
+  const { setLoading, removeLoading } = useLoaderStore();
   const { setUser } = useUserStore();
   const [inputState, setInputState] = useState({
     name: "",
@@ -33,6 +34,7 @@ const Register = () => {
       }
     }
     try {
+      setLoading();
       schema.parse(inputState);
       let res = await AxiosInt.post("user/create", {
         username: inputState.name,
@@ -49,6 +51,8 @@ const Register = () => {
       if (err instanceof z.ZodError) {
         toast.error(err.errors[0].message);
       }
+    } finally {
+      removeLoading();
     }
     // set user in localstorage and redirect to todo page
   };

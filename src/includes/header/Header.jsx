@@ -1,28 +1,18 @@
 import React, { useState } from "react";
 import { headerNav } from "../../constants/constant";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import AxiosInt from "../../services/api/api";
 import { useUserStore, useDataStore } from "../../services/store/store";
 import { toast } from "react-toastify";
-
+import { Logout } from "../../components/components";
 // style
 import cl from "classnames";
 import style from "./header.module.scss";
 const Header = () => {
-  const { user, removeUser } = useUserStore();
-  const { data, setRefetch, setData } = useDataStore();
-  const navigate = useNavigate();
+  const { user } = useUserStore();
+  const { setRefetch, setData } = useDataStore();
   const [searchInput, setSearchInput] = useState("");
-  const handleLogout = async () => {
-    const res = await AxiosInt.post("/auth/logout");
-    if (res.status == 200) {
-      removeUser();
-      navigate("/", { replace: true });
-    } else {
-      toast.error("something went wrong please try again");
-    }
-  };
   const handleSearch = async () => {
     if (searchInput.trim() == "") {
       setRefetch();
@@ -102,12 +92,13 @@ const Header = () => {
                 <Link to={"/admin"} className={cl(style.admin, "rounded-full")}>
                   Panel
                 </Link>
-                <button
+                {/* <button
                   onClick={handleLogout}
                   className={cl(style.logout, "rounded-full")}
                 >
                   Logout
-                </button>
+                </button> */}
+                <Logout style={[style.logout, "rounded-full"]} />
               </>
             ) : (
               <>

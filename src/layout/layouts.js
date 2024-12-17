@@ -1,6 +1,7 @@
 import Login from "./authLayouts/Login";
 import Register from "./authLayouts/Register";
 import Loader from "./loader/Loader";
+import DataLoader from "./loader/DataLoader.jsx";
 import Dashbroad from "./dashbroad/Dashbroad";
 import DashHeader from "../includes/header/DashHeader.jsx";
 import Editor from "./editor/Editor";
@@ -20,4 +21,5 @@ export {
   PostTable,
   UserTable,
   UserPostTable,
+  DataLoader,
 };

@@ -7,20 +7,28 @@ import { FaEye } from "react-icons/fa";
 import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useLoaderStore } from "../../services/store/store";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
+  const { setLoading, removeLoading } = useLoaderStore();
   const { data, loading, err } = useFetchData("/admin/user");
   const getUsers = async () => {
-    let res = await AxiosInt.get("/admin/user");
-    if (res.status == 200) {
-      setUsers(res.data?.data);
-    } else {
+    try {
+      setLoading();
+      let res = await AxiosInt.get("/admin/user");
+      if (res.status == 200) {
+        setUsers(res.data?.data);
+      }
+    } catch (err) {
       setUsers([]);
       toast("something went wrong");
+    } finally {
+      removeLoading();
     }
   };
   const handleActiveClick = async (e) => {
     try {
+      setLoading();
       if (e?.isActive) {
         let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
           isActive: false,
@@ -40,36 +48,54 @@ const UserTable = () => {
       }
     } catch (err) {
       toast.error("Something went wrong");
+    } finally {
+      removeLoading();
     }
   };
   const handleDeleteClick = async (e) => {
-    let res = await AxiosInt.delete(`/user/${e}`);
-    if (res.status == 200) {
-      getUsers();
-    } else {
+    try {
+      setLoading();
+      let res = await AxiosInt.delete(`/user/${e}`);
+      if (res.status == 200) {
+        getUsers();
+      }
+    } catch (err) {
       toast("something went wrong");
+    } finally {
+      removeLoading();
     }
   };
   const handleAccess = async (e) => {
-    let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-      roles: [...e?.roles, "admin"],
-    });
-    if (res.status == 200) {
-      getUsers();
-    } else {
+    try {
+      setLoading();
+      let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
+        roles: [...e?.roles, "admin"],
+      });
+      if (res.status == 200) {
+        getUsers();
+      }
+    } catch (err) {
       setUsers([]);
-      toast("something went wrong");
+      toast.error("something went wrong");
+    } finally {
+      removeLoading();
     }
   };
   const handleRemoveAccess = async (e) => {
-    let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-      roles: [...e?.roles?.filter((ele) => ele !== "admin")],
-    });
-    if (res.status == 200) {
-      getUsers();
-    } else {
+    try {
+      setLoading();
+      setLoading();
+      let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
+        roles: [...e?.roles?.filter((ele) => ele !== "admin")],
+      });
+      if (res.status == 200) {
+        getUsers();
+      }
+    } catch (err) {
       setUsers([]);
       toast("something went wrong");
+    } finally {
+      removeLoading();
     }
   };
 

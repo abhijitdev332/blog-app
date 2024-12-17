@@ -1,24 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useUserStore } from "../../services/store/store";
+import { Logout } from "../../components/components";
+// style
 import cl from "classnames";
 import style from "./header.module.scss";
-import AxiosInt from "../../services/api/api";
-import { useUserStore } from "../../services/store/store";
-import { toast } from "react-toastify";
 const DashHeader = () => {
-  const navigate = useNavigate();
-  const { user, removeUser } = useUserStore();
-  const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
-  const handleLogout = async () => {
-    const res = await AxiosInt.post("/auth/logout");
-    if (res.status == 200) {
-      toast.success("you are successfully logout");
-      removeUser();
-      navigate("/", { replace: true });
-    } else {
-      toast.error("something went wrong please try again");
-    }
-  };
+  const { user } = useUserStore();
+  const [isAdmin] = useState(user?.roles?.includes("admin"));
   return (
     <header className={cl(style.dash__header)}>
       <div className="header__wrapper lg:container lg:mx-auto p-2">
@@ -63,12 +52,7 @@ const DashHeader = () => {
               <Link to={"/admin"}>View Posts</Link>
             </button>
 
-            <button
-              className={cl(style.logout, "bg-slate-100")}
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+            <Logout style={[style.logout, "bg-slate-100"]} />
           </div>
         </div>
       </div>
