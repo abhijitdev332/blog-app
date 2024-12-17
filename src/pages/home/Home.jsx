@@ -1,27 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "../../includes/header/Header";
 import { Hero } from "../../includes/includes";
 import { PostList } from "../../components/components";
 import { ToastContainer } from "react-toastify";
 import Footer from "../../includes/footer/Footer";
-import {
-  useDataStore,
-  useLoaderStore,
-  useTrendingData,
-} from "../../services/store/store";
+import { useDataStore } from "../../services/store/store";
 import { DataLoader } from "../../layout/layouts";
+import InitialData from "../../data/InitialData";
 
 const Home = () => {
   const { data } = useDataStore();
-  // const { status } = useLoaderStore();
-  // const { post, setPost } = useTrendingData();
-  // useEffect(() => {
-  //   if (post) {
-  //     console.log(post);
-  //     return;
-  //   }
-  //   setPost();
-  // }, []);
 
   return (
     <>
@@ -33,6 +21,7 @@ const Home = () => {
       </div>
       <DataLoader />
       <ToastContainer />
+      <InitialData />
     </>
   );
 };

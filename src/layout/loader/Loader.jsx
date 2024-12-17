@@ -1,13 +1,10 @@
 import React from "react";
-import "ldrs/grid";
-
+import style from "./loader.module.scss";
 const Loader = () => {
   return (
-    <div className="h-screen bg-gray-300">
+    <div className="h-screen w-screen bg-gray-300">
       <div className="flex h-full justify-center items-center">
-        <span>
-          <l-grid size="60" speed="1.5" color="black"></l-grid>
-        </span>
+        <div className={style.loader}></div>
       </div>
     </div>
   );

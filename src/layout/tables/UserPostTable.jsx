@@ -32,18 +32,16 @@ const UserPostTable = () => {
       const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });
       if (res.status == 200) {
         setUserPosts(res.data?.data);
-      } else {
-        setUserPosts([]);
       }
     } catch (err) {
-      toast.error("something went wrong");
+      setUserPosts([]);
+      toast.error("something went wrong!!");
     } finally {
       removeLoading();
     }
   };
   const handlePublishClick = async (e) => {
     try {
-      setLoading();
       if (e?.status == "published" && isAdmin) {
         let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
           status: "archived",
@@ -65,24 +63,19 @@ const UserPostTable = () => {
       }
     } catch (err) {
       toast.error("something went wrong!!");
-    } finally {
-      removeLoading();
     }
   };
 
   const handleDelete = async (e) => {
     try {
-      setLoading();
       let res = await AxiosInt.delete(`/post/${e}`);
       if (res.status == 200) {
         getUserPosts();
         setRefetch();
-        toast.warning("Delete Successfull");
+        toast.success("Delete Successfull");
       }
     } catch (err) {
       toast.error("something went wrong!!");
-    } finally {
-      removeLoading();
     }
   };
   const handleViewPost = (e) => {

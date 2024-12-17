@@ -11,7 +11,7 @@ import { useLoaderStore } from "../../services/store/store";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const { setLoading, removeLoading } = useLoaderStore();
-  const { data, loading, err } = useFetchData("/admin/user");
+  const { data } = useFetchData("/admin/user");
   const getUsers = async () => {
     try {
       setLoading();
@@ -21,14 +21,14 @@ const UserTable = () => {
       }
     } catch (err) {
       setUsers([]);
-      toast("something went wrong");
+      toast("something went wrong!!");
     } finally {
       removeLoading();
     }
   };
   const handleActiveClick = async (e) => {
     try {
-      setLoading();
+      // setLoading();
       if (e?.isActive) {
         let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
           isActive: false,
@@ -49,25 +49,25 @@ const UserTable = () => {
     } catch (err) {
       toast.error("Something went wrong");
     } finally {
-      removeLoading();
+      // removeLoading();
     }
   };
   const handleDeleteClick = async (e) => {
     try {
-      setLoading();
+      // setLoading();
       let res = await AxiosInt.delete(`/user/${e}`);
       if (res.status == 200) {
         getUsers();
       }
     } catch (err) {
-      toast("something went wrong");
+      toast("something went wrong!!");
     } finally {
-      removeLoading();
+      // removeLoading();
     }
   };
   const handleAccess = async (e) => {
     try {
-      setLoading();
+      // setLoading();
       let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
         roles: [...e?.roles, "admin"],
       });
@@ -78,13 +78,12 @@ const UserTable = () => {
       setUsers([]);
       toast.error("something went wrong");
     } finally {
-      removeLoading();
+      // removeLoading();
     }
   };
   const handleRemoveAccess = async (e) => {
     try {
-      setLoading();
-      setLoading();
+      // setLoading();
       let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
         roles: [...e?.roles?.filter((ele) => ele !== "admin")],
       });
@@ -95,12 +94,17 @@ const UserTable = () => {
       setUsers([]);
       toast("something went wrong");
     } finally {
-      removeLoading();
+      // removeLoading();
     }
   };
 
   // fetch users
   useEffect(() => {
+    if (users?.length <= 0) {
+      setLoading();
+    } else {
+      removeLoading();
+    }
     setUsers(data);
   }, [data]);
 

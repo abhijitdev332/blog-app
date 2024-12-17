@@ -8,6 +8,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa6";
 import useFetchData from "../../hooks/useFetchData";
 import { toDateString } from "../../utils/utils";
+import { useLoaderStore } from "../../services/store/store";
 const icons = [
   {
     id: 1,
@@ -25,35 +26,22 @@ const icons = [
 const SinglePost = () => {
   const { id } = useParams();
   const { data, loading, err } = useFetchData(`/post/${id}`);
-  const {
-    data: relatedData,
-    loading: reLoading,
-    err: reErrr,
-  } = useFetchData(`/post/related/${id}`);
+  const { data: relatedData } = useFetchData(`/post/related/${id}`);
+  const { setLoading, removeLoading } = useLoaderStore();
   const [post, setPost] = useState(null);
   const [related, setRelated] = useState([]);
-  // fetch spcific data
-  // let post = articles[id - 1];
-  // const getPost = async () => {
-  //   const res = await AxiosInt.get(`/post/${id}`);
-  //   if (res.status == 200) {
-  //     setPost({ ...res.data?.data });
-  //   } else {
-  //     setPost(null);
-  //   }
-  // };
-  // const getRelated = async () => {
-  //   const res = await AxiosInt.get(`/post/related/${id}`);
-  //   if (res.status == 200) {
-  //     setRelated([...res.data?.data]);
-  //   } else {
-  //     setRelated([]);
-  //   }
-  // };
   useEffect(() => {
     setPost(data);
     setRelated(relatedData);
   }, [id, data, relatedData]);
+  useEffect(() => {
+    if (!post) {
+      setLoading();
+    } else {
+      removeLoading();
+    }
+  }, [post]);
+
   if (post == null || post?.status !== "published") {
     return <h3>No Post Found</h3>;
   }

@@ -78,7 +78,6 @@ function App() {
   return (
     <Suspense fallback={<Loader />}>
       <RouterProvider router={router} />
-      <InitialData />
     </Suspense>
   );
 }

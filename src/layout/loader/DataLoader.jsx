@@ -3,7 +3,6 @@ import cl from "classnames";
 import style from "./loader.module.scss";
 import { useLoaderStore } from "../../services/store/store";
 import { createPortal } from "react-dom";
-import "ldrs/grid";
 const DataLoader = ({ bg = "#f8f8f8" }) => {
   const { status } = useLoaderStore();
   return (

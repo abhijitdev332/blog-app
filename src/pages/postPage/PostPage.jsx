@@ -2,8 +2,6 @@ import React from "react";
 import Header from "../../includes/header/Header";
 import { Outlet } from "react-router-dom";
 import { Footer } from "../../includes/includes";
-import cl from "classnames";
-import style from "./post.module.scss";
 import { DataLoader } from "../../layout/layouts";
 const PostPage = () => {
   return (
@@ -11,7 +9,7 @@ const PostPage = () => {
       <Header />
       <Outlet />
       <Footer />
-      <DataLoader bg={"rgba(255, 255, 255, 0.46)"} />
+      <DataLoader />
     </div>
   );
 };

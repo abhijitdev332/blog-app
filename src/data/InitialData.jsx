@@ -11,15 +11,11 @@ const InitialData = () => {
       const res = await AxiosInt.get("/post");
       if (res.status == 200) {
         setData(res.data?.data);
-      } else {
-        setData([]);
       }
     } catch (err) {
       setData([]);
     } finally {
-      setTimeout(() => {
-        removeLoading();
-      }, 500);
+      removeLoading();
     }
   };
 

@@ -5,7 +5,6 @@ import { Outlet } from "react-router-dom";
 import { DashHeader } from "../../includes/includes.js";
 import { ToastContainer } from "react-toastify";
 import { DataLoader } from "../../layout/layouts.js";
-import useLoaderStore from "../../services/store/useLoaderStore.js";
 
 const Admin = () => {
   const [showSidebar, setShowSidebar] = useState(user.roles?.includes("admin"));
@@ -20,7 +19,7 @@ const Admin = () => {
           </section>
         </div>
       </div>
-      <DataLoader />
+      <DataLoader bg={"rgba(255, 255, 255, 0.46)"} />
       <ToastContainer />
     </>
   );
