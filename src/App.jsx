@@ -22,6 +22,7 @@ import {
   Register,
   UserTable,
   UserPostTable,
+  SearchPost,
 } from "./layout/layouts";
 import { Dashbroad, Editor, ViewPost } from "./layout/layouts";
 import { UserProtected, ProtectedRoute } from "./utils/ProtectedRoute";
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
     <Route element={<SuspenseLayout />} errorElement={<ErrorPage />}>
       <Route path="/" element={<Home />} />
       <Route path="/post" element={<PostPage />}>
+        <Route path="search/:query" element={<SearchPost />} />
         <Route path=":id" element={<SinglePost />} />
       </Route>
       <Route

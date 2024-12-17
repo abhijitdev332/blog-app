@@ -5,7 +5,7 @@ function toDateString(date = "") {
 
   let string = new Date(date);
 
-  return string.toLocaleDateString();
+  return string.toLocaleDateString("en-GB");
 }
 
 export { toDateString };

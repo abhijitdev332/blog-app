@@ -7,6 +7,7 @@ import { FaEye } from "react-icons/fa";
 import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { HiDotsVertical } from "react-icons/hi";
 import { useLoaderStore } from "../../services/store/store";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
@@ -113,8 +114,11 @@ const UserTable = () => {
       <div className="lg:container lg:mx-auto p-5">
         <table className={style.table}>
           <thead>
-            <td>Sl No.</td>
-            <td>Name</td>
+            {/* <td>SL No</td> */}
+            <td>
+              {/* <span>Avatar</span> */}
+              <span>Name</span>
+            </td>
             <td>Mail</td>
             <td>status</td>
             <td>Roles</td>
@@ -124,7 +128,7 @@ const UserTable = () => {
             {users?.length > 0 ? (
               users?.map((ele, index) => (
                 <tr>
-                  <td>{index + 1}</td>
+                  {/* <td>{index + 1}</td> */}
                   <td>
                     <Link to={`/admin/user/post/${ele?._id}`}>
                       {ele?.username}
@@ -170,6 +174,9 @@ const UserTable = () => {
                       onClick={() => handleDeleteClick(ele?._id)}
                     >
                       <RiDeleteBin6Fill fontSize={"1.4rem"} color="crimson" />
+                    </button>
+                    <button>
+                      <HiDotsVertical fontSize={"1.4rem"} />
                     </button>
                   </td>
                 </tr>

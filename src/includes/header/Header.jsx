@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { headerNav } from "../../constants/constant";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import AxiosInt from "../../services/api/api";
 import { useUserStore, useDataStore } from "../../services/store/store";
@@ -10,6 +10,8 @@ import { Logout } from "../../components/components";
 import cl from "classnames";
 import style from "./header.module.scss";
 const Header = () => {
+  const [searchParam, setSearchParam] = useSearchParams();
+  const navigate = useNavigate();
   const { user } = useUserStore();
   const { setRefetch, setData } = useDataStore();
   const [searchInput, setSearchInput] = useState("");
@@ -18,17 +20,20 @@ const Header = () => {
       setRefetch();
       return toast.info("Plese enter topic to search");
     }
-    const res = await AxiosInt.get(`/post/search?search=${searchInput}`);
-    if (res.status == 200) {
-      setData(res.data?.data);
-    }
+    navigate(`/post/search/${searchInput}`);
   };
   return (
     <header className={cl(style.header)}>
       <div className="header__wrapper lg:container lg:mx-auto px-4 py-3">
         <div className="flex justify-between md:justify-normal md:gap-4">
           <div className="logo md:basis-1/4 flex items-center">
-            <Link to={"/"} className={style.header__logo}>
+            <Link
+              to={"/"}
+              className={style.header__logo}
+              onClick={() => {
+                setSearchInput("");
+              }}
+            >
               Blog App
             </Link>
           </div>
@@ -49,8 +54,6 @@ const Header = () => {
                       onKeyDown={(e) => {
                         if (e.key == "Enter") {
                           handleSearch();
-                        } else if (searchInput.length == 0) {
-                          setRefetch();
                         }
                       }}
                       onChange={(e) => setSearchInput(e.target.value)}

@@ -30,11 +30,12 @@
   overflow-x: scroll;
   thead {
     background: $light;
+    border-radius: 10px !important;
     td {
       font-weight: bold;
       font-family: "roboto" !important;
       text-transform: capitalize;
-      padding: 0.7rem 0.3rem;
+      padding: 0.7rem 0.8rem;
       font-size: 1rem;
       @include sm {
         font-size: 1.4rem;
@@ -47,8 +48,10 @@
       td {
         font-size: 0.9rem;
         font-weight: 400;
-        padding: 0.7rem 0.3rem;
+        padding: 0.7rem 0.8rem;
         font-family: "poppins" !important;
+        // border-radius: 10px;
+        // border: 2px solid orange;
         @include sm {
           font-size: 1.2rem;
         }
