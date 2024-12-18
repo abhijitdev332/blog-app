@@ -10,8 +10,11 @@ import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
 import cl from "classnames";
 import { Link } from "react-router-dom";
+import { toDateString } from "../../utils/utils";
+import style from "./table.module.scss";
 const UserTableRow = ({ ele, getUsers }) => {
   const [show, setShow] = useState(false);
+  const [showAccess, setAccess] = useState(false);
   const handleActiveClick = async (e) => {
     try {
       // setLoading();
@@ -92,13 +95,14 @@ const UserTableRow = ({ ele, getUsers }) => {
       <td>
         <span
           className={cl(
-            "px-2 py-1 rounded",
-            ele?.isActive ? "bg-green-400 " : "bg-red-400 "
+            "px-2 py-1 rounded popines",
+            ele?.isActive ? "text-blue-500 " : "text-slate-500 "
           )}
         >
           {ele?.isActive ? "active" : "unactive"}
         </span>
       </td>
+      <td>{toDateString(ele?.createdAt)}</td>
       <td>
         <div className="role inline-flex gap-2">
           {ele?.roles?.map((ele) => (
@@ -139,8 +143,9 @@ const UserTableRow = ({ ele, getUsers }) => {
       </td>
       <div
         className={cl(
-          "modal absolute top-[1rem] right-[3rem] z-20",
-          show ? "block" : "hidden"
+          "modal absolute top-[2rem] right-[3rem] z-20",
+          show ? "h-0 block" : "h-fit hidden",
+          style.transition
         )}
         onMouseLeave={() => {
           setShow(false);
@@ -157,14 +162,52 @@ const UserTableRow = ({ ele, getUsers }) => {
             <li>
               <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
                 <MdOutlinePostAdd fontSize={"1.rem"} />
-                <span className="font-semibold">User Posts</span>
+                <span className="font-semibold">
+                  <Link to={`/admin/user/post/${ele?._id}`}> User Posts</Link>
+                </span>
               </button>
             </li>
             <li>
-              <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
+              <button
+                className={cl(
+                  "flex gap-1 items-center cursor-pointer hover:text-blue-500"
+                )}
+                onClick={() => setAccess(!showAccess)}
+              >
                 <FaUserEdit fontSize={"1rem"} />
                 <span className="font-semibold">Edit Access</span>
               </button>
+              <div
+                className={cl(
+                  "select__modal w-full",
+                  showAccess ? "h-fit block" : "h-0 hidden"
+                )}
+              >
+                <ul
+                  name=""
+                  id=""
+                  className="w-full border-2 rounded-md p-2 bg-slate-400"
+                >
+                  <li
+                    className=" hover:bg-blue-400 cursor-pointer p-1 rounded"
+                    value="user"
+                  >
+                    User
+                  </li>
+                  <li
+                    className=" hover:bg-blue-400 cursor-pointer p-1 rounded"
+                    value="admin"
+                  >
+                    Admin
+                  </li>
+                  <li
+                    className=" hover:bg-blue-400 cursor-pointer p-1 rounded"
+                    value="both"
+                  >
+                    Both
+                  </li>
+                </ul>
+              </div>
             </li>
             <li>
               <button

@@ -1,0 +1,7 @@
+@use "../../scss/variable.scss" as *;
+.sidebar {
+  &__container {
+    background: #070712;
+    color: $light;
+  }
+}

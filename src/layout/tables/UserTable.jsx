@@ -4,6 +4,7 @@ import style from "./table.module.scss";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { BiSort } from "react-icons/bi";
 import cl from "classnames";
 import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
@@ -11,6 +12,7 @@ import { Link } from "react-router-dom";
 import { HiDotsVertical } from "react-icons/hi";
 import { useLoaderStore } from "../../services/store/store";
 import UserTableRow from "./UserTableRow";
+import Pagination from "./Pagination";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const { setLoading, removeLoading } = useLoaderStore();
@@ -117,93 +119,54 @@ const UserTable = () => {
   }, [data]);
 
   return (
-    <div className={style.table__wrapper}>
-      <div className="lg:container lg:mx-auto p-5">
-        <table className={cl("relative", style.table)}>
-          <thead>
-            {/* <td>SL No</td> */}
-            <td>
-              {/* <span>Avatar</span> */}
-              <span>Name</span>
-            </td>
-            <td>Mail</td>
-            <td>status</td>
-            <td>Roles</td>
-            <td>Actions</td>
-          </thead>
-          <tbody>
-            {users?.length > 0 ? (
-              users?.map((ele, index) => (
-                <UserTableRow ele={ele} getUsers={getUsers} />
-                // <tr className="relative">
-                //   {/* <td>{index + 1}</td> */}
-                //   <td>
-                //     <Link to={`/admin/user/post/${ele?._id}`}>
-                //       {ele?.username}
-                //     </Link>
-                //   </td>
+    <div className={style.table__container}>
+      <div className="lg:container lg:mx-auto p-5 h-full">
+        <div className={style.table__wrapper}>
+          <table className={cl("relative", style.table)}>
+            <thead>
+              {/* <td>SL No</td> */}
+              <td>
+                {/* <span>Avatar</span> */}
 
-                //   <td>{ele?.email}</td>
-                //   <td>
-                //     <span
-                //       className={cl(
-                //         "px-2 py-1 rounded",
-                //         ele?.isActive ? "bg-green-400 " : "bg-red-400 "
-                //       )}
-                //     >
-                //       {ele?.isActive ? "active" : "unactive"}
-                //     </span>
-                //   </td>
-                //   <td>
-                //     {ele?.roles?.map((ele) => (
-                //       <span className="px-2">{ele}</span>
-                //     ))}
-
-                //     {ele?.roles?.includes("admin") ? (
-                //       <button
-                //         className="p-1 bg-teal-600 rounded-md"
-                //         onClick={() => handleRemoveAccess(ele)}
-                //       >
-                //         remove Access
-                //       </button>
-                //     ) : (
-                //       <button
-                //         className="p-1 bg-teal-600 rounded-md"
-                //         onClick={() => handleAccess(ele)}
-                //       >
-                //         Give Access
-                //       </button>
-                //     )}
-                //   </td>
-                //   <td>
-                //     {/* <button
-                //       className="hover:scale-125 transition-transform"
-                //       onClick={() => handleActiveClick(ele)}
-                //     >
-                //       {ele?.isActive ? (
-                //         <FaEye fontSize={"1.4rem"} color="indigo" />
-                //       ) : (
-                //         <FaEyeSlash fontSize={"1.4rem"} color="indigo" />
-                //       )}
-                //     </button>
-                //     <button
-                //       className="hover:scale-125 transition-transform"
-                //       onClick={() => handleDeleteClick(ele?._id)}
-                //     >
-                //       <RiDeleteBin6Fill fontSize={"1.4rem"} color="crimson" />
-                //     </button>
-                //     <button>
-                //       <HiDotsVertical fontSize={"1.4rem"} />
-                //     </button> */}
-
-                //   </td>
-                // </tr>
-              ))
-            ) : (
-              <h3>No Users in here</h3>
-            )}
-          </tbody>
-        </table>
+                <div className="flex items-center">
+                  <span>Username</span>
+                  <span>
+                    <BiSort fontSize={"0.9rem"} />
+                  </span>
+                </div>
+              </td>
+              <td>Email ID</td>
+              <td>
+                <div className="flex items-center">
+                  <span>Status</span>
+                  <span>
+                    <BiSort fontSize={"0.9rem"} />
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div className="flex items-center">
+                  <span>Created</span>
+                  <span>
+                    <BiSort fontSize={"0.9rem"} />
+                  </span>
+                </div>
+              </td>
+              <td>Roles</td>
+              <td>Actions</td>
+            </thead>
+            <tbody>
+              {users?.length > 0 ? (
+                users?.map((ele) => (
+                  <UserTableRow ele={ele} getUsers={getUsers} />
+                ))
+              ) : (
+                <h3>No Users in here</h3>
+              )}
+            </tbody>
+          </table>
+          <Pagination />
+        </div>
       </div>
     </div>
   );

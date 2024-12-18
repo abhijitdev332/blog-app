@@ -38,7 +38,7 @@ const DashHeader = () => {
             </div>
           </div> */}
 
-          <div className={cl(style.actions__btn, "flex gap-6")}>
+          {/* <div className={cl(style.actions__btn, "flex gap-6")}>
             <button className={cl(style.add)}>
               <Link to={"/admin/addpost"}>Add Post</Link>
             </button>
@@ -52,6 +52,9 @@ const DashHeader = () => {
               <Link to={"/admin"}>View Posts</Link>
             </button>
 
+            <Logout style={[style.logout, "bg-slate-100"]} />
+          </div> */}
+          <div className={cl(style.actions__btn, "flex gap-6")}>
             <Logout style={[style.logout, "bg-slate-100"]} />
           </div>
         </div>
