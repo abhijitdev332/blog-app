@@ -17,6 +17,7 @@ const UserTable = () => {
   const [users, setUsers] = useState([]);
   const { setLoading, removeLoading } = useLoaderStore();
   const { data } = useFetchData("/admin/user");
+  const [sorted, setSorted] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [selected, setSelected] = useState(null);
   const getUsers = async () => {
@@ -31,45 +32,6 @@ const UserTable = () => {
       toast("something went wrong!!");
     } finally {
       removeLoading();
-    }
-  };
-  const handleActiveClick = async (e) => {
-    try {
-      // setLoading();
-      if (e?.isActive) {
-        let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-          isActive: false,
-        });
-        if (res.status == 200) {
-          toast.success("User updated");
-          getUsers();
-        }
-      } else {
-        let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-          isActive: true,
-        });
-        if (res.status == 200) {
-          toast.success("User updated");
-          getUsers();
-        }
-      }
-    } catch (err) {
-      toast.error("Something went wrong");
-    } finally {
-      // removeLoading();
-    }
-  };
-  const handleDeleteClick = async (e) => {
-    try {
-      // setLoading();
-      let res = await AxiosInt.delete(`/user/${e}`);
-      if (res.status == 200) {
-        getUsers();
-      }
-    } catch (err) {
-      toast("something went wrong!!");
-    } finally {
-      // removeLoading();
     }
   };
   const handleAccess = async (e) => {
@@ -104,10 +66,51 @@ const UserTable = () => {
       // removeLoading();
     }
   };
-  // const handleMenuClick = (e) => {
-  //   setSelected(e);
-  //   setModalShow((prev) => !prev);
-  // };
+  const sortUser = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = users?.toSorted((a, b) =>
+        a?.username > b?.username ? -1 : b?.username > a?.username ? 1 : 0
+      );
+      setUsers(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = users?.toSorted((a, b) =>
+      b?.username > a?.username ? -1 : a?.username > b?.username ? 1 : 0
+    );
+    setUsers(sortedData);
+    setSorted(!sorted);
+  };
+  const sortCreatedDate = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = users?.toSorted((a, b) =>
+        a?.createdAt > b?.createdAt ? -1 : b?.createdAt > a?.createdAt ? 1 : 0
+      );
+      setUsers(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = users?.toSorted((a, b) =>
+      b?.createdAt > a?.createdAt ? -1 : a?.createdAt > b?.createdAt ? 1 : 0
+    );
+    setUsers(sortedData);
+    setSorted(!sorted);
+  };
+  const sortStatus = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = users?.toSorted((a, b) => a?.isActive - b?.isActive);
+      setUsers(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = users?.toSorted((a, b) => b?.isActive - a?.isActive);
+    setUsers(sortedData);
+    setSorted(!sorted);
+  };
+
   // fetch users
   useEffect(() => {
     if (users?.length <= 0) {
@@ -128,7 +131,12 @@ const UserTable = () => {
               <td>
                 {/* <span>Avatar</span> */}
 
-                <div className="flex items-center">
+                <div
+                  className="flex items-center"
+                  onClick={() => {
+                    sortUser();
+                  }}
+                >
                   <span>Username</span>
                   <span>
                     <BiSort fontSize={"0.9rem"} />
@@ -137,7 +145,7 @@ const UserTable = () => {
               </td>
               <td>Email ID</td>
               <td>
-                <div className="flex items-center">
+                <div className="flex items-center" onClick={() => sortStatus()}>
                   <span>Status</span>
                   <span>
                     <BiSort fontSize={"0.9rem"} />
@@ -145,14 +153,26 @@ const UserTable = () => {
                 </div>
               </td>
               <td>
-                <div className="flex items-center">
+                <div
+                  className="flex items-center"
+                  onClick={() => {
+                    sortCreatedDate();
+                  }}
+                >
                   <span>Created</span>
                   <span>
                     <BiSort fontSize={"0.9rem"} />
                   </span>
                 </div>
               </td>
-              <td>Roles</td>
+              <td>
+                <div className="flex items-center">
+                  <span>Roles</span>
+                  {/* <span>
+                    <BiSort fontSize={"0.9rem"} />
+                  </span> */}
+                </div>
+              </td>
               <td>Actions</td>
             </thead>
             <tbody>

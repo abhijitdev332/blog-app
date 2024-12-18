@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AxiosInt from "../../services/api/api";
+import { BiSort } from "react-icons/bi";
 import { useUserStore, useLoaderStore } from "../../services/store/store";
 import { toast } from "react-toastify";
 import Pagination from "./Pagination";
@@ -11,6 +12,7 @@ const PostTable = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [fetch, setFetch] = useState(false);
   const { user } = useUserStore();
+  const [sorted, setSorted] = useState(false);
   const { setLoading, removeLoading } = useLoaderStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig) => {
@@ -44,7 +46,63 @@ const PostTable = () => {
   const handleFetch = () => {
     setFetch(!fetch);
   };
-
+  const sortAuthor = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = userPosts?.toSorted((a, b) =>
+        a?.author?.username > b?.author?.username
+          ? -1
+          : b?.author?.username > a?.author?.username
+          ? 1
+          : 0
+      );
+      setUserPosts(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = userPosts?.toSorted((a, b) =>
+      b?.author?.username > a?.author?.username
+        ? -1
+        : a?.author?.username > b?.author?.username
+        ? 1
+        : 0
+    );
+    setUserPosts(sortedData);
+    setSorted(!sorted);
+  };
+  const sortStatus = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = userPosts?.toSorted((a, b) =>
+        a?.status > b?.status ? -1 : b?.status > a?.status ? 1 : 0
+      );
+      setUserPosts(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = userPosts?.toSorted((a, b) =>
+      b?.status > a?.status ? -1 : a?.status > b?.status ? 1 : 0
+    );
+    setUserPosts(sortedData);
+    setSorted(!sorted);
+  };
+  const sortCreatedDate = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = userPosts?.toSorted((a, b) =>
+        a?.createdAt > b?.createdAt ? -1 : b?.createdAt > a?.createdAt ? 1 : 0
+      );
+      setUserPosts(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = userPosts?.toSorted((a, b) =>
+      b?.createdAt > a?.createdAt ? -1 : a?.createdAt > b?.createdAt ? 1 : 0
+    );
+    setUserPosts(sortedData);
+    setSorted(!sorted);
+  };
+  console.log(userPosts);
   useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));
@@ -65,9 +123,45 @@ const PostTable = () => {
             <thead>
               <td>Post ID</td>
               <td>Title</td>
-              <td>Author </td>
-              <td>Status</td>
-              <td>Created</td>
+              <td>
+                <div
+                  className="inline-flex items-center gap-1"
+                  onClick={() => {
+                    sortAuthor();
+                  }}
+                >
+                  <span> Author</span>
+                  <span>
+                    <BiSort />
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div
+                  className="inline-flex items-center gap-1"
+                  onClick={() => {
+                    sortStatus();
+                  }}
+                >
+                  <span>Status</span>
+                  <span>
+                    <BiSort />
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div
+                  className="inline-flex items-center gap-1"
+                  onClick={() => {
+                    sortCreatedDate();
+                  }}
+                >
+                  <span>Created</span>
+                  <span>
+                    <BiSort />
+                  </span>
+                </div>
+              </td>
               <td>Actions</td>
             </thead>
             <tbody>
