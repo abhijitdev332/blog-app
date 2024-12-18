@@ -5,15 +5,20 @@ import cl from "classnames";
 import style from "./view.module.scss";
 import { Chip } from "../../components/components";
 import { toDateString } from "../../utils/utils";
+import useLoaderStore from "../../services/store/useLoaderStore";
 
 const ViewPost = () => {
   const { id } = useParams();
+  const { setLoading, removeLoading } = useLoaderStore();
   const { data, loading, err } = useFetchData(`/post/${id}`);
   const [post, setPost] = useState(null);
   useEffect(() => {
     setPost(data);
   }, [data]);
 
+  useEffect(() => {
+    !post ? setLoading() : removeLoading();
+  }, [post]);
   return (
     <>
       <ScrollRestoration />

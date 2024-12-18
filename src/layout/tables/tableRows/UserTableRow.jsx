@@ -54,34 +54,63 @@ const UserTableRow = ({ ele, getUsers }) => {
       // removeLoading();
     }
   };
-  const handleAccess = async (e) => {
+  // const handleAccess = async (e) => {
+  //   try {
+  //     // setLoading();
+  //     let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
+  //       roles: [...e?.roles, "admin"],
+  //     });
+  //     if (res.status == 200) {
+  //       getUsers();
+  //     }
+  //   } catch (err) {
+  //     toast.error("something went wrong");
+  //   } finally {
+  //     // removeLoading();
+  //   }
+  // };
+  // const handleRemoveAccess = async (e) => {
+  //   try {
+  //     // setLoading();
+  //     let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
+  //       roles: [...e?.roles?.filter((ele) => ele !== "admin")],
+  //     });
+  //     if (res.status == 200) {
+  //       getUsers();
+  //     }
+  //   } catch (err) {
+  //     toast("something went wrong");
+  //   } finally {
+  //     // removeLoading();
+  //   }
+  // };
+  const handleAccessClick = async (e) => {
+    let permission = e?.target?.innerText;
     try {
-      // setLoading();
-      let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-        roles: [...e?.roles, "admin"],
-      });
-      if (res.status == 200) {
-        getUsers();
+      if (permission?.toLowerCase() == "user") {
+        let res = await AxiosInt.put(`/admin/user/${ele?._id}`, {
+          roles: ["user"],
+        });
+        if (res.status == 200) {
+          getUsers();
+        }
+      } else if (permission?.toLowerCase() == "admin") {
+        let res = await AxiosInt.put(`/admin/user/${ele?._id}`, {
+          roles: ["admin"],
+        });
+        if (res.status == 200) {
+          getUsers();
+        }
+      } else {
+        let res = await AxiosInt.put(`/admin/user/${ele?._id}`, {
+          roles: ["user", "admin"],
+        });
+        if (res.status == 200) {
+          getUsers();
+        }
       }
     } catch (err) {
-      toast.error("something went wrong");
-    } finally {
-      // removeLoading();
-    }
-  };
-  const handleRemoveAccess = async (e) => {
-    try {
-      // setLoading();
-      let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-        roles: [...e?.roles?.filter((ele) => ele !== "admin")],
-      });
-      if (res.status == 200) {
-        getUsers();
-      }
-    } catch (err) {
-      toast("something went wrong");
-    } finally {
-      // removeLoading();
+      toast.error("something went wrong!!");
     }
   };
   return (
@@ -187,23 +216,15 @@ const UserTableRow = ({ ele, getUsers }) => {
                   name=""
                   id=""
                   className="w-full border-2 rounded-md p-2 bg-slate-400"
+                  onClick={handleAccessClick}
                 >
-                  <li
-                    className=" hover:bg-blue-400 cursor-pointer p-1 rounded"
-                    value="user"
-                  >
+                  <li className=" hover:bg-blue-400 cursor-pointer p-1 rounded">
                     User
                   </li>
-                  <li
-                    className=" hover:bg-blue-400 cursor-pointer p-1 rounded"
-                    value="admin"
-                  >
+                  <li className=" hover:bg-blue-400 cursor-pointer p-1 rounded">
                     Admin
                   </li>
-                  <li
-                    className=" hover:bg-blue-400 cursor-pointer p-1 rounded"
-                    value="both"
-                  >
+                  <li className=" hover:bg-blue-400 cursor-pointer p-1 rounded">
                     Both
                   </li>
                 </ul>

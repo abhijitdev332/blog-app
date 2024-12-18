@@ -21,7 +21,6 @@ const InitialData = () => {
 
   useEffect(() => {
     let abortCon = new AbortController();
-    console.log(status);
     if (status) {
       getData(abortCon.signal);
     }

@@ -102,7 +102,7 @@ const PostTable = () => {
     setUserPosts(sortedData);
     setSorted(!sorted);
   };
-  console.log(userPosts);
+
   useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));

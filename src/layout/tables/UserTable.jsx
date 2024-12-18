@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import useFetchData from "../../hooks/useFetchData";
 import style from "./table.module.scss";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FaEyeSlash } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
 import { BiSort } from "react-icons/bi";
 import cl from "classnames";
 import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { HiDotsVertical } from "react-icons/hi";
 import { useLoaderStore } from "../../services/store/store";
 import { UserTableRow } from "./tableRows/rows";
 import Pagination from "./Pagination";
@@ -18,8 +13,6 @@ const UserTable = () => {
   const { setLoading, removeLoading } = useLoaderStore();
   const { data } = useFetchData("/admin/user");
   const [sorted, setSorted] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const [selected, setSelected] = useState(null);
   const getUsers = async () => {
     try {
       setLoading();
@@ -32,38 +25,6 @@ const UserTable = () => {
       toast("something went wrong!!");
     } finally {
       removeLoading();
-    }
-  };
-  const handleAccess = async (e) => {
-    try {
-      // setLoading();
-      let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-        roles: [...e?.roles, "admin"],
-      });
-      if (res.status == 200) {
-        getUsers();
-      }
-    } catch (err) {
-      setUsers([]);
-      toast.error("something went wrong");
-    } finally {
-      // removeLoading();
-    }
-  };
-  const handleRemoveAccess = async (e) => {
-    try {
-      // setLoading();
-      let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-        roles: [...e?.roles?.filter((ele) => ele !== "admin")],
-      });
-      if (res.status == 200) {
-        getUsers();
-      }
-    } catch (err) {
-      setUsers([]);
-      toast("something went wrong");
-    } finally {
-      // removeLoading();
     }
   };
   const sortUser = () => {

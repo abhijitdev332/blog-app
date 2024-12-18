@@ -1,32 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {
-  MdOutlinePublishedWithChanges,
-  MdOutlineUnpublished,
-} from "react-icons/md";
-import {
-  useDataStore,
-  useLoaderStore,
-  useUserStore,
-} from "../../services/store/store";
-import { useNavigate, useParams } from "react-router-dom";
-
-// style
-import style from "./table.module.scss";
-import cl from "classnames";
-import { toDateString } from "../../utils/utils";
+import { useLoaderStore, useUserStore } from "../../services/store/store";
+import { useParams } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
-import { FaRegEdit, FaRegEye } from "react-icons/fa";
-import { RiDeleteBin6Fill } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { toast } from "react-toastify";
 import PostTableRow from "./tableRows/PostTableRow";
+// style
+import style from "./table.module.scss";
+import cl from "classnames";
 const UserPostTable = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [userPosts, setUserPosts] = useState([]);
   const { user } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
-  const { setRefetch } = useDataStore();
   const [fetch, setFetch] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {

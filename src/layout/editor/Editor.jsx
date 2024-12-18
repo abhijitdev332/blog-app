@@ -1,24 +1,25 @@
 import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { string, z } from "zod";
+import { string, unknown, z } from "zod";
 import "react-quill/dist/quill.snow.css";
 import TagsChip from "./TagsChip";
 import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
 import { useUserStore } from "../../services/store/store";
 import { useNavigate } from "react-router-dom";
-const inital = { title: "", imageUrl: "", content: "", tags: [] };
+const inital = { title: "", content: "", tags: [] };
 const Editor = () => {
   const navigate = useNavigate();
   const [inputvalue, Setinputvalue] = useState(inital);
   const [tagInput, setTagInput] = useState("");
+  const [imageBlob, setImageBlob] = useState(null);
   const { user } = useUserStore();
   const tagsREf = useRef();
   const handleImageInput = (e) => {
-    Setinputvalue((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.files?.length > 0) {
+      setImageBlob(e.target.files[0]);
+      return;
+    }
   };
   const handleTagsInput = (e) => {
     if (
@@ -56,14 +57,23 @@ const Editor = () => {
     title: string()
       .min(30, "Minimum 30 char allowed")
       .max(80, "Maximum 80 charcters allowed"),
-    imageUrl: string()
-      .url("Invalid URL format")
-      .refine((url) => /\.(jpeg|jpg|png|gif|bmp|webp)$/i.test(url), {
-        message: "URL must point to an image (e.g., .jpg, .png)",
-      }),
     content: string(),
     tags: string().array().max(3, "Maximum 3 tags are allowed"),
   });
+  const uploadImage = async () => {
+    let imageData = new FormData();
+    imageData.append("image", imageBlob);
+    try {
+      let uploadRes = await AxiosInt.post("/post/upload", imageData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (uploadRes.status == 200) {
+        return uploadRes.data?.imageUrl;
+      }
+    } catch (err) {
+      toast.error(err.msg);
+    }
+  };
 
   const sendData = async () => {
     for (let ele in inputvalue) {
@@ -72,22 +82,31 @@ const Editor = () => {
         return;
       }
     }
+    if (!imageBlob) {
+      toast("Please upload a image");
+      return;
+    }
     try {
       schema.parse(inputvalue);
-      let res = await AxiosInt.post("/post/create", {
-        author: user?._id,
-        ...inputvalue,
-      });
-      if (res.status == 201) {
-        toast.success("Post Created Successfully");
-        Setinputvalue(inital);
-        navigate("/admin");
-      } else {
-        toast.error("something went wrong");
+      let imgUrl = await uploadImage();
+      if (imgUrl !== "") {
+        let res = await AxiosInt.post("/post/create", {
+          author: user?._id,
+          ...inputvalue,
+          imageUrl: imgUrl,
+        });
+        if (res.status == 201) {
+          toast.success("Post Created Successfully");
+          Setinputvalue(inital);
+          setImageBlob(null);
+          navigate("/admin");
+        }
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
         toast.error(err.errors[0].message);
+      } else {
+        toast.error(err?.msg);
       }
     }
   };
@@ -137,10 +156,9 @@ const Editor = () => {
             <div className="input__group flex flex-col gap-2">
               <span className="font-semibold text-lg font-serif">Image:</span>
               <input
-                type="text"
+                type="file"
                 name="imageUrl"
                 className="w-full rounded p-2 border-2"
-                value={inputvalue.imageUrl}
                 onChange={handleImageInput}
               />
             </div>
