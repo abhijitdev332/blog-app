@@ -6,12 +6,12 @@ import { FaUserEdit } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { LuView } from "react-icons/lu";
-import AxiosInt from "../../services/api/api";
+import AxiosInt from "../../../services/api/api";
 import { toast } from "react-toastify";
 import cl from "classnames";
 import { Link } from "react-router-dom";
-import { toDateString } from "../../utils/utils";
-import style from "./table.module.scss";
+import { toDateString } from "../../../utils/utils";
+import style from ".././table.module.scss";
 const UserTableRow = ({ ele, getUsers }) => {
   const [show, setShow] = useState(false);
   const [showAccess, setAccess] = useState(false);

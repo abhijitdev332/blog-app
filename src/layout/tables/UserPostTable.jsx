@@ -17,7 +17,9 @@ import { toDateString } from "../../utils/utils";
 import AxiosInt from "../../services/api/api";
 import { FaRegEdit, FaRegEye } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import Pagination from "./Pagination";
 import { toast } from "react-toastify";
+import PostTableRow from "./tableRows/PostTableRow";
 const UserPostTable = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const UserPostTable = () => {
   const { user } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
   const { setRefetch } = useDataStore();
+  const [fetch, setFetch] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
     try {
@@ -40,46 +43,8 @@ const UserPostTable = () => {
       removeLoading();
     }
   };
-  const handlePublishClick = async (e) => {
-    try {
-      if (e?.status == "published" && isAdmin) {
-        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-          status: "archived",
-        });
-        if (res.status == 200) {
-          getUserPosts();
-          setRefetch();
-          toast.success("update Successfull");
-        }
-      } else if (isAdmin) {
-        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-          status: "published",
-        });
-        if (res.status == 200) {
-          getUserPosts();
-          setRefetch();
-          toast.success("update successfull");
-        }
-      }
-    } catch (err) {
-      toast.error("something went wrong!!");
-    }
-  };
-
-  const handleDelete = async (e) => {
-    try {
-      let res = await AxiosInt.delete(`/post/${e}`);
-      if (res.status == 200) {
-        getUserPosts();
-        setRefetch();
-        toast.success("Delete Successfull");
-      }
-    } catch (err) {
-      toast.error("something went wrong!!");
-    }
-  };
-  const handleViewPost = (e) => {
-    navigate(`/admin/viewPost/${e}`);
+  const handleFetch = () => {
+    setFetch(!fetch);
   };
   useEffect(() => {
     let abortCon = new AbortController();
@@ -88,83 +53,91 @@ const UserPostTable = () => {
       getUserPosts(abortCon.signalsig);
     }
     return () => abortCon.abort();
-  }, [id]);
+  }, [id, fetch]);
 
   return (
-    <div className={style.table__wrapper}>
+    <div className={style.table__container}>
       <div className="lg:container lg:mx-auto p-5">
-        <table className={style.table}>
-          <thead>
-            <td>Sl No. </td>
-            <td>Title</td>
-            <td>Author </td>
-            <td>Status</td>
-            <td>Created</td>
-            <td>Actions</td>
-          </thead>
-          <tbody>
-            {userPosts?.map((ele, index) => (
-              <tr key={ele._id} className={cl(style.item)}>
-                <td>{index + 1}</td>
-                {/* <p>{ele.author}</p> */}
-                <td>{ele.title.substring(0, 20)}...</td>
-                <td>{ele?.author?.username}</td>
-                <td>{ele?.status}</td>
-                <td>{toDateString(ele?.createdAt)}</td>
-                <td className={cl("flex gap-3")}>
-                  {isAdmin ? (
-                    <button
-                      onClick={() => handlePublishClick(ele)}
-                      className="hover:scale-125  transition-transform"
-                    >
-                      {ele?.status == "published" ? (
-                        <MdOutlineUnpublished
-                          fontSize={"1.3rem"}
-                          color="orange"
-                        />
-                      ) : (
-                        <MdOutlinePublishedWithChanges
-                          fontSize={"1.3rem"}
-                          color="orange"
-                        />
-                      )}
-                    </button>
-                  ) : (
-                    ""
-                  )}
+        <div className={style.table__wrapper}>
+          <table className={style.table}>
+            <thead>
+              <td>post ID </td>
+              <td>Title</td>
+              <td>Author </td>
+              <td>Status</td>
+              <td>Created</td>
+              <td>Actions</td>
+            </thead>
+            <tbody>
+              {userPosts?.length > 0 ? (
+                userPosts?.map((ele) => (
+                  <PostTableRow ele={ele} setFetch={handleFetch} />
+                  // <tr key={ele._id} className={cl(style.item)}>
+                  //   <td>{index + 1}</td>
+                  //   {/* <p>{ele.author}</p> */}
+                  //   <td>{ele.title.substring(0, 20)}...</td>
+                  //   <td>{ele?.author?.username}</td>
+                  //   <td>{ele?.status}</td>
+                  //   <td>{toDateString(ele?.createdAt)}</td>
+                  //   <td className={cl("flex gap-3")}>
+                  //     {isAdmin ? (
+                  //       <button
+                  //         onClick={() => handlePublishClick(ele)}
+                  //         className="hover:scale-125  transition-transform"
+                  //       >
+                  //         {ele?.status == "published" ? (
+                  //           <MdOutlineUnpublished
+                  //             fontSize={"1.3rem"}
+                  //             color="orange"
+                  //           />
+                  //         ) : (
+                  //           <MdOutlinePublishedWithChanges
+                  //             fontSize={"1.3rem"}
+                  //             color="orange"
+                  //           />
+                  //         )}
+                  //       </button>
+                  //     ) : (
+                  //       ""
+                  //     )}
 
-                  {isAdmin ? (
-                    <button
-                      className="hover:scale-125 transition-all"
-                      onClick={() => handleViewPost(ele?._id)}
-                    >
-                      <span>
-                        <FaRegEye color="indigo" fontSize={"1.4rem"} />
-                      </span>
-                    </button>
-                  ) : (
-                    <button className="hover:scale-125 transition-all">
-                      <span>
-                        <FaRegEdit color="indigo" fontSize={"1.4rem"} />
-                      </span>
-                    </button>
-                  )}
+                  //     {isAdmin ? (
+                  //       <button
+                  //         className="hover:scale-125 transition-all"
+                  //         onClick={() => handleViewPost(ele?._id)}
+                  //       >
+                  //         <span>
+                  //           <FaRegEye color="indigo" fontSize={"1.4rem"} />
+                  //         </span>
+                  //       </button>
+                  //     ) : (
+                  //       <button className="hover:scale-125 transition-all">
+                  //         <span>
+                  //           <FaRegEdit color="indigo" fontSize={"1.4rem"} />
+                  //         </span>
+                  //       </button>
+                  //     )}
 
-                  <button
-                    className="hover:scale-110 transition-all"
-                    onClick={() => {
-                      handleDelete(ele._id);
-                    }}
-                  >
-                    <span>
-                      <RiDeleteBin6Fill color="crimson" fontSize={"1.4rem"} />
-                    </span>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  //     <button
+                  //       className="hover:scale-110 transition-all"
+                  //       onClick={() => {
+                  //         handleDelete(ele._id);
+                  //       }}
+                  //     >
+                  //       <span>
+                  //         <RiDeleteBin6Fill color="crimson" fontSize={"1.4rem"} />
+                  //       </span>
+                  //     </button>
+                  //   </td>
+                  // </tr>
+                ))
+              ) : (
+                <h2>No post exist</h2>
+              )}
+            </tbody>
+          </table>
+          <Pagination />
+        </div>
       </div>
     </div>
   );

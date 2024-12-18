@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { HiDotsVertical } from "react-icons/hi";
 import { useLoaderStore } from "../../services/store/store";
-import UserTableRow from "./UserTableRow";
+import { UserTableRow } from "./tableRows/rows";
 import Pagination from "./Pagination";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
