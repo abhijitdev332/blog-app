@@ -8,10 +8,10 @@ import { DataLoader } from "../../layout/layouts.js";
 const Admin = () => {
   return (
     <>
-      <div className="admin">
+      <div className="admin overflow-y-hidden">
         <div className="admin__wrapper flex">
           <Sidebar />
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full h-full">
             <DashHeader />
             <section className="w-full">
               {/* <button className="m-2 px-3 py-2  rounded-lg border-2 bg-slate-400">

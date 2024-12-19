@@ -121,8 +121,14 @@ const PostTable = () => {
         <div className={style.table__wrapper}>
           <table className={style.table}>
             <thead>
-              <td>Post ID</td>
-              <td>Title</td>
+              <td>
+                <input
+                  type="checkbox"
+                  name="check"
+                  className={style.checkbox}
+                />
+              </td>
+              <td>Post Title</td>
               <td>
                 <div
                   className="inline-flex items-center gap-1"
@@ -130,7 +136,7 @@ const PostTable = () => {
                     sortAuthor();
                   }}
                 >
-                  <span> Author</span>
+                  <span>Posted By</span>
                   <span>
                     <BiSort />
                   </span>
@@ -143,7 +149,7 @@ const PostTable = () => {
                     sortStatus();
                   }}
                 >
-                  <span>Status</span>
+                  <span>Post Status</span>
                   <span>
                     <BiSort />
                   </span>
@@ -156,7 +162,7 @@ const PostTable = () => {
                     sortCreatedDate();
                   }}
                 >
-                  <span>Created</span>
+                  <span>Created Date</span>
                   <span>
                     <BiSort />
                   </span>

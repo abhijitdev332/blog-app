@@ -5,6 +5,7 @@
   width: 100% !important;
   &__container {
     height: 90vh !important;
+    overflow: hidden !important;
   }
   &__wrapper {
     width: 100%;
@@ -12,15 +13,21 @@
     // border: 2px solid #000;
     overflow: hidden;
     box-shadow: 0 0 5px 5px #f8f8f8;
-    height: 95% !important;
+    height: 100% !important;
     overflow-y: scroll !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    &::-webkit-scrollbar {
+      display: none !important;
+    }
   }
   thead {
     background: $light;
+    position: sticky;
+    top: 0;
+    z-index: 5;
     td {
       font-weight: 500;
       font-family: "roboto" !important;
@@ -60,4 +67,10 @@
 
 .transition {
   transition: 0.5s ease-in !important;
+}
+.checkbox {
+  width: 25px;
+  height: 25px;
+  accent-color: $primary;
+  cursor: pointer;
 }

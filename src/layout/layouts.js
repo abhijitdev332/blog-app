@@ -10,6 +10,7 @@ import PostTable from "./tables/PostTable.jsx";
 import UserTable from "./tables/UserTable.jsx";
 import UserPostTable from "./tables/UserPostTable.jsx";
 import SearchPost from "./searchPosts/SearchPost.jsx";
+import ViewUser from "./viewUser/ViewUser.jsx";
 
 export {
   Login,
@@ -24,4 +25,5 @@ export {
   UserPostTable,
   DataLoader,
   SearchPost,
+  ViewUser,
 };

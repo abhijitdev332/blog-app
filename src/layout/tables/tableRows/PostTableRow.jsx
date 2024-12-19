@@ -19,7 +19,6 @@ import cl from "classnames";
 import style from "./rowStyle.module.scss";
 
 const PostTableRow = ({ ele, setFetch = "" }) => {
-  const navigate = useNavigate();
   // global states
   const { user } = useUserStore();
   const { setRefetch } = useDataStore();
@@ -70,14 +69,17 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
     },
     [ele]
   );
-  const handleViewPost = (e) => {
-    navigate(`/admin/viewPost/${e}`);
-  };
+  // const handleViewPost = (e) => {
+  //   navigate(`/admin/viewPost/${e}`);
+  // };
 
   return (
-    <tr key={ele._id} className={cl(style.table__row)}>
-      <td>{ele?._id?.slice(0, 5) + "...."}</td>
-      <td>{ele.title.substring(0, 20)}...</td>
+    <tr key={ele?._id} className={cl(style.table__row, "relative")}>
+      <td>
+        <input type="checkbox" name="check" className={style.checkbox} />
+      </td>
+      {/* <td title={ele?._id}>{ele?._id?.slice(0, 5) + "...."}</td> */}
+      <td title={ele?.title}>{ele.title.substring(0, 20)}...</td>
       <td>{ele?.author?.username}</td>
       <td>
         <span
@@ -89,8 +91,8 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
         </span>
       </td>
       <td>{toDateString(ele?.createdAt)}</td>
-      <td className={cl("flex justify-center")}>
-        <div className="hidden sm:flex gap-3">
+      <td className={cl("flex justify-center gap-2")}>
+        <div className="flex gap-3">
           {isAdmin ? (
             <>
               <button
@@ -118,36 +120,16 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
               </span>
             </button>
           )}
-          <button
-            className="hover:scale-125 transition-all"
-            onClick={() => handleViewPost(ele?._id)}
-            title="View post"
-          >
-            <span>
-              <FaRegEye color="indigo" fontSize={"1.4rem"} />
-            </span>
-          </button>
-          <button
-            className="hover:scale-110 transition-all"
-            onClick={() => {
-              handleDelete(ele._id);
-            }}
-            title="Delete Post"
-          >
-            <span>
-              <RiDeleteBin6Fill color="crimson" fontSize={"1.4rem"} />
-            </span>
-          </button>
         </div>
-        <div className="block sm:hidden">
+        <div>
           <button onClick={() => setShow(!show)}>
-            <HiDotsVertical fontSize={"1.4rem"} />
+            <HiDotsVertical />
           </button>
         </div>
       </td>
       <div
         className={cl(
-          "modal absolute top-[2rem] right-[3rem] z-20",
+          "modal absolute top-[2rem] right-0 z-20",
           show ? "h-0 block" : "h-fit hidden",
           style.transition
         )}
@@ -156,32 +138,6 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
         }}
       >
         <div className="wrapper bg-slate-100 px-3 py-2 rounded-md">
-          {/* <ul className="flex flex-col gap-2">
-            <li>
-              <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
-                <MdOutlinePostAdd fontSize={"1.rem"} />
-                <span className="font-semibold">
-                  <Link to={`/admin/user/post/${ele?._id}`}>View Post</Link>
-                </span>
-              </button>
-            </li>
-            <li>
-              <button className=" flex gap-1 cursor-pointer items-center hover:text-blue-500">
-                <LuView fontSize={"1rem"} />
-                <span className="font-semibold">View User</span>
-              </button>
-            </li>
-
-            <li>
-              <button
-                className="flex gap-1 items-center cursor-pointer hover:text-red-600"
-                onClick={() => handleDelete(ele?._id)}
-              >
-                <RiDeleteBin6Fill fontSize={"1rem"} />
-                <span className="font-semibold">Delete</span>
-              </button>
-            </li>
-          </ul> */}
           {isAdmin ? (
             <AdminModal ele={ele} handleDelete={handleDelete} />
           ) : (
@@ -232,30 +188,8 @@ const AdminModal = ({ ele, handleDelete }) => {
         <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
           <MdOutlinePostAdd fontSize={"1.rem"} />
           <span className="font-semibold">
-            <Link to={`/admin/user/post/${ele?._id}`}>View Post</Link>
+            <Link to={`/admin/viewPost/${ele?._id}`}>View Post</Link>
           </span>
-        </button>
-      </li>
-      <li>
-        <button
-          onClick={() => handlePublishClick(ele)}
-          className="flex gap-1 cursor-pointer items-center hover:text-blue-500"
-        >
-          {ele?.status == "published" ? (
-            <>
-              <span>
-                <MdOutlineUnpublished fontSize={"1rem"} />
-              </span>
-              <span className="font-semibold">Publish</span>
-            </>
-          ) : (
-            <>
-              <span>
-                <MdOutlinePublishedWithChanges fontSize={"1rem"} />
-              </span>
-              <span className="font-semibold">Unpublish</span>
-            </>
-          )}
         </button>
       </li>
       <li>

@@ -54,38 +54,9 @@ const UserTableRow = ({ ele, getUsers }) => {
       // removeLoading();
     }
   };
-  // const handleAccess = async (e) => {
-  //   try {
-  //     // setLoading();
-  //     let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-  //       roles: [...e?.roles, "admin"],
-  //     });
-  //     if (res.status == 200) {
-  //       getUsers();
-  //     }
-  //   } catch (err) {
-  //     toast.error("something went wrong");
-  //   } finally {
-  //     // removeLoading();
-  //   }
-  // };
-  // const handleRemoveAccess = async (e) => {
-  //   try {
-  //     // setLoading();
-  //     let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-  //       roles: [...e?.roles?.filter((ele) => ele !== "admin")],
-  //     });
-  //     if (res.status == 200) {
-  //       getUsers();
-  //     }
-  //   } catch (err) {
-  //     toast("something went wrong");
-  //   } finally {
-  //     // removeLoading();
-  //   }
-  // };
   const handleAccessClick = async (e) => {
     let permission = e?.target?.innerText;
+    setAccess(false);
     try {
       if (permission?.toLowerCase() == "user") {
         let res = await AxiosInt.put(`/admin/user/${ele?._id}`, {
@@ -115,12 +86,13 @@ const UserTableRow = ({ ele, getUsers }) => {
   };
   return (
     <tr className="relative">
-      {/* <td>{index + 1}</td> */}
       <td>
-        <Link to={`/admin/user/post/${ele?._id}`}>{ele?.username}</Link>
+        <Link to={`/admin/user/post/${ele?._id}`} className="flex flex-col">
+          <span className="font-medium">{ele?.username}</span>
+          <span className="text-sm text-slate-500">{ele?.email}</span>
+        </Link>
       </td>
 
-      <td>{ele?.email}</td>
       <td>
         <span
           className={cl(
@@ -135,7 +107,8 @@ const UserTableRow = ({ ele, getUsers }) => {
       <td>
         <div className="role inline-flex gap-2">
           {ele?.roles?.map((ele) => (
-            <span className="px-2 bg-blue-300  rounded">{ele}</span>
+            <AccessChip access={ele} />
+            // <span className="px-2 bg-blue-300 rounded">{ele}</span>
           ))}
         </div>
       </td>
@@ -143,6 +116,7 @@ const UserTableRow = ({ ele, getUsers }) => {
         <button
           className="hover:scale-125 transition-transform"
           onClick={() => handleActiveClick(ele)}
+          title="change status"
         >
           {ele?.isActive ? (
             <FaEye fontSize={"1.4rem"} color="indigo" />
@@ -150,7 +124,7 @@ const UserTableRow = ({ ele, getUsers }) => {
             <FaEyeSlash fontSize={"1.4rem"} color="indigo" />
           )}
         </button>
-        <button onClick={() => setShow(!show)}>
+        <button onClick={() => setShow(!show)} title="Actions">
           <HiDotsVertical fontSize={"1.4rem"} />
         </button>
       </td>
@@ -169,7 +143,9 @@ const UserTableRow = ({ ele, getUsers }) => {
             <li>
               <button className=" flex gap-1 cursor-pointer items-center hover:text-blue-500">
                 <LuView fontSize={"1rem"} />
-                <span className="font-semibold">View User</span>
+                <span className="font-semibold">
+                  <Link to={`/user/${ele?._id}`}>View User</Link>
+                </span>
               </button>
             </li>
             <li>
@@ -230,4 +206,15 @@ const UserTableRow = ({ ele, getUsers }) => {
   );
 };
 
+const AccessChip = ({ access }) => {
+  return access.toLowerCase() == "admin" ? (
+    <span className="px-2 bg-green-300 text-green-800 rounded-full">
+      {access}
+    </span>
+  ) : (
+    <span className="px-2 bg-blue-300 text-blue-800 rounded-full">
+      {access}
+    </span>
+  );
+};
 export default UserTableRow;

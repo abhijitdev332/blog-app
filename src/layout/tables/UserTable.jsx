@@ -98,13 +98,12 @@ const UserTable = () => {
                     sortUser();
                   }}
                 >
-                  <span>Username</span>
+                  <span>User Name</span>
                   <span>
                     <BiSort fontSize={"0.9rem"} />
                   </span>
                 </div>
               </td>
-              <td>Email ID</td>
               <td>
                 <div className="flex items-center" onClick={() => sortStatus()}>
                   <span>Status</span>
@@ -120,7 +119,7 @@ const UserTable = () => {
                     sortCreatedDate();
                   }}
                 >
-                  <span>Created</span>
+                  <span>Date Added</span>
                   <span>
                     <BiSort fontSize={"0.9rem"} />
                   </span>
@@ -128,7 +127,7 @@ const UserTable = () => {
               </td>
               <td>
                 <div className="flex items-center">
-                  <span>Roles</span>
+                  <span>Access</span>
                   {/* <span>
                     <BiSort fontSize={"0.9rem"} />
                   </span> */}

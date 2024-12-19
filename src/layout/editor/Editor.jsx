@@ -56,7 +56,7 @@ const Editor = () => {
   const schema = z.object({
     title: string()
       .min(30, "Minimum 30 char allowed")
-      .max(80, "Maximum 80 charcters allowed"),
+      .max(100, "Maximum 80 charcters allowed"),
     content: string(),
     tags: string().array().max(3, "Maximum 3 tags are allowed"),
   });

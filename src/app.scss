@@ -14,10 +14,21 @@
   font-family: "poppins";
   src: url("./fonts/popins.ttf") type("truetype");
 }
+@font-face {
+  font-family: "inter";
+  src: url("./fonts/inter.ttf") type("truetype");
+}
 
 .pop {
   font-family: poppins !important;
 }
 .robo {
   font-family: roboto !important;
+}
+.inter {
+  font-family: "inter", sans-serif !important;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
