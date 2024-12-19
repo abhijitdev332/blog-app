@@ -4,10 +4,8 @@ import style from "./hero.module.scss";
 import Chip from "../../components/chip/Chip";
 import { Link } from "react-router-dom";
 import { toDateString } from "../../utils/utils";
-import { useTrendingData } from "../../services/store/store";
 import useFetchData from "../../hooks/useFetchData";
 const Slider = () => {
-  // const { post: data } = useTrendingData();
   const { data, loading } = useFetchData("/post/trending");
   const [post, setPost] = useState([]);
   useEffect(() => {
@@ -19,37 +17,30 @@ const Slider = () => {
   }
 
   return (
-    <div className="slider">
-      <div className="slider__wrapper lg:container lg:mx-auto">
-        <h2 className={style.hero__title}>Hot Topics</h2>
-        <div className="flex flex-col md:flex-row gap-3 p-5 md:p-7">
+    <div className={style.hero}>
+      <div className={cl("lg:container lg:mx-auto", style.hero__wrapper)}>
+        <h2 className={cl(style.hero__title)}>Hot Topics</h2>
+        <div className="flex flex-col md:flex-row justify-center gap-5 p-3 md:p-5">
           {!post || post?.length <= 0 ? (
             ""
           ) : (
             <Link
               to={`/post/${post?._id}`}
-              className={cl(style.slideItem, "lg:basis-3/4")}
+              className={cl(style.hero__link, "lg:basis-2/4")}
               key={post.id}
-              style={{
-                backgroundImage: `url(${post?.imageUrl}`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "100%",
-                backgroundPosition: "top center",
-              }}
-            ></Link>
+              style={{ background: `url(${post?.imageUrl})` }}
+            >
+              <img src={post?.imageUrl} alt="post image" />
+            </Link>
           )}
 
           <div className={cl("summary lg:basis-1/4 flex flex-col px-5")}>
-            <div
-              className={cl("flex gap-1 text-[13px] items-center", style.pop)}
-            >
+            <div className={cl("flex gap-1 text-[13px] items-center inter")}>
               <span>{post.author?.username}</span> &diams;
               <span>{toDateString(post?.createdAt)}</span>
             </div>
             <div className="text-pretty font-bold text-lg">
-              <h3 className={cl("py-3 sm:text-2xl", style.robo)}>
-                {post.title}
-              </h3>
+              <h3 className={cl("py-3 sm:text-2xl robo")}>{post.title}</h3>
             </div>
             <span className="font-semibold">
               <div

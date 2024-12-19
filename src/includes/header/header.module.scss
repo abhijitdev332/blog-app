@@ -3,17 +3,20 @@
 
 .header {
   background: $light;
+  position: sticky;
+  top: 0;
+  z-index: 5 !important;
   &__logo {
     @include logo;
   }
-  .navlink {
-    color: $primary;
-    transition: 0.5s ease;
-    font-family: "allieno";
-    &:hover {
-      color: $active;
-    }
-  }
+  // .navlink {
+  //   color: $primary;
+  //   transition: 0.5s ease;
+  //   font-family: "allieno";
+  //   &:hover {
+  //     color: $active;
+  //   }
+  // }
 }
 
 .actions__btn {
@@ -25,9 +28,9 @@
     border: 2px solid transparent;
     font-size: 0.8rem;
     color: $dark !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     height: fit-content;
-    font-family: "roboto" !important;
+    font-family: "inter" !important;
     border-radius: 15px;
     transition: 0.5s ease;
     @include sm {
@@ -68,42 +71,9 @@
       color: $dark !important;
     }
   }
-  // .logout {
-  //   border-color: $light;
-  //   transition: 0.4s ease;
-  //   &:hover {
-  //     background: $light;
-  //     border-color: transparent;
-  //     color: $dark !important;
-  //   }
-  // }
-  .add {
-    background: $light;
-    transition: 0.4s ease;
-    &:hover {
-      border-color: $dark;
-      color: $light !important;
-      background: transparent;
-    }
-  }
 }
 .dash {
   &__header {
     background: $primary !important;
   }
 }
-
-// .action__btns {
-//   padding: 0 0.5rem;
-//   align-items: center;
-//   button {
-//     padding: 0.3rem 0.5rem !important;
-//     border: 2px solid transparent;
-//     font-size: 1.1rem;
-//     color: $dark !important;
-//     font-weight: 500 !important;
-//     height: fit-content;
-//     font-family: "allieno";
-//     border-radius: 15px;
-//   }
-// }

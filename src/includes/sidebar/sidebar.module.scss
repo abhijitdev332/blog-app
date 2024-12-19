@@ -3,11 +3,14 @@
 
 .sidebar {
   &__container {
-    padding: 5rem 1rem;
+    padding: 2rem 1rem;
     background: #070712;
     color: $light;
 
     @include md {
     }
   }
+}
+.list {
+  padding-block: 3rem !important;
 }

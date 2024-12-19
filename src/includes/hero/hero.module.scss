@@ -1,8 +1,24 @@
 @use "../../scss/variable.scss" as *;
 
-.slider {
+.hero {
+  height: auto;
+  overflow: hidden;
   &__wrapper {
     overflow-x: hidden !important;
+  }
+  &__link {
+    height: 50vh;
+    background-position: top center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    overflow: hidden;
+    img {
+      height: 100%;
+      width: 100%;
+      backdrop-filter: blur(5px);
+      object-fit: contain;
+    }
   }
 }
 .slideItem {
@@ -21,14 +37,7 @@
     font-size: 2rem !important;
     font-weight: bold !important;
     color: $primary !important;
-    padding: 0.5rem 1.2rem !important;
-    font-family: "poppins";
+    padding: 0 1.2rem !important;
+    font-family: "roboto" !important;
   }
-}
-
-.pop {
-  font-family: "poppins";
-}
-.robo {
-  font-family: "roboto";
 }

@@ -5,6 +5,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { BsPostcard } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { IoIosListBox } from "react-icons/io";
+import { IoHomeOutline } from "react-icons/io5";
 import { Logout } from "../../components/components";
 import style from "./sidebar.module.scss";
 import cl from "classnames";
@@ -22,10 +23,21 @@ const Sidebar = () => {
     >
       <div className="lg:container lg:mx-auto h-full px-2">
         <div className=" h-full flex flex-col divide-y-2 gap-2">
-          <Link className="lg:text-2xl  font-semibold" to={"/admin"}>
-            Dashbroad
+          <Link
+            className="lg:text-2xl font-semibold flex gap-1 items-center"
+            to={"/"}
+          >
+            <span>
+              <IoHomeOutline />
+            </span>
+            Home
           </Link>
-          <ul className="flex flex-col gap-5 py-4 text-lg items-start text-nowrap">
+          <ul
+            className={cl(
+              "flex flex-col gap-5 text-lg items-start text-nowrap",
+              style.list
+            )}
+          >
             <li>
               <div className="flex justify-start gap-1 items-center hover:text-indigo-400">
                 <span>

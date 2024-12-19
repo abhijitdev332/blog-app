@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Chip = ({ title, color = "crimson" }) => {
+const Chip = ({ title, color = "#3a459add" }) => {
   return (
     <div className="chip">
-      <div className="flex justify-center items-center">
-        <div className={`rounded-full px-2 py-1`} style={{ background: color }}>
-          <p className="font-semibold text-sm text-slate-50">{title}</p>
-        </div>
+      <div className={`rounded-full px-2`} style={{ background: color }}>
+        <span className="text-sm font-medium leading-loose text-slate-50 capitalize">
+          <Link to={`/post/search/${title}`}> {title}</Link>
+        </span>
       </div>
     </div>
   );

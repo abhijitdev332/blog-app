@@ -34,7 +34,7 @@ const Header = () => {
                 setSearchInput("");
               }}
             >
-              Blog App
+              Blog Now
             </Link>
           </div>
           <div className="navigation  md:basis-2/4 justify-end items-center flex px-3">
@@ -44,11 +44,11 @@ const Header = () => {
                 <div className=" hidden md:block search ">
                   <label
                     htmlFor=""
-                    className="flex gap-1 border-2 border-black p-1 rounded"
+                    className="flex gap-1 border-2 border-slate-500 p-1 rounded"
                   >
                     <input
                       type="text"
-                      className="bg-transparent  outline-none"
+                      className="bg-transparent outline-none"
                       placeholder="Search topic"
                       value={searchInput}
                       onKeyDown={(e) => {
@@ -66,7 +66,7 @@ const Header = () => {
                     </span>
                   </label>
                 </div>
-                <div className={"navmenu hidden gap-4 items-center"}>
+                {/* <div className={"navmenu hidden gap-4 items-center"}>
                   {headerNav?.map((ele) => (
                     <li key={ele.id}>
                       <NavLink
@@ -80,7 +80,7 @@ const Header = () => {
                       </NavLink>
                     </li>
                   ))}
-                </div>
+                </div> */}
               </ul>
             </div>
           </div>
@@ -95,12 +95,6 @@ const Header = () => {
                 <Link to={"/admin"} className={cl(style.admin, "rounded-full")}>
                   Panel
                 </Link>
-                {/* <button
-                  onClick={handleLogout}
-                  className={cl(style.logout, "rounded-full")}
-                >
-                  Logout
-                </button> */}
                 <Logout style={[style.logout, "rounded-full"]} />
               </>
             ) : (
@@ -115,9 +109,6 @@ const Header = () => {
                 </button>
               </>
             )}
-            {/* <div className={cl(style.ham, "md:hidden")}>
-              <GiHamburgerMenu fontSize={"1.2rem"} />
-            </div> */}
           </div>
         </div>
       </div>

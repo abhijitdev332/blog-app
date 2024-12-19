@@ -10,8 +10,11 @@ const DashHeader = () => {
       <div className="header__wrapper lg:container lg:mx-auto p-2">
         <div className="flex justify-between">
           <div className="logo flex items-center">
-            <Link to={"/"} className="py-3 px-2 text-2xl text-white font-bold">
-              Blog App
+            <Link
+              to={"/admin"}
+              className="py-3 px-2 text-2xl text-white roboto font-bold"
+            >
+              Dashbroad
             </Link>
           </div>
           <div className={cl(style.actions__btn, "flex gap-6")}>
