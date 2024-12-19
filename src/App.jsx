@@ -34,6 +34,7 @@ const SuspenseLayout = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Outlet />
+      <InitialData />
     </Suspense>
   );
 };

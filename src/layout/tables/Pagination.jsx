@@ -3,7 +3,7 @@ import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import cl from "classnames";
 const Pagination = ({ style }) => {
   return (
-    <div className={cl(style, "bg-slate-300")}>
+    <div className={cl(style, "bg-slate-300 sticky bottom-0 w-full")}>
       <div className="pagination__wrapper px-3 py-3 md:px-4 ">
         <div className="flex items-center justify-between">
           <div className="flex">

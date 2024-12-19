@@ -11,9 +11,9 @@ const Sidebar = ({ show }) => {
   return (
     <div
       className={cl(
-        style.sidebar__container,
         "w-[20%] robo",
-        show ? "block" : "hidden"
+        show ? "block" : "hidden",
+        style.sidebar__container
       )}
     >
       <div className="lg:container lg:mx-auto py-3 px-4 h-full">

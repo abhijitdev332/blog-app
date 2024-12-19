@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import Footer from "../../includes/footer/Footer";
 import { useDataStore } from "../../services/store/store";
 import { DataLoader } from "../../layout/layouts";
-import InitialData from "../../data/InitialData";
 
 const Home = () => {
   const { data } = useDataStore();
@@ -21,7 +20,6 @@ const Home = () => {
       </div>
       <DataLoader />
       <ToastContainer />
-      <InitialData />
     </>
   );
 };

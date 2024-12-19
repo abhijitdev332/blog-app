@@ -1,7 +1,16 @@
 @use "../../scss/variable.scss" as *;
+@use "../../scss/responsive.scss" as *;
+
 .sidebar {
   &__container {
     background: #070712;
     color: $light;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    @include md {
+      position: relative !important;
+      left: 0 !important;
+    }
   }
 }

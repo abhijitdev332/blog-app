@@ -77,32 +77,30 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
       <td>{toDateString(ele?.createdAt)}</td>
       <td className={cl("flex gap-3")}>
         {isAdmin ? (
-          <button
-            onClick={() => handlePublishClick(ele)}
-            className="hover:scale-125  transition-transform"
-          >
-            {ele?.status == "published" ? (
-              <MdOutlineUnpublished fontSize={"1.3rem"} color="orange" />
-            ) : (
-              <MdOutlinePublishedWithChanges
-                fontSize={"1.3rem"}
-                color="orange"
-              />
-            )}
-          </button>
-        ) : (
-          ""
-        )}
+          <>
+            <button
+              onClick={() => handlePublishClick(ele)}
+              className="hover:scale-125  transition-transform"
+            >
+              {ele?.status == "published" ? (
+                <MdOutlineUnpublished fontSize={"1.3rem"} color="orange" />
+              ) : (
+                <MdOutlinePublishedWithChanges
+                  fontSize={"1.3rem"}
+                  color="orange"
+                />
+              )}
+            </button>
 
-        {isAdmin ? (
-          <button
-            className="hover:scale-125 transition-all"
-            onClick={() => handleViewPost(ele?._id)}
-          >
-            <span>
-              <FaRegEye color="indigo" fontSize={"1.4rem"} />
-            </span>
-          </button>
+            <button
+              className="hover:scale-125 transition-all"
+              onClick={() => handleViewPost(ele?._id)}
+            >
+              <span>
+                <FaRegEye color="indigo" fontSize={"1.4rem"} />
+              </span>
+            </button>
+          </>
         ) : (
           <button className="hover:scale-125 transition-all">
             <span>

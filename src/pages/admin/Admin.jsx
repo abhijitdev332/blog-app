@@ -29,7 +29,6 @@ const Admin = () => {
       </div>
       <DataLoader bg={"rgba(255, 255, 255, 0.46)"} />
       <ToastContainer />
-      <InitialData />
     </>
   );
 };
