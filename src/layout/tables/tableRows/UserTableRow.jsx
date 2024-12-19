@@ -138,22 +138,6 @@ const UserTableRow = ({ ele, getUsers }) => {
             <span className="px-2 bg-blue-300  rounded">{ele}</span>
           ))}
         </div>
-
-        {/* {ele?.roles?.includes("admin") ? (
-          <button
-            className="p-1 bg-teal-600 rounded-md"
-            onClick={() => handleRemoveAccess(ele)}
-          >
-            remove Access
-          </button>
-        ) : (
-          <button
-            className="p-1 bg-teal-600 rounded-md"
-            onClick={() => handleAccess(ele)}
-          >
-            Give Access
-          </button>
-        )} */}
       </td>
       <td className="flex gap-4">
         <button

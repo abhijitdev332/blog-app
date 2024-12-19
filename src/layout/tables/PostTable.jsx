@@ -117,7 +117,7 @@ const PostTable = () => {
   }, [user, fetch]);
   return (
     <div className={style.table__container}>
-      <div className="lg:container lg:mx-auto p-1 sm:p-4 h-full">
+      <div className="lg:container lg:mx-auto p-2 sm:p-4 h-full">
         <div className={style.table__wrapper}>
           <table className={style.table}>
             <thead>
