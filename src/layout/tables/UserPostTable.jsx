@@ -8,12 +8,14 @@ import PostTableRow from "./tableRows/PostTableRow";
 // style
 import style from "./table.module.scss";
 import cl from "classnames";
+import { BiSort } from "react-icons/bi";
 const UserPostTable = () => {
   const { id } = useParams();
   const [userPosts, setUserPosts] = useState([]);
   const { user } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
   const [fetch, setFetch] = useState(false);
+  const [sorted, setSorted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
     try {
@@ -32,6 +34,38 @@ const UserPostTable = () => {
   const handleFetch = () => {
     setFetch(!fetch);
   };
+  const sortCreatedDate = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = userPosts?.toSorted((a, b) =>
+        a?.createdAt > b?.createdAt ? -1 : b?.createdAt > a?.createdAt ? 1 : 0
+      );
+      setUserPosts(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = userPosts?.toSorted((a, b) =>
+      b?.createdAt > a?.createdAt ? -1 : a?.createdAt > b?.createdAt ? 1 : 0
+    );
+    setUserPosts(sortedData);
+    setSorted(!sorted);
+  };
+  const sortStatus = () => {
+    let sortedData = [];
+    if (sorted) {
+      sortedData = userPosts?.toSorted((a, b) =>
+        a?.status > b?.status ? -1 : b?.status > a?.status ? 1 : 0
+      );
+      setUserPosts(sortedData);
+      setSorted(!sorted);
+      return;
+    }
+    sortedData = userPosts?.toSorted((a, b) =>
+      b?.status > a?.status ? -1 : a?.status > b?.status ? 1 : 0
+    );
+    setUserPosts(sortedData);
+    setSorted(!sorted);
+  };
   useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));
@@ -43,79 +77,47 @@ const UserPostTable = () => {
 
   return (
     <div className={style.table__container}>
-      <div className="lg:container lg:mx-auto p-5">
+      <div className="lg:container lg:mx-auto p-5 h-full">
         <div className={style.table__wrapper}>
           <table className={style.table}>
             <thead>
-              <td>post ID </td>
-              <td>Title</td>
-              <td>Author </td>
-              <td>Status</td>
-              <td>Created</td>
-              <td>Actions</td>
+              <td>
+                <input type="checkbox" className={style.checkbox} />
+              </td>
+              <td>Post Title</td>
+              <td>Post Author </td>
+              <td>
+                <div
+                  className="inline-flex items-center gap-1"
+                  onClick={() => {
+                    sortStatus();
+                  }}
+                >
+                  <span>Post Status</span>
+                  <span>
+                    <BiSort />
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div
+                  className="inline-flex items-center gap-1"
+                  onClick={() => {
+                    sortCreatedDate();
+                  }}
+                >
+                  <span>Created Date</span>
+                  <span>
+                    <BiSort />
+                  </span>
+                </div>
+              </td>
+              <td>Post Actions</td>
             </thead>
             <tbody>
               {userPosts?.length > 0 ? (
                 userPosts?.map((ele) => (
                   <PostTableRow ele={ele} setFetch={handleFetch} />
-                  // <tr key={ele._id} className={cl(style.item)}>
-                  //   <td>{index + 1}</td>
-                  //   {/* <p>{ele.author}</p> */}
-                  //   <td>{ele.title.substring(0, 20)}...</td>
-                  //   <td>{ele?.author?.username}</td>
-                  //   <td>{ele?.status}</td>
-                  //   <td>{toDateString(ele?.createdAt)}</td>
-                  //   <td className={cl("flex gap-3")}>
-                  //     {isAdmin ? (
-                  //       <button
-                  //         onClick={() => handlePublishClick(ele)}
-                  //         className="hover:scale-125  transition-transform"
-                  //       >
-                  //         {ele?.status == "published" ? (
-                  //           <MdOutlineUnpublished
-                  //             fontSize={"1.3rem"}
-                  //             color="orange"
-                  //           />
-                  //         ) : (
-                  //           <MdOutlinePublishedWithChanges
-                  //             fontSize={"1.3rem"}
-                  //             color="orange"
-                  //           />
-                  //         )}
-                  //       </button>
-                  //     ) : (
-                  //       ""
-                  //     )}
-
-                  //     {isAdmin ? (
-                  //       <button
-                  //         className="hover:scale-125 transition-all"
-                  //         onClick={() => handleViewPost(ele?._id)}
-                  //       >
-                  //         <span>
-                  //           <FaRegEye color="indigo" fontSize={"1.4rem"} />
-                  //         </span>
-                  //       </button>
-                  //     ) : (
-                  //       <button className="hover:scale-125 transition-all">
-                  //         <span>
-                  //           <FaRegEdit color="indigo" fontSize={"1.4rem"} />
-                  //         </span>
-                  //       </button>
-                  //     )}
-
-                  //     <button
-                  //       className="hover:scale-110 transition-all"
-                  //       onClick={() => {
-                  //         handleDelete(ele._id);
-                  //       }}
-                  //     >
-                  //       <span>
-                  //         <RiDeleteBin6Fill color="crimson" fontSize={"1.4rem"} />
-                  //       </span>
-                  //     </button>
-                  //   </td>
-                  // </tr>
                 ))
               ) : (
                 <h2>No post exist</h2>
