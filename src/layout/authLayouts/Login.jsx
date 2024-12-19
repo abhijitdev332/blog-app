@@ -53,7 +53,12 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col p-2  max-w-prose">
+    <div
+      className="flex flex-col p-2  max-w-prose"
+      onKeyDown={(e) => {
+        e.key == "Enter" && handleSignIn();
+      }}
+    >
       <h2 className="flex items-center justify-center gap-2 text-black font-bold font-serif ">
         <span>Welcome Back</span>
         <span>
@@ -64,7 +69,7 @@ const Login = () => {
         Today is a new day. It's your day.You shape it.
       </p>
       <p className="font-semibold font-serif text-center py-3 md:px-3">
-        Sign in to start managing your Todos
+        Sign in to start managing your blogs.
       </p>
 
       <label

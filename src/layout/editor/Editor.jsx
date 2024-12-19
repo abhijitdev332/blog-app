@@ -34,7 +34,7 @@ const Editor = () => {
       // do clean the ref
       setTagInput("");
       // to chip
-    } else if (inputvalue.tags.length > 2) {
+    } else if (inputvalue.tags.length > 2 && e.key == "Enter") {
       // enterring
       // alert please enter correct tags
       toast.info("only 3 tags allowed");
@@ -55,8 +55,8 @@ const Editor = () => {
   };
   const schema = z.object({
     title: string()
-      .min(30, "Minimum 30 char allowed")
-      .max(100, "Maximum 80 charcters allowed"),
+      .min(20, "Minimum 20 charcters")
+      .max(100, "Maximum 100 charcters allowed"),
     content: string(),
     tags: string().array().max(3, "Maximum 3 tags are allowed"),
   });

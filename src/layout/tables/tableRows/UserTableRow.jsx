@@ -47,6 +47,7 @@ const UserTableRow = ({ ele, getUsers }) => {
       let res = await AxiosInt.delete(`/user/${e}`);
       if (res.status == 200) {
         getUsers();
+        toast.success("user deleted successfully");
       }
     } catch (err) {
       toast("something went wrong!!");

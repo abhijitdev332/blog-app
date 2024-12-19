@@ -17,7 +17,7 @@ const Auth = () => {
             <div className="basis-1/2 order-1 md:order-2">
               <div className="img-wrapper h-full ">
                 <img
-                  src="./images/auth.jpg"
+                  src="/images/auth.jpg"
                   alt="auth_image"
                   className="w-full h-full object-cover rounded-lg"
                 />

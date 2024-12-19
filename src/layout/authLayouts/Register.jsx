@@ -44,8 +44,8 @@ const Register = () => {
       });
       if (res.status == 201) {
         toast.success("account created successfull");
-        setUser(res.data.data);
-        navigate("/");
+        toast("Please login!!");
+        navigate("/auth");
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -57,8 +57,11 @@ const Register = () => {
     // set user in localstorage and redirect to todo page
   };
   return (
-    <div className="flex flex-col gap-3 md:gap-7  py-7 px-5 max-w-prose">
-      <h2 className="flex items-center justify-center gap-2 text-black font-bold font-serif ">
+    <div
+      className="flex flex-col py-7 px-5 max-w-prose"
+      onKeyDown={(e) => e.key == "Enter" && handleSignUp()}
+    >
+      <h2 className="flex items-center justify-center text-black font-bold font-serif ">
         <span>Welcome</span>
         <span>
           <img src={hand} alt="handwave" className="w-[20px] h-[20px]" />
@@ -67,8 +70,8 @@ const Register = () => {
       <p className="font-semibold font-serif text-center md:px-3">
         Today is a new day. It's your day.You shape it.
       </p>
-      <p className="font-semibold font-serif text-center md:px-3">
-        Sign up to start managing your Todos
+      <p className="font-semibold font-serif text-center md:px-3 py-2 sm:py-4">
+        Sign up to find latest blog every minute.
       </p>
       <div className="flex wrapper flex-col gap-3 mx-auto w-full ">
         <label
