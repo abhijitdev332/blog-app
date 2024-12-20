@@ -20,10 +20,10 @@
 }
 
 .pop {
-  font-family: poppins !important;
+  font-family: "poppins" !important;
 }
 .robo {
-  font-family: roboto !important;
+  font-family: "roboto" !important;
 }
 .inter {
   font-family: "inter" !important;
@@ -31,4 +31,5 @@
 
 html::-webkit-scrollbar {
   display: none;
+  font-family: "roboto";
 }

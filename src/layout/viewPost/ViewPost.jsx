@@ -55,14 +55,6 @@ const ViewPost = () => {
                 dangerouslySetInnerHTML={{ __html: post?.content }}
               ></div>
             </div>
-            {/* <div
-              className={cl(
-                "md:basis-2/6 hidden md:flex flex-col",
-                style.list__wrapper
-              )}
-            >
-              <PostList posts={related} title="Related Posts" />
-            </div> */}
           </div>
         </div>
       </div>

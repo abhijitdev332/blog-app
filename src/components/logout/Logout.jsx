@@ -20,7 +20,7 @@ const Logout = ({ style }) => {
 
   return (
     <>
-      <button onClick={handleLogout} className={cl(style)}>
+      <button onClick={handleLogout} className={cl("robo", style)}>
         <span>Logout</span>
       </button>
     </>

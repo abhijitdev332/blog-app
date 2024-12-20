@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FaRegEdit, FaUserEdit } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FaRegEye } from "react-icons/fa";
 import {
   MdOutlinePostAdd,
   MdOutlinePublishedWithChanges,
   MdOutlineUnpublished,
 } from "react-icons/md";
 import AxiosInt from "../../../services/api/api";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toDateString } from "../../../utils/utils";
 import { toast } from "react-toastify";
 import { useUserStore, useDataStore } from "../../../services/store/store.js";
@@ -48,7 +47,7 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
         }
       }
     } catch (err) {
-      toast.error("something went wrong!!");
+      toast.error(err?.msg);
     }
   };
 
@@ -61,29 +60,28 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
         toast.success("Delete Successfull");
       }
     } catch (err) {
-      toast.error("something went wrong!!");
+      toast.error(err?.msg);
     }
   };
 
   return (
-    <tr key={ele?._id} className={cl(style.table__row, "relative")}>
+    <tr key={ele?._id} className={cl("relative")}>
       <td>
         <input type="checkbox" name="check" className={style.checkbox} />
       </td>
-      {/* <td title={ele?._id}>{ele?._id?.slice(0, 5) + "...."}</td> */}
-      <td title={ele?.title}>{ele.title.substring(0, 20)}...</td>
+      <td title={ele?.title}>{ele.title.substring(0, 15)}...</td>
       <td>{ele?.author?.username}</td>
       <td>
         <span
           className={cl(
-            ele?.status == "published" ? "text-green-400" : "text-slate-500"
+            ele?.status == "published" ? "text-green-500" : "text-slate-500"
           )}
         >
           {ele?.status}
         </span>
       </td>
       <td>{toDateString(ele?.createdAt)}</td>
-      <td className={cl("flex justify-center gap-2")}>
+      <td className={cl("flex justify-start gap-2")}>
         <div className="flex gap-3">
           {isAdmin ? (
             <>
@@ -113,17 +111,16 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
             </button>
           )}
         </div>
-        <div>
+        <div className="inline-flex items-center">
           <button onClick={() => setShow(!show)}>
-            <HiDotsVertical />
+            <HiDotsVertical fontSize={"1.4rem"} />
           </button>
         </div>
       </td>
       <div
         className={cl(
-          "modal absolute top-[2rem] right-0 z-20",
-          show ? "h-0 block" : "h-fit hidden",
-          style.transition
+          "modal absolute top-[2rem] right-0 z-20 transition-all",
+          show ? "h-0 block" : "h-fit hidden"
         )}
         onMouseLeave={() => {
           setShow(false);

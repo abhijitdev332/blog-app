@@ -4,7 +4,6 @@ import cl from "classnames";
 import { toast } from "react-toastify";
 
 const Pagination = ({ posts, setCurrent, itemsPerPage, style }) => {
-  // const [currentPosts, SetCurrentPosts] = useState([]);
   const [currentPage, SetCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(
     Math.ceil((posts?.length || 0) / itemsPerPage)
@@ -31,44 +30,33 @@ const Pagination = ({ posts, setCurrent, itemsPerPage, style }) => {
     let slicedPosts = posts?.slice(startInx, endInx);
     setCurrent(slicedPosts);
   }, [currentPage, posts]);
-  console.log(totalPage);
   return (
     <div className={cl(style, "bg-slate-300 sticky bottom-0 w-full")}>
       <div className="pagination__wrapper px-3 py-3 md:px-4 ">
         <div className="flex items-center justify-between">
           <div className="flex">
-            <p className="font-semibold text-sm flex gap-2 pop">
+            <p className="font-semibold text-sm flex gap-1">
               <span>
                 {(currentPage - 1) * itemsPerPage}-{currentPage * itemsPerPage}
               </span>
-              of
+              OF
               <span>{posts?.length}</span>
             </p>
           </div>
           <div className="flex items-center justify-between gap-4">
             <div className="select__wrapper flex items-center gap-2 font-semibold text-sm">
-              {/* <select
-                name=""
-                id=""
-                className="bg-transparent  border-2 rounded border-slate-400 p-1"
-                value={currentPage}
-              >
-                {new Array(!totalPage && 0).fill(0).map((ele, i) => (
-                  <option value={i + 1}>0{i + 1}</option>
-                ))}
-              </select> */}
               <SelectBoxModal
                 totalPages={totalPage}
                 currentPage={currentPage}
                 onPageChange={SetCurrentPage}
               />
-              <span className="pop ">of 0{totalPage} pages</span>
+              <span>Of 0{totalPage} Pages</span>
             </div>
-            <div
-              className="btns__group flex items-center justify-between gap-2"
-              onClick={handlePrevious}
-            >
-              <button className="bg-slate-400 p-1 rounded">
+            <div className="btns__group flex items-center justify-between gap-2">
+              <button
+                className="bg-slate-400 p-1 rounded"
+                onClick={handlePrevious}
+              >
                 <MdNavigateBefore fontSize={"1.4rem"} />
               </button>
               <button className="bg-slate-400 p-1 rounded" onClick={handleNext}>

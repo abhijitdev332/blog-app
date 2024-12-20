@@ -39,7 +39,7 @@ const Footer = () => {
                 <h4 className="font-bold text-lg">{ele.title}</h4>
                 <ul className="flex flex-col gap-2">
                   {ele.links.map((ele) => (
-                    <li className="hover:text-indigo-300 font-semibold">
+                    <li className="hover:text-indigo-400 font-semibold">
                       <Link>{ele.linkName}</Link>
                     </li>
                   ))}

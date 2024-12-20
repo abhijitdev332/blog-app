@@ -31,45 +31,45 @@ const UserTable = () => {
   const sortUser = () => {
     let sortedData = [];
     if (sorted) {
-      sortedData = users?.toSorted((a, b) =>
+      sortedData = currentUser?.toSorted((a, b) =>
         a?.username > b?.username ? -1 : b?.username > a?.username ? 1 : 0
       );
-      setUsers(sortedData);
+      setCurrentUsers(sortedData);
       setSorted(!sorted);
       return;
     }
-    sortedData = users?.toSorted((a, b) =>
+    sortedData = currentUser?.toSorted((a, b) =>
       b?.username > a?.username ? -1 : a?.username > b?.username ? 1 : 0
     );
-    setUsers(sortedData);
+    setCurrentUsers(sortedData);
     setSorted(!sorted);
   };
   const sortCreatedDate = () => {
     let sortedData = [];
     if (sorted) {
-      sortedData = users?.toSorted((a, b) =>
+      sortedData = currentUser?.toSorted((a, b) =>
         a?.createdAt > b?.createdAt ? -1 : b?.createdAt > a?.createdAt ? 1 : 0
       );
-      setUsers(sortedData);
+      setCurrentUsers(sortedData);
       setSorted(!sorted);
       return;
     }
-    sortedData = users?.toSorted((a, b) =>
+    sortedData = currentUser?.toSorted((a, b) =>
       b?.createdAt > a?.createdAt ? -1 : a?.createdAt > b?.createdAt ? 1 : 0
     );
-    setUsers(sortedData);
+    setCurrentUsers(sortedData);
     setSorted(!sorted);
   };
   const sortStatus = () => {
     let sortedData = [];
     if (sorted) {
-      sortedData = users?.toSorted((a, b) => a?.isActive - b?.isActive);
-      setUsers(sortedData);
+      sortedData = currentUser?.toSorted((a, b) => a?.isActive - b?.isActive);
+      setCurrentUsers(sortedData);
       setSorted(!sorted);
       return;
     }
-    sortedData = users?.toSorted((a, b) => b?.isActive - a?.isActive);
-    setUsers(sortedData);
+    sortedData = currentUser?.toSorted((a, b) => b?.isActive - a?.isActive);
+    setCurrentUsers(sortedData);
     setSorted(!sorted);
   };
   const handleCurrentPost = (data) => {
@@ -91,7 +91,7 @@ const UserTable = () => {
       <div className="lg:container lg:mx-auto p-1 sm:p-5 h-full">
         <div className={style.table__wrapper}>
           <table className={cl("relative", style.table)}>
-            <thead>
+            <thead className="bg-slate-300">
               {/* <td>SL No</td> */}
               <td>
                 {/* <span>Avatar</span> */}

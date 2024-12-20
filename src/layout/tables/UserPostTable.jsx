@@ -12,6 +12,7 @@ import { BiSort } from "react-icons/bi";
 const UserPostTable = () => {
   const { id } = useParams();
   const [userPosts, setUserPosts] = useState([]);
+  const [currentPosts, setCurrentPosts] = useState([]);
   const { user } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
   const [fetch, setFetch] = useState(false);
@@ -66,6 +67,9 @@ const UserPostTable = () => {
     setUserPosts(sortedData);
     setSorted(!sorted);
   };
+  const handleCurrentPost = (data) => {
+    setCurrentPosts(data);
+  };
   useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));
@@ -115,8 +119,8 @@ const UserPostTable = () => {
               <td>Post Actions</td>
             </thead>
             <tbody>
-              {userPosts?.length > 0 ? (
-                userPosts?.map((ele) => (
+              {currentPosts?.length > 0 ? (
+                currentPosts?.map((ele) => (
                   <PostTableRow ele={ele} setFetch={handleFetch} />
                 ))
               ) : (
@@ -124,7 +128,11 @@ const UserPostTable = () => {
               )}
             </tbody>
           </table>
-          <Pagination />
+          <Pagination
+            posts={userPosts}
+            setCurrent={handleCurrentPost}
+            itemsPerPage={5}
+          />
         </div>
       </div>
     </div>

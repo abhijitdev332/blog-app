@@ -9,7 +9,7 @@
   }
   &__wrapper {
     width: 100%;
-    border-radius: 15px;
+    border-radius: 8px;
     // border: 2px solid #000;
     overflow: hidden;
     box-shadow: 0 0 5px 5px #f8f8f8;
@@ -24,7 +24,6 @@
     }
   }
   thead {
-    background: $light;
     position: sticky;
     top: 0;
     z-index: 5;
@@ -32,14 +31,12 @@
       font-weight: 500;
       font-family: "roboto" !important;
       text-transform: capitalize;
-      padding: 0.5rem 0.4rem;
-      font-size: 1rem;
+      font-size: 1.2rem;
       span {
         cursor: pointer;
       }
       @include sm {
-        font-size: 1.3rem;
-        padding: 0.7rem 0.8rem;
+        padding: 0.7rem;
       }
     }
   }
@@ -51,23 +48,19 @@
         font-size: 0.9rem;
         font-weight: 500;
         padding: 0.7rem 0.8rem;
-        font-family: sans-serif;
-        // border-radius: 10px;
-        // border: 2px solid orange;
+        font-family: "roboto" !important;
+
         @include sm {
-          font-size: 1.1rem;
+          font-size: 1rem;
         }
       }
       // &:nth-child(even) {
-      //   background-color: #d6eeee;
+      //   background-color: #9c9bb9;
       // }
     }
   }
 }
 
-.transition {
-  transition: 0.5s ease-in !important;
-}
 .checkbox {
   width: 25px;
   height: 25px;

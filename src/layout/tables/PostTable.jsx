@@ -50,63 +50,62 @@ const PostTable = () => {
   const sortAuthor = () => {
     let sortedData = [];
     if (sorted) {
-      sortedData = userPosts?.toSorted((a, b) =>
+      sortedData = currentPosts?.toSorted((a, b) =>
         a?.author?.username > b?.author?.username
           ? -1
           : b?.author?.username > a?.author?.username
           ? 1
           : 0
       );
-      setUserPosts(sortedData);
+      setCurrentPosts(sortedData);
       setSorted(!sorted);
       return;
     }
-    sortedData = userPosts?.toSorted((a, b) =>
+    sortedData = currentPosts?.toSorted((a, b) =>
       b?.author?.username > a?.author?.username
         ? -1
         : a?.author?.username > b?.author?.username
         ? 1
         : 0
     );
-    setUserPosts(sortedData);
+    setCurrentPosts(sortedData);
     setSorted(!sorted);
   };
   const sortStatus = () => {
     let sortedData = [];
     if (sorted) {
-      sortedData = userPosts?.toSorted((a, b) =>
+      sortedData = currentPosts?.toSorted((a, b) =>
         a?.status > b?.status ? -1 : b?.status > a?.status ? 1 : 0
       );
-      setUserPosts(sortedData);
+      setCurrentPosts(sortedData);
       setSorted(!sorted);
       return;
     }
-    sortedData = userPosts?.toSorted((a, b) =>
+    sortedData = currentPosts?.toSorted((a, b) =>
       b?.status > a?.status ? -1 : a?.status > b?.status ? 1 : 0
     );
-    setUserPosts(sortedData);
+    setCurrentPosts(sortedData);
     setSorted(!sorted);
   };
   const sortCreatedDate = () => {
     let sortedData = [];
     if (sorted) {
-      sortedData = userPosts?.toSorted((a, b) =>
+      sortedData = currentPosts?.toSorted((a, b) =>
         a?.createdAt > b?.createdAt ? -1 : b?.createdAt > a?.createdAt ? 1 : 0
       );
-      setUserPosts(sortedData);
+      setCurrentPosts(sortedData);
       setSorted(!sorted);
       return;
     }
-    sortedData = userPosts?.toSorted((a, b) =>
+    sortedData = currentPosts?.toSorted((a, b) =>
       b?.createdAt > a?.createdAt ? -1 : a?.createdAt > b?.createdAt ? 1 : 0
     );
-    setUserPosts(sortedData);
+    setCurrentPosts(sortedData);
     setSorted(!sorted);
   };
   const handleCurrentPost = (data) => {
     setCurrentPosts(data);
   };
-  console.log(currentPosts);
   useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));
@@ -124,7 +123,7 @@ const PostTable = () => {
       <div className="lg:container lg:mx-auto p-2 sm:p-4 h-full">
         <div className={style.table__wrapper}>
           <table className={style.table}>
-            <thead>
+            <thead className="bg-slate-200">
               <td>
                 <input
                   type="checkbox"

@@ -5,6 +5,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { BsPostcard } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { IoIosListBox } from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { Logout } from "../../components/components";
 import style from "./sidebar.module.scss";
@@ -16,7 +17,7 @@ const Sidebar = () => {
   return (
     <div
       className={cl(
-        "w-[25%] md:w-[15%]  robo",
+        "w-[20%]",
         // show ? "block" : "hidden",
         style.sidebar__container
       )}
@@ -24,7 +25,7 @@ const Sidebar = () => {
       <div className="lg:container lg:mx-auto h-full px-2">
         <div className=" h-full flex flex-col divide-y-2 gap-2">
           <Link
-            className="lg:text-2xl font-semibold flex gap-1 items-center"
+            className="lg:text-xl font-semibold flex gap-1 items-center robo"
             to={"/"}
           >
             <span>
@@ -34,14 +35,14 @@ const Sidebar = () => {
           </Link>
           <ul
             className={cl(
-              "flex flex-col gap-5 text-lg items-start text-nowrap",
+              "flex flex-col gap-5 text-lg justify-start items-start text-nowrap",
               style.list
             )}
           >
             <li>
               <div className="flex justify-start gap-1 items-center hover:text-indigo-400">
                 <span>
-                  <IoAdd />
+                  <IoMdAddCircleOutline fontSize={"1.3rem"} />
                 </span>
                 <Link to={"/admin/addpost"}>Add Post</Link>
               </div>

@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import cl from "classnames";
 import { Link } from "react-router-dom";
 import { toDateString } from "../../../utils/utils";
-import style from ".././table.module.scss";
 const UserTableRow = ({ ele, getUsers }) => {
   const [show, setShow] = useState(false);
   const [showAccess, setAccess] = useState(false);
@@ -109,7 +108,6 @@ const UserTableRow = ({ ele, getUsers }) => {
         <div className="role inline-flex gap-2">
           {ele?.roles?.map((ele) => (
             <AccessChip access={ele} />
-            // <span className="px-2 bg-blue-300 rounded">{ele}</span>
           ))}
         </div>
       </td>
@@ -131,9 +129,8 @@ const UserTableRow = ({ ele, getUsers }) => {
       </td>
       <div
         className={cl(
-          "modal absolute top-[2rem] right-[3rem] z-20",
-          show ? "h-0 block" : "h-fit hidden",
-          style.transition
+          "modal absolute top-[2rem] right-[3rem] z-20 transition-all",
+          show ? "h-0 block" : "h-fit hidden"
         )}
         onMouseLeave={() => {
           setShow(false);

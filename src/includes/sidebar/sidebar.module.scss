@@ -3,7 +3,7 @@
 
 .sidebar {
   &__container {
-    padding: 2rem 1rem;
+    padding: 5rem 1rem;
     background: #070712;
     color: $light;
 
@@ -13,4 +13,9 @@
 }
 .list {
   padding-block: 3rem !important;
+  li {
+    a {
+      font-family: "roboto" !important;
+    }
+  }
 }
