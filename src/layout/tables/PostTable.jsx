@@ -10,6 +10,7 @@ import style from "./table.module.scss";
 import { PostTableRow } from "./tableRows/rows";
 const PostTable = () => {
   const [userPosts, setUserPosts] = useState([]);
+  const [currentPosts, setCurrentPosts] = useState([]);
   const [fetch, setFetch] = useState(false);
   const { user } = useUserStore();
   const [sorted, setSorted] = useState(false);
@@ -102,7 +103,10 @@ const PostTable = () => {
     setUserPosts(sortedData);
     setSorted(!sorted);
   };
-
+  const handleCurrentPost = (data) => {
+    setCurrentPosts(data);
+  };
+  console.log(currentPosts);
   useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));
@@ -171,8 +175,8 @@ const PostTable = () => {
               <td>Actions</td>
             </thead>
             <tbody>
-              {userPosts?.length > 0 ? (
-                userPosts?.map((ele) => (
+              {currentPosts?.length > 0 ? (
+                currentPosts?.map((ele) => (
                   <PostTableRow ele={ele} setFetch={handleFetch} />
                 ))
               ) : (
@@ -180,7 +184,11 @@ const PostTable = () => {
               )}
             </tbody>
           </table>
-          <Pagination />
+          <Pagination
+            posts={userPosts}
+            setCurrent={handleCurrentPost}
+            itemsPerPage={5}
+          />
         </div>
       </div>
     </div>

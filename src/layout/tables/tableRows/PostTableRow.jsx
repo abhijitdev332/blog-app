@@ -26,52 +26,44 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
   const [show, setShow] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   // functions
-  const handlePublishClick = useCallback(
-    async (e) => {
-      try {
-        if (e?.status == "published" && isAdmin) {
-          let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-            status: "archived",
-          });
-          if (res.status == 200) {
-            setRefetch();
-            setFetch();
-            toast.success("update Successfull");
-          }
-        } else if (isAdmin) {
-          let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-            status: "published",
-          });
-          if (res.status == 200) {
-            setRefetch();
-            setFetch();
-            toast.success("update successfull");
-          }
-        }
-      } catch (err) {
-        toast.error("something went wrong!!");
-      }
-    },
-    [ele]
-  );
-  const handleDelete = useCallback(
-    async (e) => {
-      try {
-        let res = await AxiosInt.delete(`/post/${e}`);
+  const handlePublishClick = async (e) => {
+    try {
+      if (e?.status == "published" && isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "archived",
+        });
         if (res.status == 200) {
           setRefetch();
           setFetch();
-          toast.success("Delete Successfull");
+          toast.success("update Successfull");
         }
-      } catch (err) {
-        toast.error("something went wrong!!");
+      } else if (isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "published",
+        });
+        if (res.status == 200) {
+          setRefetch();
+          setFetch();
+          toast.success("update successfull");
+        }
       }
-    },
-    [ele]
-  );
-  // const handleViewPost = (e) => {
-  //   navigate(`/admin/viewPost/${e}`);
-  // };
+    } catch (err) {
+      toast.error("something went wrong!!");
+    }
+  };
+
+  const handleDelete = async (e) => {
+    try {
+      let res = await AxiosInt.delete(`/post/${e}`);
+      if (res.status == 200) {
+        setRefetch();
+        setFetch();
+        toast.success("Delete Successfull");
+      }
+    } catch (err) {
+      toast.error("something went wrong!!");
+    }
+  };
 
   return (
     <tr key={ele?._id} className={cl(style.table__row, "relative")}>

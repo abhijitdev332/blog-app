@@ -10,6 +10,7 @@ import { UserTableRow } from "./tableRows/rows";
 import Pagination from "./Pagination";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUsers] = useState([]);
   const { setLoading, removeLoading } = useLoaderStore();
   const { data } = useFetchData("/admin/user");
   const [sorted, setSorted] = useState(false);
@@ -70,6 +71,9 @@ const UserTable = () => {
     sortedData = users?.toSorted((a, b) => b?.isActive - a?.isActive);
     setUsers(sortedData);
     setSorted(!sorted);
+  };
+  const handleCurrentPost = (data) => {
+    setCurrentUsers(data);
   };
 
   // fetch users
@@ -136,8 +140,8 @@ const UserTable = () => {
               <td>Actions</td>
             </thead>
             <tbody>
-              {users?.length > 0 ? (
-                users?.map((ele) => (
+              {currentUser?.length > 0 ? (
+                currentUser?.map((ele) => (
                   <UserTableRow ele={ele} getUsers={getUsers} />
                 ))
               ) : (
@@ -145,7 +149,11 @@ const UserTable = () => {
               )}
             </tbody>
           </table>
-          <Pagination />
+          <Pagination
+            posts={users}
+            setCurrent={handleCurrentPost}
+            itemsPerPage={5}
+          />
         </div>
       </div>
     </div>

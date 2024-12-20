@@ -113,7 +113,7 @@ const UserTableRow = ({ ele, getUsers }) => {
           ))}
         </div>
       </td>
-      <td className="flex gap-4">
+      <td className="flex items-center gap-4">
         <button
           className="hover:scale-125 transition-transform"
           onClick={() => handleActiveClick(ele)}
@@ -137,6 +137,7 @@ const UserTableRow = ({ ele, getUsers }) => {
         )}
         onMouseLeave={() => {
           setShow(false);
+          setAccess(false);
         }}
       >
         <div className="wrapper bg-slate-100 px-3 py-2 rounded-md">
