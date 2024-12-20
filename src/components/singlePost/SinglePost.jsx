@@ -46,6 +46,7 @@ const SinglePost = () => {
     return <h3>No Post Found</h3>;
   }
 
+  console.log(post?.content);
   return (
     <>
       <ScrollRestoration />
@@ -81,9 +82,11 @@ const SinglePost = () => {
                 <img src={post?.imageUrl} alt="post_image" />
               </div>
               <div
-                className="content__wrapper p-6"
-                dangerouslySetInnerHTML={{ __html: post?.content }}
-              ></div>
+                className="content__wrapper p-6 list-disc"
+                dangerouslySetInnerHTML={{
+                  __html: post?.content,
+                }}
+              />
             </div>
             <div
               className={cl(

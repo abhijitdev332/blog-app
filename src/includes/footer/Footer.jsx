@@ -37,7 +37,7 @@ const Footer = () => {
             {footerMenus.map((ele) => (
               <div className="flex gap-3   flex-col">
                 <h4 className="font-bold text-lg">{ele.title}</h4>
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-2 list-none">
                   {ele.links.map((ele) => (
                     <li className="hover:text-indigo-400 font-semibold">
                       <Link>{ele.linkName}</Link>

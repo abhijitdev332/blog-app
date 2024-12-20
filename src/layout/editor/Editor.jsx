@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
 import { useUserStore } from "../../services/store/store";
 import { useNavigate } from "react-router-dom";
+import AddBtn from "./AddBtn";
 const inital = { title: "", content: "", tags: [] };
 const Editor = () => {
   const navigate = useNavigate();
@@ -171,12 +172,7 @@ const Editor = () => {
                 onChange={handleContentInput}
               />
             </div>
-            <button
-              className="p-3 rounded w-full mt-8 text-lg font-semibold bg-indigo-400"
-              onClick={sendData}
-            >
-              Add Post
-            </button>
+            <AddBtn sendData={sendData} />
           </div>
         </div>
       </div>
