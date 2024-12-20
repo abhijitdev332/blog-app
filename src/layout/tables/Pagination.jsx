@@ -37,7 +37,10 @@ const Pagination = ({ posts, setCurrent, itemsPerPage, style }) => {
           <div className="flex">
             <p className="font-semibold text-sm flex gap-1">
               <span>
-                {(currentPage - 1) * itemsPerPage}-{currentPage * itemsPerPage}
+                {(currentPage - 1) * itemsPerPage}-
+                {currentPage * itemsPerPage > posts?.length
+                  ? posts?.length
+                  : currentPage * itemsPerPage}
               </span>
               OF
               <span>{posts?.length}</span>

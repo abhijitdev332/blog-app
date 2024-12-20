@@ -22,8 +22,8 @@ import {
   Register,
   UserTable,
   UserPostTable,
-  SearchPost,
   ViewUser,
+  SearchPost,
 } from "./layout/layouts";
 import { Dashbroad, Editor, ViewPost } from "./layout/layouts";
 import { UserProtected, ProtectedRoute } from "./utils/ProtectedRoute";
@@ -31,6 +31,7 @@ import InitialData from "./data/InitialData";
 // styles
 import "./app.scss";
 import "react-toastify/dist/ReactToastify.css";
+import "react-loading-skeleton/dist/skeleton.css";
 const SuspenseLayout = () => {
   return (
     <Suspense fallback={<Loader />}>

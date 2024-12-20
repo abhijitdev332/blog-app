@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import cl from "classnames";
+import Skeleton from "react-loading-skeleton";
 import style from "./hero.module.scss";
 import Chip from "../../components/chip/Chip";
 import { Link } from "react-router-dom";
@@ -22,7 +23,7 @@ const Slider = () => {
         <h2 className={cl(style.hero__title)}>Hot Topics</h2>
         <div className="flex flex-col md:flex-row justify-center gap-5 p-3 md:p-5">
           {!post || post?.length <= 0 ? (
-            ""
+            <Skeleton />
           ) : (
             <Link
               to={`/post/${post?._id}`}
@@ -36,8 +37,8 @@ const Slider = () => {
 
           <div className={cl("summary lg:basis-1/4 flex flex-col px-5")}>
             <div className={cl("flex gap-1 text-[13px] items-center inter")}>
-              <span>{post.author?.username}</span> &diams;
-              <span>{toDateString(post?.createdAt)}</span>
+              <span>{post.author?.username || <Skeleton />}</span> &diams;
+              <span>{toDateString(post?.createdAt) || <Skeleton />}</span>
             </div>
             <div className="text-pretty font-bold text-lg">
               <h3 className={cl("py-3 sm:text-2xl robo")}>{post.title}</h3>
@@ -50,15 +51,13 @@ const Slider = () => {
                 }}
               ></div>
               {!post || post.length <= 0 ? (
-                <p>No trending post</p>
+                <Skeleton />
               ) : (
                 <Link to={`/post/${post?._id}`}>Read More ...</Link>
               )}
             </span>
             <div className="flex gap-2 py-4 ">
-              {post.tags?.map((ele) => (
-                <Chip title={ele} />
-              ))}
+              {post.tags?.map((ele) => <Chip title={ele} />) || <Skeleton />}
             </div>
           </div>
         </div>
