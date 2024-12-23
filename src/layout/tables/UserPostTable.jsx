@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useUserStore } from "../../services/store/store";
+import { useLoaderStore, useUserStore } from "../../services/store/store";
 import { useParams } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
 import Pagination from "./Pagination";
@@ -13,11 +13,13 @@ const UserPostTable = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [currentPosts, setCurrentPosts] = useState([]);
   const { user } = useUserStore();
+  const { setLoading, removeLoading } = useLoaderStore();
   const [fetch, setFetch] = useState(false);
   const [sorted, setSorted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
     try {
+      setLoading;
       const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });
       if (res.status == 200) {
         setUserPosts(res.data?.data);
@@ -25,6 +27,8 @@ const UserPostTable = () => {
     } catch (err) {
       setUserPosts([]);
       toast.error(err?.response?.data?.msg);
+    } finally {
+      setLoading;
     }
   };
   const handleFetch = () => {

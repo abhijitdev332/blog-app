@@ -7,13 +7,16 @@ import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
 import { UserTableRow } from "./tableRows/rows";
 import Pagination from "./Pagination";
+import useLoaderStore from "../../services/store/useLoaderStore";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUsers] = useState([]);
   const { data } = useFetchData("/admin/user");
   const [sorted, setSorted] = useState(false);
+  const { setLoading, removeLoading } = useLoaderStore();
   const getUsers = async () => {
     try {
+      setLoading();
       let res = await AxiosInt.get("/admin/user");
       if (res.status == 200) {
         setUsers(res.data?.data);
@@ -21,6 +24,8 @@ const UserTable = () => {
     } catch (err) {
       setUsers([]);
       toast.error(err?.response?.data?.msg);
+    } finally {
+      removeLoading();
     }
   };
   const sortUser = () => {
