@@ -45,8 +45,6 @@ const SinglePost = () => {
   if (post == null || post?.status !== "published") {
     return <h3>No Post Found</h3>;
   }
-
-  console.log(post?.content);
   return (
     <>
       <ScrollRestoration />
