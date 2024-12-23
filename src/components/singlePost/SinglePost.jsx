@@ -92,7 +92,11 @@ const SinglePost = () => {
                 style.list__wrapper
               )}
             >
-              <PostList posts={related} title="Related Posts" />
+              <PostList
+                posts={related}
+                title="Related Posts"
+                showPagination={false}
+              />
             </div>
           </div>
         </div>
