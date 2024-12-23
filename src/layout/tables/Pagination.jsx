@@ -101,7 +101,7 @@ const SelectBoxModal = ({ totalPages = 1, currentPage, onPageChange }) => {
         <div className="fixed bottom-10 right-[2rem] w-fit bg-slate-400 rounded-md border-b border-gray-300 shadow-md z-50">
           <div className="p-4">
             <h2 className="text-lg font-medium mb-4 pop">Select a Page</h2>
-            <ul className="grid grid-cols-5 gap-2">
+            <ul className="grid grid-cols-5 gap-2 list-none">
               {Array.from({ length: totalPages }).map((_, i) => (
                 <li key={i}>
                   <button

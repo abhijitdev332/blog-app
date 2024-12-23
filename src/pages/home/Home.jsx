@@ -4,11 +4,27 @@ import { Hero } from "../../includes/includes";
 import { PostList } from "../../components/components";
 import { ToastContainer } from "react-toastify";
 import Footer from "../../includes/footer/Footer";
-import { useDataStore } from "../../services/store/store";
+import { useDataStore, useLoaderStore } from "../../services/store/store";
 import { DataLoader } from "../../layout/layouts";
+import AxiosInt from "../../services/api/api";
 
 const Home = () => {
   const { data } = useDataStore();
+  const { setLoading, removeLoading } = useLoaderStore();
+  AxiosInt.interceptors.request.use((config) => {
+    setLoading();
+    return config;
+  });
+  AxiosInt.interceptors.response.use(
+    (value) => {
+      removeLoading();
+      return value;
+    },
+    (error) => {
+      removeLoading();
+      return Promise.reject(error);
+    }
+  );
 
   return (
     <>

@@ -34,7 +34,7 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
         if (res.status == 200) {
           setRefetch();
           setFetch();
-          toast.success("update Successfull");
+          toast.success(res.data?.msg);
         }
       } else if (isAdmin) {
         let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
@@ -43,11 +43,11 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
         if (res.status == 200) {
           setRefetch();
           setFetch();
-          toast.success("update successfull");
+          toast.success(res.data?.msg);
         }
       }
     } catch (err) {
-      toast.error(err?.msg);
+      toast.error(err?.response?.data?.msg);
     }
   };
 
@@ -57,10 +57,10 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
       if (res.status == 200) {
         setRefetch();
         setFetch();
-        toast.success("Delete Successfull");
+        toast.success(res.data?.msg);
       }
     } catch (err) {
-      toast.error(err?.msg);
+      toast.error(err?.response?.data?.msg);
     }
   };
 

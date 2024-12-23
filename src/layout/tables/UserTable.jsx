@@ -5,27 +5,22 @@ import { BiSort } from "react-icons/bi";
 import cl from "classnames";
 import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
-import { useLoaderStore } from "../../services/store/store";
 import { UserTableRow } from "./tableRows/rows";
 import Pagination from "./Pagination";
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUsers] = useState([]);
-  const { setLoading, removeLoading } = useLoaderStore();
   const { data } = useFetchData("/admin/user");
   const [sorted, setSorted] = useState(false);
   const getUsers = async () => {
     try {
-      setLoading();
       let res = await AxiosInt.get("/admin/user");
       if (res.status == 200) {
         setUsers(res.data?.data);
       }
     } catch (err) {
       setUsers([]);
-      toast("something went wrong!!");
-    } finally {
-      removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
   };
   const sortUser = () => {
@@ -78,11 +73,6 @@ const UserTable = () => {
 
   // fetch users
   useEffect(() => {
-    if (users?.length <= 0) {
-      setLoading();
-    } else {
-      removeLoading();
-    }
     setUsers(data);
   }, [data]);
 

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { string, unknown, z } from "zod";
+import { string, z } from "zod";
 import "react-quill/dist/quill.snow.css";
 import TagsChip from "./TagsChip";
 import { toast } from "react-toastify";
@@ -97,18 +97,17 @@ const Editor = () => {
           imageUrl: imgUrl,
         });
         if (res.status == 201) {
-          toast.success("Post Created Successfully");
+          toast.success(res.data?.msg);
           Setinputvalue(inital);
           setImageBlob(null);
-          navigate("/admin");
+          return navigate("/admin");
         }
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
-        toast.error(err.errors[0].message);
-      } else {
-        toast.error(err?.msg);
+        return toast.error(err.errors[0].message);
       }
+      toast.error(err?.response?.data?.msg);
     }
   };
   return (

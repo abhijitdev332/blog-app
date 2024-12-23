@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import { PostList } from "../../components/components";
-import useLoaderStore from "../../services/store/useLoaderStore";
 
 const SearchPost = () => {
   const { query } = useParams();
-  // const { setLoading, removeLoading } = useLoaderStore();
+  const [searchParam, SetSearchParam] = useSearchParams();
   const { data, loading } = useFetchData(`/post/search?search=${query}`);
   const [postData, setPostData] = useState([]);
 

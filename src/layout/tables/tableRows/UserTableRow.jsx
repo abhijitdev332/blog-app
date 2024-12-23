@@ -16,13 +16,12 @@ const UserTableRow = ({ ele, getUsers }) => {
   const [showAccess, setAccess] = useState(false);
   const handleActiveClick = async (e) => {
     try {
-      // setLoading();
       if (e?.isActive) {
         let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
           isActive: false,
         });
         if (res.status == 200) {
-          toast.success("User updated");
+          toast.success(res.data?.msg);
           getUsers();
         }
       } else {
@@ -30,14 +29,12 @@ const UserTableRow = ({ ele, getUsers }) => {
           isActive: true,
         });
         if (res.status == 200) {
-          toast.success("User updated");
+          toast.success(res.data?.msg);
           getUsers();
         }
       }
     } catch (err) {
-      toast.error("Something went wrong");
-    } finally {
-      // removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
   };
   const handleDeleteClick = async (e) => {
@@ -46,12 +43,10 @@ const UserTableRow = ({ ele, getUsers }) => {
       let res = await AxiosInt.delete(`/user/${e}`);
       if (res.status == 200) {
         getUsers();
-        toast.success("user deleted successfully");
+        toast.success(res.data?.msg);
       }
     } catch (err) {
-      toast("something went wrong!!");
-    } finally {
-      // removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
   };
   const handleAccessClick = async (e) => {
@@ -64,6 +59,7 @@ const UserTableRow = ({ ele, getUsers }) => {
         });
         if (res.status == 200) {
           getUsers();
+          toast.success(res.data?.msg);
         }
       } else if (permission?.toLowerCase() == "admin") {
         let res = await AxiosInt.put(`/admin/user/${ele?._id}`, {
@@ -71,6 +67,7 @@ const UserTableRow = ({ ele, getUsers }) => {
         });
         if (res.status == 200) {
           getUsers();
+          toast.success(res.data?.msg);
         }
       } else {
         let res = await AxiosInt.put(`/admin/user/${ele?._id}`, {
@@ -78,10 +75,11 @@ const UserTableRow = ({ ele, getUsers }) => {
         });
         if (res.status == 200) {
           getUsers();
+          toast.success(res.data?.msg);
         }
       }
     } catch (err) {
-      toast.error("something went wrong!!");
+      toast.error(err?.response?.data?.msg);
     }
   };
   return (

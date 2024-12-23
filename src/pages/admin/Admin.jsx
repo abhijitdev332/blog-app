@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 import { Sidebar } from "../../includes/includes.js";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { DashHeader } from "../../includes/includes.js";
 import { ToastContainer } from "react-toastify";
 import { DataLoader } from "../../layout/layouts.js";
+import useLoaderStore from "../../services/store/useLoaderStore.js";
+import AxiosInt from "../../services/api/api.js";
 
 const Admin = () => {
+  const { setLoading, removeLoading } = useLoaderStore();
+  AxiosInt.interceptors.request.use((config) => {
+    setLoading();
+    return config;
+  });
+  AxiosInt.interceptors.response.use(
+    (value) => {
+      removeLoading();
+      return value;
+    },
+    (error) => {
+      removeLoading();
+      return Promise.reject(error);
+    }
+  );
   return (
     <>
       <div className="admin overflow-y-hidden">

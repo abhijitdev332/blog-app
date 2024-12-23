@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AxiosInt from "../../services/api/api";
 import { BiSort } from "react-icons/bi";
-import { useUserStore, useLoaderStore } from "../../services/store/store";
+import { useUserStore } from "../../services/store/store";
 import { toast } from "react-toastify";
 import Pagination from "./Pagination";
 // style
@@ -14,34 +14,27 @@ const PostTable = () => {
   const [fetch, setFetch] = useState(false);
   const { user } = useUserStore();
   const [sorted, setSorted] = useState(false);
-  const { setLoading, removeLoading } = useLoaderStore();
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig) => {
     try {
-      setLoading();
       const res = await AxiosInt.get(`/post/user/${user._id}`, { signal: sig });
       if (res.status == 200) {
         setUserPosts(res.data?.data);
       }
     } catch (err) {
       setUserPosts([]);
-      toast.error("Something went wrong");
-    } finally {
-      removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
   };
   const getAdminPosts = async (sig) => {
     try {
-      setLoading();
       const res = await AxiosInt.get(`/admin/posts`, { signal: sig });
       if (res.status == 200) {
         setUserPosts(res.data?.data);
       }
     } catch (err) {
       setUserPosts([]);
-      toast.error("something went wrong!!");
-    } finally {
-      removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
   };
   const handleFetch = () => {

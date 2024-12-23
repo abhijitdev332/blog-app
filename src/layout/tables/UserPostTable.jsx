@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderStore, useUserStore } from "../../services/store/store";
+import { useUserStore } from "../../services/store/store";
 import { useParams } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
 import Pagination from "./Pagination";
@@ -7,29 +7,24 @@ import { toast } from "react-toastify";
 import PostTableRow from "./tableRows/PostTableRow";
 // style
 import style from "./table.module.scss";
-import cl from "classnames";
 import { BiSort } from "react-icons/bi";
 const UserPostTable = () => {
   const { id } = useParams();
   const [userPosts, setUserPosts] = useState([]);
   const [currentPosts, setCurrentPosts] = useState([]);
   const { user } = useUserStore();
-  const { setLoading, removeLoading } = useLoaderStore();
   const [fetch, setFetch] = useState(false);
   const [sorted, setSorted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
     try {
-      setLoading();
       const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });
       if (res.status == 200) {
         setUserPosts(res.data?.data);
       }
     } catch (err) {
       setUserPosts([]);
-      toast.error("something went wrong!!");
-    } finally {
-      removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
   };
   const handleFetch = () => {
