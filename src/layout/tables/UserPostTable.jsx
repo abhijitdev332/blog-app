@@ -84,9 +84,9 @@ const UserPostTable = () => {
         <div className={style.table__wrapper}>
           <table className={style.table}>
             <thead>
-              <td>
+              {/* <td>
                 <input type="checkbox" className={style.checkbox} />
-              </td>
+              </td> */}
               <td>Post Title</td>
               <td>Post Author </td>
               <td>

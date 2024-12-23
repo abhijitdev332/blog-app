@@ -139,13 +139,13 @@ const PostTable = () => {
         <div className={style.table__wrapper}>
           <table className={style.table}>
             <thead className="bg-slate-200">
-              <td>
+              {/* <td>
                 <input
                   type="checkbox"
                   name="check"
                   className={style.checkbox}
                 />
-              </td>
+              </td> */}
               <td>Post Title</td>
               <td>
                 <div

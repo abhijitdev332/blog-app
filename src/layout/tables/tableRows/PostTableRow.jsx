@@ -66,9 +66,9 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
 
   return (
     <tr key={ele?._id} className={cl("relative")}>
-      <td>
+      {/* <td>
         <input type="checkbox" name="check" className={style.checkbox} />
-      </td>
+      </td> */}
       <td title={ele?.title}>{ele.title.substring(0, 15)}...</td>
       <td>{ele?.author?.username}</td>
       <td>
@@ -140,7 +140,7 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
 
 const UserModal = ({ ele, handleDelete }) => {
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-2 list-none">
       <li>
         <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
           <MdOutlinePostAdd fontSize={"1.rem"} />
@@ -172,7 +172,7 @@ const UserModal = ({ ele, handleDelete }) => {
 };
 const AdminModal = ({ ele, handleDelete }) => {
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-2 list-none">
       <li>
         <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
           <MdOutlinePostAdd fontSize={"1.rem"} />

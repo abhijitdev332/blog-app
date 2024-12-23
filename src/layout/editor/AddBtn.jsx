@@ -4,7 +4,7 @@ const AddBtn = ({ sendData }) => {
   const [loader, setLoader] = useState(false);
   return (
     <button
-      className="p-3 rounded w-full flex gap-1 mt-8 text-lg font-semibold bg-indigo-400 robo"
+      className="p-3  rounded w-full text-center flex justify-center gap-1 mt-8 text-lg font-semibold bg-indigo-400 robo"
       onClick={() => {
         setLoader(true);
         sendData();
