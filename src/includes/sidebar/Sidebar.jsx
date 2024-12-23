@@ -35,7 +35,7 @@ const Sidebar = () => {
           </Link>
           <ul
             className={cl(
-              "flex flex-col gap-5 text-lg justify-start items-start text-nowrap",
+              "flex flex-col gap-5 text-lg justify-start items-start text-nowrap list-none",
               style.list
             )}
           >
