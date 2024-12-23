@@ -11,6 +11,7 @@ import UserTable from "./tables/UserTable.jsx";
 import UserPostTable from "./tables/UserPostTable.jsx";
 import SearchPost from "./searchPosts/SearchPost.jsx";
 import ViewUser from "./viewUser/ViewUser.jsx";
+import Pagination from "./tables/Pagination.jsx";
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   DataLoader,
   SearchPost,
   ViewUser,
+  Pagination,
 };
