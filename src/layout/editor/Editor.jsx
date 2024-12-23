@@ -72,7 +72,7 @@ const Editor = () => {
         return uploadRes.data?.imageUrl;
       }
     } catch (err) {
-      toast.error(err.msg);
+      toast.error(err?.response?.data?.msg);
     }
   };
 

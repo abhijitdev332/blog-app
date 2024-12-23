@@ -19,7 +19,7 @@ const UserPostTable = () => {
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const getUserPosts = async (sig = "") => {
     try {
-      setLoading;
+      setLoading();
       const res = await AxiosInt.get(`/post/user/${id}`, { signal: sig });
       if (res.status == 200) {
         setUserPosts(res.data?.data);
@@ -28,7 +28,7 @@ const UserPostTable = () => {
       setUserPosts([]);
       toast.error(err?.response?.data?.msg);
     } finally {
-      setLoading;
+      removeLoading();
     }
   };
   const handleFetch = () => {
