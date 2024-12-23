@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import { Header } from "../../includes/includes";
 import { toDateString } from "../../utils/utils";
@@ -8,6 +8,7 @@ import cl from "classnames";
 import { useUserStore } from "../../services/store/store";
 import AxiosInt from "../../services/api/api";
 const ViewUser = () => {
+  const navigate = useNavigate();
   const { userId } = useParams();
   const { data, loading } = useFetchData(`/user/${userId}`);
   const [buttonShow, setButtonShow] = useState(false);
@@ -36,6 +37,7 @@ const ViewUser = () => {
       });
       if (res.status == 200) {
         toast.success(res.data?.data?.msg);
+        return navigate("/admin/users");
       }
     } catch (err) {
       toast.error(err?.response?.data?.msg);
@@ -46,6 +48,7 @@ const ViewUser = () => {
       let res = await AxiosInt.delete(`/user/${userValue?.id}`);
       if (res.status == 200) {
         toast.success(res.data?.data?.msg);
+        return navigate("/admin/users");
       }
     } catch (err) {
       toast.error(err?.response?.data?.msg);
