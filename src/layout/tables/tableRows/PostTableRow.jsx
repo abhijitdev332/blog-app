@@ -184,7 +184,9 @@ const AdminModal = ({ ele, handleDelete }) => {
       <li>
         <button className=" flex gap-1 cursor-pointer items-center hover:text-blue-500">
           <LuView fontSize={"1rem"} />
-          <span className="font-semibold">View User</span>
+          <Link to={`/user/${ele?.author?._id}`} className="font-semibold">
+            View User
+          </Link>
         </button>
       </li>
 

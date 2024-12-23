@@ -42,7 +42,7 @@ const ViewPost = () => {
                     ))}
                   </div> */}
                 </div>
-                <p className="text-sm flex gap-1 text-slate-400">
+                <p className="text-sm flex gap-1 text-slate-400 font-medium robo">
                   <span>{toDateString(post?.createdAt)}</span> &diams;
                   <span>{post?.author?.username}</span>
                 </p>
