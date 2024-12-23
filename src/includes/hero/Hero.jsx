@@ -36,9 +36,16 @@ const Slider = () => {
           )}
 
           <div className={cl("summary lg:basis-1/4 flex flex-col px-5")}>
-            <div className={cl("flex gap-1 text-[13px] items-center inter")}>
-              <span>{post.author?.username || <Skeleton />}</span> &diams;
-              <span>{toDateString(post?.createdAt) || <Skeleton />}</span>
+            <div
+              className={cl("flex gap-1 text-[13px] items-center font-medium")}
+            >
+              <span className="robo">
+                {post.author?.username || <Skeleton />}
+              </span>{" "}
+              &diams;
+              <span className="robo">
+                {toDateString(post?.createdAt) || <Skeleton />}
+              </span>
             </div>
             <div className="text-pretty font-bold text-lg">
               <h3 className={cl("py-3 sm:text-2xl robo")}>{post.title}</h3>

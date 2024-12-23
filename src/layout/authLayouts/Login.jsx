@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import hand from "../../assets/icons/hand.png";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
-import { useLoaderStore, useUserStore } from "../../services/store/store";
+import { useUserStore } from "../../services/store/store";
 import { z } from "zod";
 const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useUserStore();
-  const { setLoading, removeLoading } = useLoaderStore();
   const [inputState, setInputState] = useState({
     email: "",
     password: "",
@@ -17,8 +16,9 @@ const Login = () => {
     email: z.string().email("Invalid Email"),
     password: z.string().min(5, "minimum 3 char needed"),
   });
-
+  // handle signin
   const handleSignIn = async () => {
+    // check if input is not empty
     for (let ele in inputState) {
       if (inputState[ele].trim() == "") {
         // show toast
@@ -45,8 +45,7 @@ const Login = () => {
       if (err instanceof z.ZodError) {
         toast.error(err.errors[0]?.message);
       }
-      // console.log(err?.response?.data?.msg);
-      toast.error(err?.response.data?.msg);
+      toast.error(err?.response?.data?.msg);
     }
   };
   return (

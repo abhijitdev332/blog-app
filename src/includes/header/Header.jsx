@@ -48,7 +48,7 @@ const Header = () => {
                   >
                     <input
                       type="text"
-                      className="bg-transparent outline-none"
+                      className="bg-transparent outline-none robo"
                       placeholder="Search topic"
                       value={searchInput}
                       onKeyDown={(e) => {

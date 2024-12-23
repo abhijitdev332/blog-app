@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 @font-face {
   font-family: "coloni";
   src: url("/fonts/coloni.ttf") type("truetype");
@@ -5,10 +7,6 @@
 @font-face {
   font-family: "allieno";
   src: url("/fonts/allieno.ttf") type("truetype");
-}
-@font-face {
-  font-family: "roboto";
-  src: url("/fonts/roboto.ttf") type("truetype");
 }
 @font-face {
   font-family: "poppins";
@@ -23,7 +21,7 @@
   font-family: "poppins" !important;
 }
 .robo {
-  font-family: "roboto" !important;
+  font-family: "Roboto" !important;
 }
 .inter {
   font-family: "inter" !important;
@@ -31,5 +29,5 @@
 
 html::-webkit-scrollbar {
   display: none;
-  font-family: "roboto";
+  font-family: "Roboto";
 }

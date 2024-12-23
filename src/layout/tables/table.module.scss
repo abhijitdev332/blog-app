@@ -29,7 +29,7 @@
     z-index: 5;
     td {
       font-weight: 500;
-      font-family: "roboto" !important;
+      font-family: "Roboto" !important;
       text-transform: capitalize;
       font-size: 1.2rem;
       span {
@@ -46,9 +46,9 @@
       padding: 1rem 0;
       td {
         font-size: 0.9rem;
-        font-weight: 500;
+        font-weight: 400;
         padding: 0.7rem 0.8rem;
-        font-family: "roboto" !important;
+        font-family: "Roboto" !important;
 
         @include sm {
           font-size: 1rem;

@@ -4,11 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { useLoaderStore, useUserStore } from "../../services/store/store";
 const Register = () => {
   const navigate = useNavigate();
-  const { setLoading, removeLoading } = useLoaderStore();
-  const { setUser } = useUserStore();
   const [inputState, setInputState] = useState({
     name: "",
     email: "",
@@ -27,6 +24,7 @@ const Register = () => {
       .regex(/[0-9]/, "Password must contain a number"),
   });
   const handleSignUp = async () => {
+    // check if input field is not empty
     for (let ele in inputState) {
       if (inputState[ele].trim() == "") {
         toast.error(`Please enter ${ele} field`);
@@ -34,27 +32,23 @@ const Register = () => {
       }
     }
     try {
-      setLoading();
       schema.parse(inputState);
       let res = await AxiosInt.post("user/create", {
         username: inputState.name,
         email: inputState.email,
         password: inputState.password,
-        roles: ["admin", "user"],
       });
       if (res.status == 201) {
-        toast.success("account created successfull");
+        toast.success(res.data?.msg);
         toast("Please login!!");
-        navigate("/auth");
+        return navigate("/auth");
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
         toast.error(err.errors[0].message);
       }
-    } finally {
-      removeLoading();
+      toast.error(err?.response?.data?.msg);
     }
-    // set user in localstorage and redirect to todo page
   };
   return (
     <div
