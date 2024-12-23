@@ -147,7 +147,7 @@ const UserTable = () => {
           <Pagination
             posts={users}
             setCurrent={handleCurrentPost}
-            itemsPerPage={5}
+            perPage={5}
           />
         </div>
       </div>

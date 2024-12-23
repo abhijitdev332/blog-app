@@ -3,8 +3,10 @@ import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import cl from "classnames";
 import { toast } from "react-toastify";
 
-const Pagination = ({ posts, setCurrent, itemsPerPage, style }) => {
+const Pagination = ({ posts, setCurrent, perPage, style }) => {
   const [currentPage, SetCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerpage] = useState(perPage || 5);
+  const [inputVal, SetinputVal] = useState(perPage || 5);
   const [totalPage, setTotalPage] = useState(
     Math.ceil((posts?.length || 0) / itemsPerPage)
   );
@@ -23,18 +25,28 @@ const Pagination = ({ posts, setCurrent, itemsPerPage, style }) => {
       toast("You are at Start page");
     }
   };
+  const handleItemPerPage = () => {
+    let itPerPage = Number(inputVal.trim(""));
+    if (isNaN(itPerPage)) {
+      toast.info("please enter valid number!!");
+    } else if (itPerPage < 0) {
+      toast.info("Please enter number greater than 0");
+    } else {
+      setItemsPerpage(itPerPage);
+    }
+  };
   useEffect(() => {
     setTotalPage(Math.ceil((posts?.length || 0) / itemsPerPage));
     const startInx = (currentPage - 1) * itemsPerPage;
     const endInx = currentPage * itemsPerPage;
     let slicedPosts = posts?.slice(startInx, endInx);
     setCurrent(slicedPosts);
-  }, [currentPage, posts]);
+  }, [currentPage, posts, itemsPerPage]);
   return (
     <div className={cl(style, "bg-slate-300 sticky bottom-0 w-full")}>
       <div className="pagination__wrapper px-3 py-3 md:px-4 ">
         <div className="flex items-center justify-between">
-          <div className="flex">
+          <div className="flex items-center">
             <p className="font-semibold text-sm flex gap-1">
               <span>
                 {(currentPage - 1) * itemsPerPage}-
@@ -44,6 +56,24 @@ const Pagination = ({ posts, setCurrent, itemsPerPage, style }) => {
               </span>
               OF
               <span>{posts?.length}</span>
+            </p>
+            <p className="flex items-center gap-2 px-3">
+              <span className="font-medium robo">Per Page</span>
+              <span className="w-[3rem]">
+                <input
+                  type="text"
+                  className="outline-none w-full bg-slate-200 border-2 border-slate-300 rounded-md p-1"
+                  value={inputVal}
+                  onChange={(e) => {
+                    SetinputVal(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      handleItemPerPage();
+                    }
+                  }}
+                />
+              </span>
             </p>
           </div>
           <div className="flex items-center justify-between gap-4">
