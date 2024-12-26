@@ -22,7 +22,7 @@ const Home = () => {
   // window scroll event
   const handleScroll = (e) => {
     if (err) {
-      abortCon.abort();
+      abortCon?.abort();
       setLoading(false);
       return;
     } else if (
