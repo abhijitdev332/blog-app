@@ -1,12 +1,17 @@
-$primary: #414288;
+@use "./responsive.scss" as *;
+
+$primary: #11194f;
 $active: #f6ae2d;
 $dark: #070707;
 $light: #f6f8ff;
 $success: #73937e;
 
 @mixin logo {
-  font-size: 1.7rem;
+  font-size: 1rem;
   color: $primary;
   font-weight: bold;
   font-family: "Roboto" !important;
+  @include sm {
+    font-size: 1.7rem;
+  }
 }

@@ -3,11 +3,12 @@
   flex-direction: column;
   gap: 0.4rem;
   max-width: 30rem;
+  padding-bottom: 0.5rem;
   .postImg {
     width: 100%;
     min-width: 20rem;
     height: max(18rem, 13vh);
-    border-radius: 15px;
+    border-radius: 8px;
     object-fit: cover;
     object-position: top center;
   }

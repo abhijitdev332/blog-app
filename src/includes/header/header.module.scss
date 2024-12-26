@@ -9,14 +9,6 @@
   &__logo {
     @include logo;
   }
-  // .navlink {
-  //   color: $primary;
-  //   transition: 0.5s ease;
-  //   font-family: "allieno";
-  //   &:hover {
-  //     color: $active;
-  //   }
-  // }
 }
 
 .actions__btn {
@@ -27,11 +19,10 @@
     padding: 0.3rem 0.5rem !important;
     border: 2px solid transparent;
     font-size: 0.8rem;
-    color: $dark !important;
     font-weight: 500 !important;
     height: fit-content;
     border-radius: 10px;
-    transition: 0.5s ease;
+    transition: 0.3s ease;
     @include sm {
       font-size: 1.1rem;
     }
@@ -52,21 +43,22 @@
   .login {
     border-color: $primary;
     transition: 0.4s ease;
+    color: $primary;
     &:hover {
       background: $primary;
       border-color: transparent;
-      color: $light !important;
+      color: $light;
     }
   }
   .signin {
     background: $primary;
     border-color: transparent;
-    color: $light !important;
+    color: $light;
     transition: 0.4s ease;
     &:hover {
       border-color: $primary;
       background: transparent;
-      color: $dark !important;
+      color: $primary;
     }
   }
 }
