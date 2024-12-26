@@ -5,7 +5,8 @@ const useDataStore = create((set) => ({
   loading: false,
   status: true,
 
-  setData: (data) => set({ data: [...data], status: false }),
+  setData: (data) =>
+    set((state) => ({ data: [...state.data, ...data], status: false })),
   removeData: () => set(() => ({ data: [] })),
   setRefetch: () => set({ status: true }),
 }));
