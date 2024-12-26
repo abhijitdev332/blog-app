@@ -15,11 +15,17 @@ const Home = () => {
   const { data, setData } = useDataStore();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [err, setErr] = useState(false);
   const perPage = 5;
 
+  let abortCon;
   // window scroll event
   const handleScroll = (e) => {
-    if (
+    if (err) {
+      abortCon.abort();
+      setLoading(false);
+      return;
+    } else if (
       document.body.scrollHeight - 500 <
       window.scrollY + window.innerHeight
     ) {
@@ -28,18 +34,19 @@ const Home = () => {
   };
   window.addEventListener("scroll", handleScroll);
   // fetch data
-  const getData = async () => {
+  const getData = async (sig) => {
     try {
       const res = await AxiosInt.get(
-        `/post?limit=${perPage}&skip=${perPage * (page - 1)}`
+        `/post?limit=${perPage}&skip=${perPage * (page - 1)}`,
+        { signal: sig }
       );
       if (res.status == 200) {
         setData(res.data?.data);
       }
     } catch (err) {
-      window.removeEventListener("scroll", handleScroll);
-      setLoading(false);
-      toast.error(err?.response?.data?.msg || "No Posts found!!");
+      setErr(true);
+      // window.removeEventListener("scroll", handleScroll);
+      toast(err?.response?.data?.msg || "No More Posts found!!");
       // toast("Please try after some times!!");
     } finally {
       setLoading(false);
@@ -51,9 +58,10 @@ const Home = () => {
     }
   }, [loading]);
   useEffect(() => {
+    abortCon = new AbortController();
     if (page > 1) {
       setTimeout(() => {
-        getData();
+        getData(abortCon.signal);
       }, 1000);
     }
   }, [page]);
