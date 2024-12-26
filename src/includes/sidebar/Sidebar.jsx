@@ -22,7 +22,7 @@ const Sidebar = () => {
         style.sidebar__container
       )}
     >
-      <div className="lg:container lg:mx-auto h-full px-2">
+      <div className="lg:container lg:mx-auto h-full md:px-2">
         <div className=" h-full flex flex-col divide-y-2 gap-2">
           <Link
             className="lg:text-xl font-semibold flex flex-row gap-1 items-center robo"
@@ -31,7 +31,7 @@ const Sidebar = () => {
             <span>
               <IoHomeOutline />
             </span>
-            <span>Home</span>
+            <span className="md:inline-block hidden">Home</span>
           </Link>
           <ul
             className={cl(
@@ -40,28 +40,43 @@ const Sidebar = () => {
             )}
           >
             <li>
-              <div className="flex justify-start gap-1 items-center hover:text-indigo-400">
-                <span>
-                  <IoMdAddCircleOutline fontSize={"1.3rem"} />
-                </span>
-                <Link to={"/admin/addpost"}>Add Post</Link>
+              <div>
+                <Link
+                  to={"/admin/addpost"}
+                  className="flex justify-start gap-1 items-center hover:text-indigo-400"
+                >
+                  <span>
+                    <IoMdAddCircleOutline fontSize={"1.3rem"} />
+                  </span>
+                  <span className="md:inline-block hidden">Add Post</span>
+                </Link>
               </div>
             </li>
             <li>
-              <div className="flex justify-start gap-1 items-center hover:text-indigo-400">
-                <span>
-                  <BsPostcard />
-                </span>
-                <Link to={"/admin"}>View Posts</Link>
+              <div>
+                <Link
+                  to={"/admin"}
+                  className="flex justify-start gap-1 items-center hover:text-indigo-400"
+                >
+                  <span>
+                    <BsPostcard />
+                  </span>
+                  <span className="md:inline-block hidden">View Posts</span>
+                </Link>
               </div>
             </li>
             {isAdmin && (
               <li>
-                <div className="flex justify-start gap-1 items-center hover:text-indigo-400">
-                  <span>
-                    <IoIosPeople />
-                  </span>
-                  <Link to={"/admin/users"}>View Users</Link>
+                <div>
+                  <Link
+                    to={"/admin/users"}
+                    className="flex justify-start gap-1 items-center hover:text-indigo-400"
+                  >
+                    <span>
+                      <IoIosPeople />
+                    </span>
+                    <span className="md:inline-block hidden"> View Users</span>
+                  </Link>
                 </div>
               </li>
             )}
@@ -94,9 +109,9 @@ const Sidebar = () => {
 
           <div className="flex gap-1 items-center text-lg py-5 hover:text-indigo-400">
             <span>
-              <IoIosLogOut />
+              <IoIosLogOut fontSize={"1.3rem"} />
             </span>
-            <Logout />
+            <Logout style={"md:inline-block hidden"} />
           </div>
         </div>
       </div>

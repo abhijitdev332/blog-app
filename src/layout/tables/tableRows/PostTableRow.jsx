@@ -101,14 +101,15 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
               </button>
             </>
           ) : (
-            <button
-              className="hover:scale-125 transition-all"
-              title="Edit Post"
-            >
-              <span>
-                <FaRegEdit color="indigo" fontSize={"1.4rem"} />
-              </span>
-            </button>
+            ""
+            // <button
+            //   className="hover:scale-125 transition-all"
+            //   title="Edit Post"
+            // >
+            //   <span>
+            //     <FaRegEdit color="indigo" fontSize={"1.4rem"} />
+            //   </span>
+            // </button>
           )}
         </div>
         <div className="inline-flex items-center">
@@ -149,14 +150,14 @@ const UserModal = ({ ele, handleDelete }) => {
           </span>
         </button>
       </li>
-      <li>
+      {/* <li>
         <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
           <span>
             <FaRegEdit fontSize={"1rem"} />
           </span>
           <span className="font-semibold">Edit Post</span>
         </button>
-      </li>
+      </li> */}
 
       <li>
         <button

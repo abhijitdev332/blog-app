@@ -3,7 +3,9 @@ import { IoClose } from "react-icons/io5";
 const TagsChip = ({ input, handleDelete }) => {
   return (
     <span className="bg-slate-400 flex gap-1 items-center px-2 py-1 rounded">
-      <span className="font-semibold robo">{input}</span>
+      <span className="font-semibold robo flex text-sm text-nowrap">
+        {input}
+      </span>
       <span
         onClick={() => {
           handleDelete(input);

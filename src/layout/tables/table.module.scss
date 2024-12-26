@@ -31,9 +31,12 @@
       font-weight: 500;
       font-family: "Roboto" !important;
       text-transform: capitalize;
-      font-size: 1.2rem;
+      font-size: 0.8rem;
       span {
         cursor: pointer;
+      }
+      @include md {
+        font-size: 1.2rem;
       }
       @include sm {
         padding: 0.7rem;
@@ -44,6 +47,7 @@
     tr {
       border-bottom: 2px solid $dark;
       padding: 1rem 0;
+      overflow-x: auto;
       td {
         font-size: 0.9rem;
         font-weight: 400;
