@@ -147,9 +147,9 @@ const UserTableRow = ({ ele, getUsers }) => {
             </li>
             <li>
               <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
-                <MdOutlinePostAdd fontSize={"1.rem"} />
+                <MdOutlinePostAdd fontSize={"1rem"} />
                 <span className="font-semibold">
-                  <Link to={`/admin/user/post/${ele?._id}`}> User Posts</Link>
+                  <Link to={`/admin/user/post/${ele?._id}`}>User Posts</Link>
                 </span>
               </button>
             </li>

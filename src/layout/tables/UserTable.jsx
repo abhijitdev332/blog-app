@@ -140,7 +140,9 @@ const UserTable = () => {
                   <UserTableRow ele={ele} getUsers={getUsers} />
                 ))
               ) : (
-                <h3>No Users in here</h3>
+                <h3 className="p-5 font-semibold text-lg">
+                  No Users in here !!
+                </h3>
               )}
             </tbody>
           </table>

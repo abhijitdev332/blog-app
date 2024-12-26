@@ -149,7 +149,7 @@ const PostTable = () => {
               <td>Post Title</td>
               <td>
                 <div
-                  className="inline-flex items-center gap-1"
+                  className="inline-flex items-center"
                   onClick={() => {
                     sortAuthor();
                   }}
@@ -162,7 +162,7 @@ const PostTable = () => {
               </td>
               <td>
                 <div
-                  className="inline-flex items-center gap-1"
+                  className="inline-flex items-center"
                   onClick={() => {
                     sortStatus();
                   }}
@@ -175,7 +175,7 @@ const PostTable = () => {
               </td>
               <td>
                 <div
-                  className="inline-flex items-center gap-1"
+                  className="inline-flex items-center"
                   onClick={() => {
                     sortCreatedDate();
                   }}
@@ -194,7 +194,7 @@ const PostTable = () => {
                   <PostTableRow ele={ele} setFetch={handleFetch} />
                 ))
               ) : (
-                <h2>No post exist</h2>
+                <h2 className="p-5 font-semibold text-lg">No post exist!!</h2>
               )}
             </tbody>
           </table>

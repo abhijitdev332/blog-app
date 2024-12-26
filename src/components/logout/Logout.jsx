@@ -8,13 +8,15 @@ const Logout = ({ style }) => {
   const navigate = useNavigate();
   const { removeUser } = useUserStore();
   const handleLogout = async () => {
-    const res = await AxiosInt.post("/auth/logout");
-    if (res.status == 200) {
-      toast.success("you are successfully logout");
-      removeUser();
-      navigate("/", { replace: true });
-    } else {
-      toast.error("something went wrong please try again");
+    try {
+      const res = await AxiosInt.post("/auth/logout");
+      if (res.status == 200) {
+        toast.success(res.data?.msg);
+        removeUser();
+        navigate("/", { replace: true });
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.msg);
     }
   };
 

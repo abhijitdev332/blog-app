@@ -25,13 +25,13 @@ const Sidebar = () => {
       <div className="lg:container lg:mx-auto h-full px-2">
         <div className=" h-full flex flex-col divide-y-2 gap-2">
           <Link
-            className="lg:text-xl font-semibold flex gap-1 items-center robo"
+            className="lg:text-xl font-semibold flex flex-row gap-1 items-center robo"
             to={"/"}
           >
             <span>
               <IoHomeOutline />
             </span>
-            Home
+            <span>Home</span>
           </Link>
           <ul
             className={cl(

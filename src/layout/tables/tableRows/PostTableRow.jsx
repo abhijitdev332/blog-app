@@ -189,7 +189,19 @@ const AdminModal = ({ ele, handleDelete }) => {
           </Link>
         </button>
       </li>
-
+      <li>
+        <button className=" flex gap-1 cursor-pointer items-center hover:text-blue-500">
+          <MdOutlinePostAdd fontSize={"1rem"} />
+          <span>
+            <Link
+              to={`/admin/user/post/${ele?.author?._id}`}
+              className="font-semibold"
+            >
+              User Posts
+            </Link>
+          </span>
+        </button>
+      </li>
       <li>
         <button
           className="flex gap-1 items-center cursor-pointer hover:text-red-600"

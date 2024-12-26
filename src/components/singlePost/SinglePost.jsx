@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollRestoration, useParams } from "react-router-dom";
+import { Link, ScrollRestoration, useParams } from "react-router-dom";
 import style from "./singlePost.module.scss";
 import cl from "classnames";
 import { Chip, PostList } from "../components";
@@ -9,17 +9,22 @@ import { FaFacebook } from "react-icons/fa6";
 import useFetchData from "../../hooks/useFetchData";
 import { toDateString } from "../../utils/utils";
 import { useLoaderStore } from "../../services/store/store";
+const APPURL = import.meta.env.VITE_REACT_APP_APP_URL;
+
 const icons = [
   {
     id: 1,
+    url: `https://wa.me/?text=${APPURL}`,
     icon: <IoLogoWhatsapp />,
   },
   {
     id: 2,
+    url: `https://twitter.com/intent/tweet?url=${APPURL}&text=blog%20app`,
     icon: <FaXTwitter />,
   },
   {
     id: 3,
+    url: `https://www.facebook.com/sharer/sharer.php?u=${APPURL}`,
     icon: <FaFacebook />,
   },
 ];
@@ -43,7 +48,9 @@ const SinglePost = () => {
   }, [post]);
 
   if (post == null || post?.status !== "published") {
-    return <h3>No Post Found</h3>;
+    return (
+      <h3 className="font-medium text-lg text-center">No Post Found !!</h3>
+    );
   }
   return (
     <>
@@ -64,8 +71,13 @@ const SinglePost = () => {
                   </div>
                   <div className="share__group flex gap-3">
                     {icons.map((ele) => (
-                      <span className="text-2xl cursor-pointer hover:scale-125 hover:text-indigo-600 transition-transform ">
-                        {ele.icon}
+                      <span
+                        key={ele.id}
+                        className="text-2xl cursor-pointer hover:scale-125 hover:text-indigo-600 transition-transform "
+                      >
+                        <Link to={ele.url} target="_blank">
+                          {ele.icon}
+                        </Link>
                       </span>
                     ))}
                   </div>
@@ -92,11 +104,7 @@ const SinglePost = () => {
                 style.list__wrapper
               )}
             >
-              <PostList
-                posts={related}
-                title="Related Posts"
-                showPagination={false}
-              />
+              <PostList posts={related} title="Related Posts" />
             </div>
           </div>
         </div>
