@@ -26,7 +26,7 @@ const Home = () => {
       setLoading(false);
       return;
     } else if (
-      document.body.scrollHeight - 500 <
+      document.body.scrollHeight - 300 <
       window.scrollY + window.innerHeight
     ) {
       setLoading(true);
@@ -35,11 +35,11 @@ const Home = () => {
   window.addEventListener("scroll", handleScroll);
   // fetch data
   const getData = async (sig) => {
+    let skip = data?.length + 1;
     try {
-      const res = await AxiosInt.get(
-        `/post?limit=${perPage}&skip=${perPage * (page - 1)}`,
-        { signal: sig }
-      );
+      const res = await AxiosInt.get(`/post?limit=${perPage}&skip=${skip}`, {
+        signal: sig,
+      });
       if (res.status == 200) {
         setData(res.data?.data);
       }
