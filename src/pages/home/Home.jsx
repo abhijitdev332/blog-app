@@ -10,6 +10,7 @@ import { DataLoader } from "../../layout/layouts";
 // style
 import style from "./home.module.scss";
 import AxiosInt from "../../services/api/api";
+import { ScrollRestoration } from "react-router-dom";
 
 const Home = () => {
   const { data, setData } = useDataStore();
@@ -68,6 +69,7 @@ const Home = () => {
 
   return (
     <>
+      <ScrollRestoration />
       <div className="bg-[#f8f8f8]">
         <Header />
         <Hero />
