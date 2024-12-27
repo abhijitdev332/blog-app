@@ -94,8 +94,10 @@ const UserTableRow = ({ ele, getUsers }) => {
       <td>
         <span
           className={cl(
-            "px-2 py-1 rounded popines",
-            ele?.isActive ? "text-blue-500 " : "text-slate-500 "
+            "px-2 py-1 rounded-full",
+            ele?.isActive
+              ? "text-green-900 bg-green-400"
+              : "text-slate-900 bg-slate-400"
           )}
         >
           {ele?.isActive ? "active" : "unactive"}
@@ -205,11 +207,11 @@ const UserTableRow = ({ ele, getUsers }) => {
 
 const AccessChip = ({ access }) => {
   return access.toLowerCase() == "admin" ? (
-    <span className="px-2 bg-green-300 text-green-800 rounded-full">
+    <span className="px-2 bg-green-400 text-green-900 rounded-full">
       {access}
     </span>
   ) : (
-    <span className="px-2 bg-blue-300 text-blue-800 rounded-full">
+    <span className="px-2 bg-blue-400 text-blue-900 rounded-full">
       {access}
     </span>
   );

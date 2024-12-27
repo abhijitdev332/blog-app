@@ -1,0 +1,17 @@
+@use "../../../scss/variable.scss" as *;
+@use "../../../scss/responsive.scss" as *;
+
+.action {
+  transition: display 0.6s ease;
+  &__wrapper {
+    background: $light;
+    border: 1px solid $primary;
+    justify-content: space-around;
+  }
+  &__text {
+    color: $primary;
+    font-family: "roboto";
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+}

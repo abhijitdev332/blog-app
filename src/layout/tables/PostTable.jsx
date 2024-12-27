@@ -8,6 +8,7 @@ import Pagination from "./Pagination";
 import cl from "classnames";
 import style from "./table.module.scss";
 import { PostTableRow } from "./tableRows/rows";
+import Actions from "./hoverActions/Actions";
 
 const PostTable = () => {
   const [userPosts, setUserPosts] = useState([]);
@@ -31,6 +32,8 @@ const PostTable = () => {
   // );
   const [sorted, setSorted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
+  const [checked, setChecked] = useState(false);
+  const [checkedArr, setCheckArr] = useState([]);
   const getUserPosts = async (sig) => {
     try {
       setLoading();
@@ -122,6 +125,13 @@ const PostTable = () => {
     setCurrentPosts(data);
   };
   useEffect(() => {
+    if (checked) {
+      setCheckArr(currentPosts?.map((ele) => ele?._id));
+    } else {
+      setCheckArr([]);
+    }
+  }, [checked]);
+  useEffect(() => {
     let abortCon = new AbortController();
     setIsAdmin(user?.roles?.includes("admin"));
     if (isAdmin) {
@@ -139,13 +149,17 @@ const PostTable = () => {
         <div className={style.table__wrapper}>
           <table className={style.table}>
             <thead className="bg-slate-200">
-              {/* <td>
+              <td>
                 <input
                   type="checkbox"
                   name="check"
                   className={style.checkbox}
+                  checked={checked}
+                  onChange={(e) => {
+                    setChecked(e.target.checked);
+                  }}
                 />
-              </td> */}
+              </td>
               <td>Post Title</td>
               <td>
                 <div
@@ -191,13 +205,19 @@ const PostTable = () => {
             <tbody>
               {currentPosts?.length > 0 ? (
                 currentPosts?.map((ele) => (
-                  <PostTableRow ele={ele} setFetch={handleFetch} />
+                  <PostTableRow
+                    ele={ele}
+                    setFetch={handleFetch}
+                    allCheck={checked}
+                    setCheckArr={setCheckArr}
+                  />
                 ))
               ) : (
                 <h2 className="p-5 font-semibold text-lg">No post exist!!</h2>
               )}
             </tbody>
           </table>
+          <Actions checkedArr={checkedArr} setFetch={setFetch} />
           <Pagination
             posts={userPosts}
             setCurrent={handleCurrentPost}

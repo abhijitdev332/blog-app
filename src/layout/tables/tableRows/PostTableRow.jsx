@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import {
@@ -17,13 +17,14 @@ import { LuView } from "react-icons/lu";
 import cl from "classnames";
 import style from "./rowStyle.module.scss";
 
-const PostTableRow = ({ ele, setFetch = "" }) => {
+const PostTableRow = ({ ele, setFetch = "", allCheck, setCheckArr }) => {
   // global states
   const { user } = useUserStore();
   const { setRefetch } = useDataStore();
   // local states
   const [show, setShow] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
+  const [checked, setChecked] = useState(false);
   // functions
   const handlePublishClick = async (e) => {
     try {
@@ -63,18 +64,46 @@ const PostTableRow = ({ ele, setFetch = "" }) => {
       toast.error(err?.response?.data?.msg);
     }
   };
+  const handleCheck = (e) => {
+    if (e.target.checked) {
+      setCheckArr((prev) => [...prev, ele?._id]);
+    } else {
+      setCheckArr((prev) => {
+        let fillterArr = prev?.filter((item) => item !== ele?._id);
+        return [...fillterArr];
+      });
+    }
+    setChecked(e.target.checked);
+  };
 
+  useEffect(() => {
+    if (allCheck) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, [allCheck]);
   return (
     <tr key={ele?._id} className={cl("relative")}>
-      {/* <td>
-        <input type="checkbox" name="check" className={style.checkbox} />
-      </td> */}
+      <td>
+        <input
+          type="checkbox"
+          name="check"
+          checked={checked}
+          className={style.checkbox}
+          onChange={handleCheck}
+        />
+      </td>
       <td title={ele?.title}>{ele.title.substring(0, 15)}...</td>
       <td>{ele?.author?.username}</td>
       <td>
         <span
           className={cl(
-            ele?.status == "published" ? "text-green-500" : "text-slate-500"
+            "p-2 rounded-full capitalize",
+
+            ele?.status == "published"
+              ? "text-green-900 bg-green-400"
+              : "text-slate-900 bg-slate-400"
           )}
         >
           {ele?.status}

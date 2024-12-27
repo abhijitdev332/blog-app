@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import cl from "classnames";
 import { toast } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
 
 const Pagination = ({ posts, setCurrent, perPage, style }) => {
+  const [params, setSearchParams] = useSearchParams(1);
   const [currentPage, SetCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerpage] = useState(perPage || 5);
   const [inputVal, SetinputVal] = useState(perPage || 5);
@@ -27,9 +29,15 @@ const Pagination = ({ posts, setCurrent, perPage, style }) => {
   };
   const handleItemPerPage = () => {
     let itPerPage = Number(inputVal.trim(""));
+    if (inputVal == "") {
+      SetinputVal(posts?.length);
+      setItemsPerpage(posts?.length);
+      return;
+    }
+
     if (isNaN(itPerPage)) {
       toast.info("please enter valid number!!");
-    } else if (itPerPage < 0) {
+    } else if (itPerPage <= 0) {
       toast.info("Please enter number greater than 0");
     } else {
       setItemsPerpage(itPerPage);
@@ -38,12 +46,13 @@ const Pagination = ({ posts, setCurrent, perPage, style }) => {
   useEffect(() => {
     setTotalPage(Math.ceil((posts?.length || 0) / itemsPerPage));
     const startInx = (currentPage - 1) * itemsPerPage;
-    const endInx = currentPage * itemsPerPage;
+    const endInx = startInx + itemsPerPage;
     let slicedPosts = posts?.slice(startInx, endInx);
     setCurrent(slicedPosts);
+    setSearchParams({ page: currentPage });
   }, [currentPage, posts, itemsPerPage]);
   return (
-    <div className={cl(style, "bg-slate-300 sticky bottom-0 w-full")}>
+    <div className={cl(style, "bg-slate-300 sticky bottom-0 w-full mt-auto")}>
       <div className="pagination__wrapper px-3 py-3 md:px-4 ">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
