@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AxiosInt from "../services/api/api";
 
-const useFetchData = (url = "") => {
+const useFetchData = (url = "", refetch = false) => {
   const [data, setData] = useState(null);
   const [loading, setLoader] = useState(false);
   const [err, setErr] = useState(null);
@@ -25,7 +25,7 @@ const useFetchData = (url = "") => {
     };
     fetchData();
     return () => abortCon.abort();
-  }, [url]);
+  }, [url, refetch]);
 
   return { data, loading, err };
 };
