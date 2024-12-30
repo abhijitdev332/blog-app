@@ -4,11 +4,12 @@ import AxiosInt from "../../../services/api/api";
 import { toast } from "react-toastify";
 import { LuLoaderCircle } from "react-icons/lu";
 
-const AddComment = ({ postId, setRefetch }) => {
+const AddComment = ({ postId, addComment }) => {
   const { user } = useUserStore();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // handle comment add
   const handleAddCommnet = async () => {
     if (input.trim() == "") {
       toast.info("Please enter valid comment");
@@ -23,10 +24,10 @@ const AddComment = ({ postId, setRefetch }) => {
             text: input,
           },
         });
-        if ((res.status = 200)) {
+        if (res.status == 200) {
+          addComment({ user: user, text: input, createdAt: Date.now() });
           toast.success(res.data?.msg);
           setInput("");
-          setRefetch((prev) => !prev);
         }
       } catch (err) {
         toast.error(err?.response?.data?.msg);
@@ -54,7 +55,7 @@ const AddComment = ({ postId, setRefetch }) => {
         }}
       />
       <button
-        className="p-2 bg-slate-900 text-white rounded-md font-semibold"
+        className="p-2 bg-slate-900 flex gap-1 text-white rounded-md font-semibold"
         onClick={handleAddCommnet}
       >
         {loading && (

@@ -23,4 +23,4 @@ const DataLoader = ({ bg = "#f8f8f8" }) => {
   );
 };
 
-export default DataLoader;
+export default React.memo(DataLoader);

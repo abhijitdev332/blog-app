@@ -10,6 +10,7 @@ import useFetchData from "../../hooks/useFetchData";
 import { toDateString } from "../../utils/utils";
 import { useLoaderStore } from "../../services/store/store";
 import AddComment from "./addComment/AddComment";
+import { toast } from "react-toastify";
 const APPURL = import.meta.env.VITE_REACT_APP_APP_URL;
 
 const icons = [
@@ -31,14 +32,19 @@ const icons = [
 ];
 const SinglePost = () => {
   const { id } = useParams();
-  const [reFetch, setRefetch] = useState(false);
-  const { data } = useFetchData(`/post/${id}`, reFetch);
+  const { data } = useFetchData(`/post/${id}`);
   const { data: relatedData } = useFetchData(`/post/related/${id}`);
-  const { setLoading, removeLoading } = useLoaderStore();
+  const { status, setLoading, removeLoading } = useLoaderStore();
   const [post, setPost] = useState(null);
   const [related, setRelated] = useState([]);
+  const [postComments, setPostComments] = useState([]);
+  const handleCommentAdd = (comment) => {
+    setPostComments((prev) => [...prev, { ...comment }]);
+  };
+
   useEffect(() => {
     setPost(data);
+    setPostComments(data?.comments);
     setRelated(relatedData);
   }, [id, data, relatedData]);
   useEffect(() => {
@@ -48,7 +54,6 @@ const SinglePost = () => {
       removeLoading();
     }
   }, [post]);
-
   if (post == null || post?.status !== "published") {
     return (
       <h3 className="font-medium text-lg text-center">No Post Found !!</h3>
@@ -103,9 +108,9 @@ const SinglePost = () => {
                 <h2 className="text-lg font-semibold py-3 border-b-2 border-black">
                   Comments:
                 </h2>
-                <AddComment postId={post?._id} setRefetch={setRefetch} />
+                <AddComment postId={post?._id} addComment={handleCommentAdd} />
                 <div className="flex-col">
-                  {post?.comments?.map((com) => {
+                  {postComments?.map((com) => {
                     return (
                       <div className="flex py-3 gap-2">
                         {/* img */}

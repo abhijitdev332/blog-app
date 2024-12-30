@@ -3,11 +3,12 @@ import hand from "../../assets/icons/hand.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
-import { useUserStore } from "../../services/store/store";
+import { useLoaderStore, useUserStore } from "../../services/store/store";
 import { z } from "zod";
 const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useUserStore();
+  const { setLoading, removeLoading } = useLoaderStore();
   const [inputState, setInputState] = useState({
     email: "",
     password: "",
@@ -28,6 +29,7 @@ const Login = () => {
     }
     // validate data
     try {
+      setLoading();
       schema.parse(inputState);
       let body = JSON.stringify(inputState);
       //  send request o backend
@@ -46,6 +48,8 @@ const Login = () => {
         toast.error(err.errors[0]?.message);
       }
       toast.error(err?.response?.data?.msg);
+    } finally {
+      removeLoading();
     }
   };
   return (

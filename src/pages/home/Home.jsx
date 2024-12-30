@@ -11,6 +11,7 @@ import { DataLoader } from "../../layout/layouts";
 import style from "./home.module.scss";
 import AxiosInt from "../../services/api/api";
 import { ScrollRestoration } from "react-router-dom";
+import InitialData from "../../data/InitialData";
 
 const Home = () => {
   const { data, setData } = useDataStore();
@@ -83,6 +84,7 @@ const Home = () => {
 
         <Footer />
       </div>
+      <InitialData />
       <DataLoader />
       <ToastContainer />
     </>

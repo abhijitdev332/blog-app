@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AxiosInt from "../../services/api/api";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import { useLoaderStore } from "../../services/store/store";
 const Register = () => {
   const navigate = useNavigate();
+  const { setLoading, removeLoading } = useLoaderStore();
   const [inputState, setInputState] = useState({
     name: "",
     email: "",
@@ -32,6 +34,7 @@ const Register = () => {
       }
     }
     try {
+      setLoading();
       schema.parse(inputState);
       let res = await AxiosInt.post("user/create", {
         username: inputState.name,
@@ -48,6 +51,8 @@ const Register = () => {
         toast.error(err.errors[0].message);
       }
       toast.error(err?.response?.data?.msg);
+    } finally {
+      removeLoading();
     }
   };
   return (

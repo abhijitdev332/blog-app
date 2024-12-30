@@ -2,24 +2,7 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { DataLoader } from "../../layout/layouts";
-import AxiosInt from "../../services/api/api";
-import { useLoaderStore } from "../../services/store/store.js";
-const Auth = () => {
-  const { setLoading, removeLoading } = useLoaderStore();
-  AxiosInt.interceptors.request.use((config) => {
-    setLoading();
-    return config;
-  });
-  AxiosInt.interceptors.response.use(
-    (value) => {
-      removeLoading();
-      return value;
-    },
-    (error) => {
-      removeLoading();
-      return Promise.reject(error);
-    }
-  );
+const AuthPage = () => {
   return (
     <>
       <div className="bg-slate-900 md:h-screen">
@@ -49,4 +32,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthPage;
