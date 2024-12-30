@@ -6,7 +6,7 @@ import useLoaderStore from "../../../services/store/useLoaderStore";
 import AxiosInt from "../../../services/api/api";
 import { toast } from "react-toastify";
 
-const Actions = ({ checkedArr, setFetch }) => {
+const Actions = ({ checkedArr, setCheckArr, setFetch }) => {
   const { setLoading, removeLoading } = useLoaderStore();
   const handleDelete = async () => {
     try {
@@ -17,6 +17,7 @@ const Actions = ({ checkedArr, setFetch }) => {
       });
       if (res.status == 200) {
         toast.success(res.data?.msg);
+        setCheckArr([]);
         setFetch(true);
       }
     } catch (err) {
@@ -43,7 +44,7 @@ const Actions = ({ checkedArr, setFetch }) => {
         <p className={style.action__text}>{checkedArr?.length} Selected</p>
         <button
           className="flex gap-1 items-center cursor-pointer hover:text-red-600"
-          //   onClick={() => handleDelete(ele?._id)}
+          onClick={() => handleDelete()}
         >
           <RiDeleteBin6Fill fontSize={"1rem"} />
           <span className="font-semibold">Delete</span>

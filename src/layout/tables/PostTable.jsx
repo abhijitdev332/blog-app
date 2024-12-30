@@ -217,7 +217,11 @@ const PostTable = () => {
               )}
             </tbody>
           </table>
-          <Actions checkedArr={checkedArr} setFetch={setFetch} />
+          <Actions
+            checkedArr={checkedArr}
+            setCheckArr={setCheckArr}
+            setFetch={setFetch}
+          />
           <Pagination
             posts={userPosts}
             setCurrent={handleCurrentPost}
