@@ -8,9 +8,12 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa6";
 import useFetchData from "../../hooks/useFetchData";
 import { toDateString } from "../../utils/utils";
-import { useLoaderStore } from "../../services/store/store";
+import { useLoaderStore, useUserStore } from "../../services/store/store";
 import AddComment from "./addComment/AddComment";
+import { ImBin2 } from "react-icons/im";
+import AxiosInt from "../../services/api/api";
 import { toast } from "react-toastify";
+import { LuLoaderCircle } from "react-icons/lu";
 const APPURL = import.meta.env.VITE_REACT_APP_APP_URL;
 
 const icons = [
@@ -34,12 +37,17 @@ const SinglePost = () => {
   const { id } = useParams();
   const { data } = useFetchData(`/post/${id}`);
   const { data: relatedData } = useFetchData(`/post/related/${id}`);
-  const { status, setLoading, removeLoading } = useLoaderStore();
+  const { setLoading, removeLoading } = useLoaderStore();
   const [post, setPost] = useState(null);
   const [related, setRelated] = useState([]);
   const [postComments, setPostComments] = useState([]);
   const handleCommentAdd = (comment) => {
     setPostComments((prev) => [...prev, { ...comment }]);
+  };
+  const handleCommentDelete = (commentId) => {
+    setPostComments((prev) => [
+      ...prev?.filter((ele) => ele?._id !== commentId),
+    ]);
   };
 
   useEffect(() => {
@@ -110,29 +118,13 @@ const SinglePost = () => {
                 </h2>
                 <AddComment postId={post?._id} addComment={handleCommentAdd} />
                 <div className="flex-col">
-                  {postComments?.map((com) => {
-                    return (
-                      <div className="flex py-3 gap-2">
-                        {/* img */}
-                        <div className="text-slate-200 bg-slate-800 rounded-full w-8 h-8 flex justify-center items-center">
-                          <span className="font-bold text-lg">
-                            {com?.user?.username?.charAt(0)}
-                          </span>
-                        </div>
-
-                        <p className="flex flex-col gap-1">
-                          <span className="text-sm leading-loose text-slate-600">
-                            {com?.user?.username} &diams;
-                            {toDateString(com?.createdAt)}
-                          </span>
-
-                          <span className="font-medium text-md">
-                            {com?.text}
-                          </span>
-                        </p>
-                      </div>
-                    );
-                  })}
+                  {postComments?.map((com) => (
+                    <Comment
+                      com={com}
+                      postId={post?._id}
+                      deleteComment={handleCommentDelete}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -148,6 +140,70 @@ const SinglePost = () => {
         </div>
       </div>
     </>
+  );
+};
+
+const Comment = ({ com, postId, deleteComment }) => {
+  const { user } = useUserStore();
+  const [isAdmin, setAdmin] = useState(user?.roles?.includes("admin") || false);
+  const [loading, setLoading] = useState(false);
+  const handleCommentClick = async () => {
+    try {
+      setLoading(true);
+      let res = await AxiosInt.delete(
+        `/post/comment/${com?._id}?postId=${postId}`
+      );
+      if (res.status == 200) {
+        deleteComment(com?._id);
+        toast.success(res.data?.msg);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.msg || "failed to delete comment");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    setAdmin(user?.roles?.includes("admin"));
+  }, [user]);
+  return (
+    <div className="flex py-3 gap-2">
+      {/* img */}
+      <div className="text-slate-200 bg-slate-800 rounded-full w-8 h-8 flex justify-center items-center">
+        <span className="font-bold text-lg">
+          {com?.user?.username?.charAt(0)}
+        </span>
+      </div>
+
+      <p className="flex flex-col gap-1">
+        <span className="text-sm leading-loose text-slate-600">
+          {com?.user?.username} &diams;
+          {toDateString(com?.createdAt)}
+        </span>
+
+        <span className="font-medium text-md">{com?.text}</span>
+      </p>
+
+      {(user?._id == com?.user?._id || isAdmin) && (
+        <div
+          className="flex gap-1 justify-center items-center p-1 rounded-md cursor-pointer"
+          onClick={handleCommentClick}
+        >
+          {loading && (
+            <span>
+              <LuLoaderCircle
+                fontSize={"1.4rem"}
+                color="#000"
+                className="animate-spin"
+              />
+            </span>
+          )}
+          <span className="hover:animate-pulse">
+            <ImBin2 fontSize={"1.5rem"} color="crimson" />
+          </span>
+        </div>
+      )}
+    </div>
   );
 };
 
