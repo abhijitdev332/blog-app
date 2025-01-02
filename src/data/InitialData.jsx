@@ -10,8 +10,8 @@ const InitialData = () => {
     try {
       setLoading();
       const res = await AxiosInt.get("/post", { signal: sig });
-      if (res.status == 200) {
-        setData(res.data?.data);
+      if (res.status == 200 && res?.data?.data > 0) {
+        setData(res?.data?.data);
       }
     } catch (err) {
       toast.error(err?.response?.data?.msg || "Something went wrong!!");
