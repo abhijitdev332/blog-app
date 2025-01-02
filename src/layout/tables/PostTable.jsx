@@ -16,20 +16,6 @@ const PostTable = () => {
   const [fetch, setFetch] = useState(false);
   const { user } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
-  // AxiosInt.interceptors.request.use((config) => {
-  //   setLoading();
-  //   return config;
-  // });
-  // AxiosInt.interceptors.response.use(
-  //   (value) => {
-  //     removeLoading();
-  //     return value;
-  //   },
-  //   (error) => {
-  //     removeLoading();
-  //     return Promise.reject(error);
-  //   }
-  // );
   const [sorted, setSorted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const [checked, setChecked] = useState(false);
