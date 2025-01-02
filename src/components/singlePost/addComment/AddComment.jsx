@@ -3,12 +3,19 @@ import { useUserStore } from "../../../services/store/store";
 import AxiosInt from "../../../services/api/api";
 import { toast } from "react-toastify";
 import { LuLoaderCircle } from "react-icons/lu";
+import { z, ZodError } from "zod";
 
 const AddComment = ({ postId, addComment }) => {
   const { user } = useUserStore();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const schema = z.object({
+    user: z.string(),
+    text: z
+      .string()
+      .min(3, "Comment should be minimum 3 charcters long!!")
+      .max(15, "Comment Should not be greater than 15 charchters"),
+  });
   // handle comment add
   const handleAddCommnet = async () => {
     if (input.trim() == "") {
@@ -18,8 +25,12 @@ const AddComment = ({ postId, addComment }) => {
     if ("email" in user) {
       try {
         setLoading(true);
+        schema.parse({
+          user: user?._id,
+          text: input,
+        });
         let res = await AxiosInt.put(`/post/comment/${postId}`, {
-          comments: {
+          comment: {
             user: user?._id,
             text: input,
           },
@@ -30,7 +41,11 @@ const AddComment = ({ postId, addComment }) => {
           setInput("");
         }
       } catch (err) {
-        toast.error(err?.response?.data?.msg);
+        if (err instanceof ZodError) {
+          toast.info(err.errors[0].message);
+        } else {
+          toast.error(err?.response?.data?.msg);
+        }
       } finally {
         setLoading(false);
       }

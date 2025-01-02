@@ -105,7 +105,7 @@ const Editor = () => {
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
-        return toast.error(err.errors[0].message);
+        return toast.info(err.errors[0].message);
       }
       toast.error(err?.response?.data?.msg);
     }

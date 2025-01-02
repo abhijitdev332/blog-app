@@ -16,12 +16,13 @@ const Register = () => {
   const schema = z.object({
     name: z
       .string()
-      .min(5, "Minimum 5 char needed")
-      .max(10, "Maximum 10 char allowed"),
-    email: z.string().email("Enter Valid email"),
+      .min(5, "Username should be 5 charcters long!!")
+      .max(15, "Username can't greater than 15 charcters!!"),
+    email: z.string().email("Please Enter a Valid email"),
     password: z
       .string()
       .min(6, "Password must be at least 6 characters")
+      .max(10, "Password should not greater that 10 charcters")
       .regex(/[A-Z]/, "Password must contain an uppercase letter")
       .regex(/[0-9]/, "Password must contain a number"),
   });
@@ -29,7 +30,7 @@ const Register = () => {
     // check if input field is not empty
     for (let ele in inputState) {
       if (inputState[ele].trim() == "") {
-        toast.error(`Please enter ${ele} field`);
+        toast.info(`Please enter ${ele} field`);
         return;
       }
     }
@@ -42,13 +43,13 @@ const Register = () => {
         password: inputState.password,
       });
       if (res.status == 201) {
-        toast.success(res.data?.msg);
-        toast("Please login!!");
+        toast.info(res.data?.data?.msg);
+        toast.info("Please login!!");
         return navigate("/auth");
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
-        toast.error(err.errors[0].message);
+        toast.info(err.errors[0].message);
       }
       toast.error(err?.response?.data?.msg);
     } finally {

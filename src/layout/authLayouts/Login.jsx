@@ -14,8 +14,13 @@ const Login = () => {
     password: "",
   });
   const schema = z.object({
-    email: z.string().email("Invalid Email"),
-    password: z.string().min(5, "minimum 3 char needed"),
+    email: z.string().email("Please enter valid Email!!"),
+    password: z
+      .string()
+      .min(6, "Password should be 6 charcters long!!")
+      .max(10, "Password should not greater that 10 charcters")
+      .regex(/[A-Z]/, "Password must contain an uppercase letter")
+      .regex(/[0-9]/, "Password must contain a number"),
   });
   // handle signin
   const handleSignIn = async () => {
@@ -23,7 +28,7 @@ const Login = () => {
     for (let ele in inputState) {
       if (inputState[ele].trim() == "") {
         // show toast
-        toast.error("Please enter all fleids");
+        toast.info(`Please enter ${ele} field`);
         return;
       }
     }
@@ -36,10 +41,10 @@ const Login = () => {
       let res = await AxiosInt.post("/auth/login", body);
       if (res.status == 200) {
         if (res.data?.data?.isActive == false) {
-          toast("sorry you are blocked by Admin");
+          toast.info("Sorry your account blocked by the Admin!!");
           return;
         }
-        toast.success("login successFull");
+        toast.success(res.data?.msg);
         setUser(res.data?.data);
         return navigate("/admin");
       }
