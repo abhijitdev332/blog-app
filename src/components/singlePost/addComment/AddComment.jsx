@@ -30,10 +30,8 @@ const AddComment = ({ postId, addComment }) => {
           text: input,
         });
         let res = await AxiosInt.put(`/post/comment/${postId}`, {
-          comment: {
-            user: user?._id,
-            text: input,
-          },
+          user: user?._id,
+          text: input,
         });
         if (res.status == 200) {
           addComment({ user: user, text: input, createdAt: Date.now() });

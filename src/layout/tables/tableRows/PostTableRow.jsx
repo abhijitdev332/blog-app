@@ -26,31 +26,6 @@ const PostTableRow = ({ ele, setFetch = "", allCheck, setCheckArr }) => {
   const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
   const [checked, setChecked] = useState(false);
   // functions
-  const handlePublishClick = async (e) => {
-    try {
-      if (e?.status == "published" && isAdmin) {
-        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-          status: "archived",
-        });
-        if (res.status == 200) {
-          setRefetch();
-          setFetch();
-          toast.success(res.data?.msg);
-        }
-      } else if (isAdmin) {
-        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
-          status: "published",
-        });
-        if (res.status == 200) {
-          setRefetch();
-          setFetch();
-          toast.success(res.data?.msg);
-        }
-      }
-    } catch (err) {
-      toast.error(err?.response?.data?.msg);
-    }
-  };
 
   const handleDelete = async (e) => {
     try {
@@ -113,22 +88,7 @@ const PostTableRow = ({ ele, setFetch = "", allCheck, setCheckArr }) => {
       <td className={cl("flex justify-start gap-2")}>
         <div className="flex gap-3">
           {isAdmin ? (
-            <>
-              <button
-                onClick={() => handlePublishClick(ele)}
-                className="hover:scale-125  transition-transform"
-                title="Publish Post"
-              >
-                {ele?.status == "published" ? (
-                  <MdOutlineUnpublished fontSize={"1.3rem"} color="orange" />
-                ) : (
-                  <MdOutlinePublishedWithChanges
-                    fontSize={"1.3rem"}
-                    color="orange"
-                  />
-                )}
-              </button>
-            </>
+            <PublishEye ele={ele} setFetch={setFetch} />
           ) : (
             ""
             // <button
@@ -242,6 +202,63 @@ const AdminModal = ({ ele, handleDelete }) => {
         </button>
       </li>
     </ul>
+  );
+};
+const PublishEye = ({ ele, setFetch }) => {
+  const { user } = useUserStore();
+  const { setRefetch } = useDataStore();
+  const [isAdmin, setIsAdmin] = useState(user?.roles?.includes("admin"));
+  const [loading, setLoading] = useState(false);
+  const handlePublishClick = async (e) => {
+    try {
+      setLoading(true);
+      if (e?.status == "published" && isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "archived",
+        });
+        if (res.status == 200) {
+          setRefetch();
+          setFetch();
+          toast.success(res.data?.msg);
+        }
+      } else if (isAdmin) {
+        let res = await AxiosInt.put(`/admin/post/${e?._id}`, {
+          status: "published",
+        });
+        if (res.status == 200) {
+          setRefetch();
+          setFetch();
+          toast.success(res.data?.msg);
+        }
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <>
+      <button
+        onClick={() => handlePublishClick(ele)}
+        className="hover:scale-125  transition-transform"
+        title="Publish Post"
+      >
+        {ele?.status == "published" ? (
+          <MdOutlineUnpublished
+            fontSize={"1.3rem"}
+            color="orange"
+            className={cl(loading ? "animate-spin" : "")}
+          />
+        ) : (
+          <MdOutlinePublishedWithChanges
+            fontSize={"1.3rem"}
+            color="orange"
+            className={cl(loading ? "animate-spin" : "")}
+          />
+        )}
+      </button>
+    </>
   );
 };
 

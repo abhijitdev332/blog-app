@@ -14,29 +14,7 @@ import { toDateString } from "../../../utils/utils";
 const UserTableRow = ({ ele, getUsers }) => {
   const [show, setShow] = useState(false);
   const [showAccess, setAccess] = useState(false);
-  const handleActiveClick = async (e) => {
-    try {
-      if (e?.isActive) {
-        let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-          isActive: false,
-        });
-        if (res.status == 200) {
-          toast.success(res.data?.msg);
-          getUsers();
-        }
-      } else {
-        let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
-          isActive: true,
-        });
-        if (res.status == 200) {
-          toast.success(res.data?.msg);
-          getUsers();
-        }
-      }
-    } catch (err) {
-      toast.error(err?.response?.data?.msg);
-    }
-  };
+
   const handleDeleteClick = async (e) => {
     try {
       // setLoading();
@@ -112,17 +90,7 @@ const UserTableRow = ({ ele, getUsers }) => {
         </div>
       </td>
       <td className="flex items-center gap-4">
-        <button
-          className="hover:scale-125 transition-transform"
-          onClick={() => handleActiveClick(ele)}
-          title="change status"
-        >
-          {ele?.isActive ? (
-            <FaEye fontSize={"1.4rem"} color="indigo" />
-          ) : (
-            <FaEyeSlash fontSize={"1.4rem"} color="indigo" />
-          )}
-        </button>
+        <SetStatus ele={ele} getUsers={getUsers} />
         <button onClick={() => setShow(!show)} title="Actions">
           <HiDotsVertical fontSize={"1.4rem"} />
         </button>
@@ -214,6 +182,56 @@ const AccessChip = ({ access }) => {
     <span className="px-2 bg-blue-400 text-blue-900 rounded-full">
       {access}
     </span>
+  );
+};
+const SetStatus = ({ ele, getUsers }) => {
+  const [loading, setLoading] = useState(false);
+  const handleActiveClick = async (e) => {
+    try {
+      setLoading(true);
+      if (e?.isActive) {
+        let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
+          isActive: false,
+        });
+        if (res.status == 200) {
+          toast.success(res.data?.msg);
+          getUsers();
+        }
+      } else {
+        let res = await AxiosInt.put(`/admin/user/${e?._id}`, {
+          isActive: true,
+        });
+        if (res.status == 200) {
+          toast.success(res.data?.msg);
+          getUsers();
+        }
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <button
+      className="hover:scale-125 transition-transform"
+      onClick={() => handleActiveClick(ele)}
+      title="change status"
+    >
+      {ele?.isActive ? (
+        <FaEye
+          fontSize={"1.4rem"}
+          color="indigo"
+          className={cl(loading ? "animate-pulse" : "")}
+        />
+      ) : (
+        <FaEyeSlash
+          fontSize={"1.4rem"}
+          color="indigo"
+          className={cl(loading ? "animate-pulse" : "")}
+        />
+      )}
+    </button>
   );
 };
 export default UserTableRow;
