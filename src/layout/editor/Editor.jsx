@@ -14,6 +14,7 @@ const Editor = () => {
   const [inputvalue, Setinputvalue] = useState(inital);
   const [tagInput, setTagInput] = useState("");
   const [imageBlob, setImageBlob] = useState(null);
+  const [err, setErr] = useState(false);
   const { user } = useUserStore();
   const tagsREf = useRef();
   const handleImageInput = (e) => {
@@ -78,12 +79,18 @@ const Editor = () => {
 
   const sendData = async () => {
     for (let ele in inputvalue) {
-      if (inputvalue["tags"].length <= 0 && inputvalue[ele].trim() == "") {
+      if (inputvalue[ele] !== "tags" && ele.trim() == "") {
+        setErr(true);
         toast.error(`Please enter ${ele} field`);
+        return;
+      } else if (inputvalue["tags"] <= 0) {
+        setErr(true);
+        toast.info("Please enter atleast one tag!!");
         return;
       }
     }
     if (!imageBlob) {
+      setErr(true);
       toast("Please upload a image");
       return;
     }
@@ -104,6 +111,7 @@ const Editor = () => {
         }
       }
     } catch (err) {
+      setErr(true);
       if (err instanceof z.ZodError) {
         return toast.info(err.errors[0].message);
       }
@@ -171,7 +179,7 @@ const Editor = () => {
                 onChange={handleContentInput}
               />
             </div>
-            <AddBtn sendData={sendData} />
+            <AddBtn sendData={sendData} err={err} />
           </div>
         </div>
       </div>
