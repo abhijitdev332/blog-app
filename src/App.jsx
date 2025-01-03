@@ -25,7 +25,7 @@ import {
   ViewUser,
   SearchPost,
 } from "./layout/layouts";
-import { Dashbroad, Editor, ViewPost } from "./layout/layouts";
+import { Dashbroad, Editor, ViewPost, EditPost } from "./layout/layouts";
 import { UserProtected, ProtectedRoute } from "./utils/ProtectedRoute";
 // styles
 import "./app.scss";
@@ -73,6 +73,7 @@ const router = createBrowserRouter(
         <Route path="user/post/:id" element={<UserPostTable />} />
         <Route path="addpost" element={<Editor />} />
         <Route path="viewPost/:id" element={<ViewPost />} />
+        <Route path="editPost/:postId" element={<EditPost />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
     </Route>

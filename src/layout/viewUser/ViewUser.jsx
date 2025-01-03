@@ -5,14 +5,16 @@ import { Header } from "../../includes/includes";
 import { toDateString } from "../../utils/utils";
 import { toast } from "react-toastify";
 import cl from "classnames";
-import { useUserStore } from "../../services/store/store";
+import { useLoaderStore, useUserStore } from "../../services/store/store";
 import AxiosInt from "../../services/api/api";
+import { DataLoader } from "../layouts";
 const ViewUser = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { data, loading } = useFetchData(`/user/${userId}`);
   const [buttonShow, setButtonShow] = useState(false);
   const { user } = useUserStore();
+  const { setLoading, removeLoading } = useLoaderStore();
   const [userValue, setUserValue] = useState({
     id: "",
     username: "",
@@ -55,15 +57,21 @@ const ViewUser = () => {
     }
   };
   useEffect(() => {
-    setUserValue({
-      id: data?._id,
-      username: data?.username,
-      email: data?.email,
-      roles: data?.roles,
-      status: data?.isActive ? "active" : "Unactive",
-      joinDate: toDateString(data?.createdAt),
-    });
+    if (!data) {
+      setLoading();
+    } else {
+      setUserValue({
+        id: data?._id,
+        username: data?.username,
+        email: data?.email,
+        roles: data?.roles,
+        status: data?.isActive ? "active" : "Unactive",
+        joinDate: toDateString(data?.createdAt),
+      });
+      removeLoading();
+    }
   }, [data]);
+
   return (
     <>
       <Header />
@@ -145,6 +153,7 @@ const ViewUser = () => {
           </div>
         </div>
       </div>
+      <DataLoader />
     </>
   );
 };

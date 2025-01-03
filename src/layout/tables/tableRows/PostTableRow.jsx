@@ -141,14 +141,16 @@ const UserModal = ({ ele, handleDelete }) => {
           </span>
         </button>
       </li>
-      {/* <li>
+      <li>
         <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
           <span>
             <FaRegEdit fontSize={"1rem"} />
           </span>
-          <span className="font-semibold">Edit Post</span>
+          <span className="font-semibold">
+            <Link to={`/admin/editpost/${ele?._id}`}>Edit Post</Link>
+          </span>
         </button>
-      </li> */}
+      </li>
 
       <li>
         <button
@@ -170,6 +172,16 @@ const AdminModal = ({ ele, handleDelete }) => {
           <MdOutlinePostAdd fontSize={"1.rem"} />
           <span className="font-semibold">
             <Link to={`/admin/viewPost/${ele?._id}`}>View Post</Link>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button className=" flex gap-1 items-center cursor-pointer hover:text-blue-500">
+          <span>
+            <FaRegEdit fontSize={"1rem"} />
+          </span>
+          <span className="font-semibold">
+            <Link to={`/admin/editpost/${ele?._id}`}>Edit Post</Link>
           </span>
         </button>
       </li>

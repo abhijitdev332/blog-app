@@ -12,6 +12,7 @@ import UserPostTable from "./tables/UserPostTable.jsx";
 import SearchPost from "./searchPosts/SearchPost.jsx";
 import ViewUser from "./viewUser/ViewUser.jsx";
 import Pagination from "./tables/Pagination.jsx";
+import EditPost from "./editPost/EditPost.jsx";
 
 export {
   Login,
@@ -28,4 +29,5 @@ export {
   SearchPost,
   ViewUser,
   Pagination,
+  EditPost,
 };

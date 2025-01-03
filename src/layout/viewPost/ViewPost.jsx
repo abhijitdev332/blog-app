@@ -9,16 +9,16 @@ import useLoaderStore from "../../services/store/useLoaderStore";
 
 const ViewPost = () => {
   const { id } = useParams();
-  // const { setLoading, removeLoading } = useLoaderStore();
-  const { data, loading, err } = useFetchData(`/post/${id}`);
+  const { setLoading, removeLoading } = useLoaderStore();
+  const { data } = useFetchData(`/post/${id}`);
   const [post, setPost] = useState(null);
   useEffect(() => {
     setPost(data);
   }, [data]);
 
-  // useEffect(() => {
-  //   !post ? setLoading() : removeLoading();
-  // }, [post]);
+  useEffect(() => {
+    !post ? setLoading() : removeLoading();
+  }, [post]);
   return (
     <>
       <ScrollRestoration />

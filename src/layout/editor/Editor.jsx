@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import { string, z } from "zod";
 import "react-quill/dist/quill.snow.css";
@@ -8,12 +8,21 @@ import AxiosInt from "../../services/api/api";
 import { useUserStore } from "../../services/store/store";
 import { useNavigate } from "react-router-dom";
 import AddBtn from "./AddBtn";
+import cl from "classnames";
+import { IoClose } from "react-icons/io5";
 const inital = { title: "", content: "", tags: [] };
-const Editor = () => {
+const Editor = ({
+  postId = "",
+  title = "",
+  content = "",
+  tags = [],
+  imageUrl = "",
+}) => {
   const navigate = useNavigate();
-  const [inputvalue, Setinputvalue] = useState(inital);
+  const [inputvalue, Setinputvalue] = useState({ title, content, tags });
   const [tagInput, setTagInput] = useState("");
   const [imageBlob, setImageBlob] = useState(null);
+  const [modalState, setModalState] = useState(false);
   const [err, setErr] = useState(false);
   const { user } = useUserStore();
   const tagsREf = useRef();
@@ -57,8 +66,8 @@ const Editor = () => {
   };
   const schema = z.object({
     title: string()
-      .min(20, "Minimum 20 charcters")
-      .max(100, "Maximum 100 charcters allowed"),
+      .min(20, "title minimum 20 charcters long")
+      .max(100, "title maximum 100 charcters long allowed"),
     content: string(),
     tags: string().array().max(3, "Maximum 3 tags are allowed"),
   });
@@ -107,6 +116,7 @@ const Editor = () => {
           toast.success(res.data?.msg);
           Setinputvalue(inital);
           setImageBlob(null);
+          setErr(false);
           return navigate("/admin");
         }
       }
@@ -118,10 +128,129 @@ const Editor = () => {
       toast.error(err?.response?.data?.msg);
     }
   };
+  const updatePost = async () => {
+    for (let ele in inputvalue) {
+      if (inputvalue[ele] !== "tags" && ele.trim() == "") {
+        setErr(true);
+        toast.error(`Please enter ${ele} field`);
+        return;
+      } else if (inputvalue["tags"] <= 0) {
+        setErr(true);
+        toast.info("Please enter atleast one tag!!");
+        return;
+      }
+    }
+    if (imageUrl == "" || !imageBlob) {
+      console.log(imageUrl);
+      setErr(true);
+      toast("Please upload a image");
+      return;
+    }
+    try {
+      schema.parse(inputvalue);
+      if (imageBlob) {
+        let imgUrl = await uploadImage();
+        if (imgUrl !== "") {
+          let res = await AxiosInt.put(`/post/${postId}`, {
+            // author: user?._id,
+            ...inputvalue,
+            imageUrl: imgUrl,
+          });
+          if (res.status == 200) {
+            toast.success(res.data?.msg);
+            Setinputvalue(inital);
+            setImageBlob(null);
+            setErr(false);
+            return navigate(`/admin/viewPost/${postId}`);
+          }
+        }
+      } else {
+        let res = await AxiosInt.put(`/post/${postId}`, {
+          ...inputvalue,
+        });
+        if (res.status == 200) {
+          toast.success(res.data?.msg);
+          Setinputvalue(inital);
+          setImageBlob(null);
+          setErr(false);
+          return navigate(`/admin/viewPost/${postId}`);
+        }
+      }
+    } catch (err) {
+      setErr(true);
+      if (err instanceof z.ZodError) {
+        return toast.info(err.errors[0].message);
+      }
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+  const postUpdateAdmin = async () => {
+    for (let ele in inputvalue) {
+      if (inputvalue[ele] !== "tags" && ele.trim() == "") {
+        setErr(true);
+        toast.error(`Please enter ${ele} field`);
+        return;
+      } else if (inputvalue["tags"] <= 0) {
+        setErr(true);
+        toast.info("Please enter atleast one tag!!");
+        return;
+      }
+    }
+    if (imageUrl == "" || !imageBlob) {
+      setErr(true);
+      toast("Please upload a image");
+      return;
+    }
+    try {
+      schema.parse(inputvalue);
+      if (imageBlob) {
+        let imgUrl = await uploadImage();
+        if (imgUrl !== "") {
+          let res = await AxiosInt.put(`/post/${postId}`, {
+            author: user?._id,
+            ...inputvalue,
+            imageUrl: imgUrl,
+          });
+          if (res.status == 200) {
+            toast.success(res.data?.msg);
+            Setinputvalue(inital);
+            setImageBlob(null);
+            setErr(false);
+            return navigate(`/admin/viewPost/${postId}`);
+          }
+        }
+      } else {
+        let res = await AxiosInt.put(`/post/${postId}`, {
+          author: user?._id,
+          ...inputvalue,
+        });
+        if (res.status == 200) {
+          toast.success(res.data?.msg);
+          Setinputvalue(inital);
+          setImageBlob(null);
+          setErr(false);
+          return navigate(`/admin/viewPost/${postId}`);
+        }
+      }
+    } catch (err) {
+      setErr(true);
+      if (err instanceof z.ZodError) {
+        return toast.info(err.errors[0].message);
+      }
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+  useEffect(() => {
+    if (!title || !content || !tags || !imageUrl) {
+      return;
+    } else {
+      Setinputvalue({ title, content, tags, imageUrl });
+    }
+  }, [title, content, tags, imageUrl, postId]);
   return (
     <>
-      <div className="editor">
-        <div className="editor__wrapper px-6 lg:container lg:mx-auto">
+      <div className="editor relative">
+        <div className="editor__wrapper  px-6 lg:container lg:mx-auto">
           <div className="flex flex-col gap-3 py-4 px-3">
             <div className="input__group flex flex-col gap-2">
               <span className="font-semibold text-lg font-serif">Title:</span>
@@ -163,12 +292,45 @@ const Editor = () => {
             </div>
             <div className="input__group flex flex-col gap-2">
               <span className="font-semibold text-lg font-serif">Image:</span>
-              <input
-                type="file"
-                name="imageUrl"
-                className="w-full rounded p-2 border-2"
-                onChange={handleImageInput}
-              />
+              <label
+                htmlFor="imageInput"
+                className=" flex gap-2 border-2 items-center border-black p-1 rounded"
+              >
+                {imageUrl !== "" && (
+                  <button
+                    className="whitespace-nowrap px-1 rounded border-2 border-black"
+                    onClick={() => {
+                      setModalState(!modalState);
+                    }}
+                  >
+                    Old Image
+                  </button>
+                )}
+                <span className="border-2 px-1 border-black rounded cursor-pointer">
+                  Select Image
+                </span>
+                <input
+                  type="file"
+                  name="imageUrl"
+                  id="imageInput"
+                  className="rounded p-2 hidden"
+                  onChange={handleImageInput}
+                />
+                <span className="flex gap-1 items-center cursor-pointer">
+                  {imageBlob?.name || ""}
+                  {imageBlob?.name && (
+                    <IoClose
+                      fontSize={"1.2rem"}
+                      className="hover:scale-125"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setImageBlob(null);
+                      }}
+                    />
+                  )}
+                </span>
+              </label>
             </div>
             <div className="area">
               <ReactQuill
@@ -179,7 +341,33 @@ const Editor = () => {
                 onChange={handleContentInput}
               />
             </div>
-            <AddBtn sendData={sendData} err={err} />
+            <AddBtn
+              title={title}
+              updatePost={updatePost}
+              postUpdateAdmin={postUpdateAdmin}
+              sendData={sendData}
+              err={err}
+            />
+          </div>
+        </div>
+        <div
+          className={cl(
+            "absolute w-full top-0 h-full bg-transparent",
+            modalState ? "block" : "hidden"
+          )}
+          onMouseLeave={() => {
+            setModalState(false);
+          }}
+        >
+          <div className="modal__wrapper bg-[#f8f8f895] flex  justify-center items-center h-full p-3">
+            <img
+              src={imageUrl}
+              alt="post image"
+              className="w-[25rem] h-[20rem]"
+              onMouseLeave={() => {
+                setModalState(false);
+              }}
+            />
           </div>
         </div>
       </div>

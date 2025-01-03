@@ -48,7 +48,7 @@ const SinglePost = () => {
   const [related, setRelated] = useState([]);
   const [postComments, setPostComments] = useState([]);
   const handleCommentAdd = (comment) => {
-    setPostComments((prev) => [...prev, { ...comment }]);
+    setPostComments((prev) => [{ ...comment }, ...prev]);
   };
   const handleCommentDelete = (commentId) => {
     setPostComments((prev) => [
@@ -58,7 +58,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     setPost(data);
-    setPostComments(data?.comments);
+    setPostComments(data?.comments?.toReversed());
     setRelated(relatedData);
   }, [id, data, relatedData]);
   useEffect(() => {
