@@ -3,8 +3,8 @@
 
 .sidebar {
   &__container {
-    padding: 5rem 1rem;
-    background: #070712;
+    padding: 1rem;
+    background: $dark;
     color: $light;
 
     @include md {

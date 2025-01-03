@@ -5,6 +5,7 @@ import style from "./action.module.scss";
 import useLoaderStore from "../../../services/store/useLoaderStore";
 import AxiosInt from "../../../services/api/api";
 import { toast } from "react-toastify";
+import { BsPostcard } from "react-icons/bs";
 
 const Actions = ({ checkedArr, setCheckArr, setFetch }) => {
   const { setLoading, removeLoading } = useLoaderStore();
@@ -41,7 +42,12 @@ const Actions = ({ checkedArr, setCheckArr, setFetch }) => {
           style.action__wrapper
         )}
       >
-        <p className={style.action__text}>{checkedArr?.length} Selected</p>
+        <p className={style.action__text}>
+          <span>
+            <BsPostcard />
+          </span>
+          <span>{checkedArr?.length} Selected</span>
+        </p>
         <button
           className="flex gap-1 items-center cursor-pointer hover:text-red-600"
           onClick={() => handleDelete()}

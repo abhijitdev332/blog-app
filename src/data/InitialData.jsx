@@ -10,7 +10,7 @@ const InitialData = () => {
     try {
       setLoading();
       const res = await AxiosInt.get("/post", { signal: sig });
-      if (res.status == 200 && res?.data?.data > 0) {
+      if (res.status == 200 && res?.data?.data) {
         setData(res?.data?.data);
       }
     } catch (err) {

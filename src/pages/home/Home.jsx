@@ -28,7 +28,7 @@ const Home = () => {
       setLoading(false);
       return;
     } else if (
-      document.body.scrollHeight - 300 <
+      document.body.scrollHeight - 100 <
       window.scrollY + window.innerHeight
     ) {
       setLoading(true);

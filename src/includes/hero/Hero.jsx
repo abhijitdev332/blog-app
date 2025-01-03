@@ -42,7 +42,7 @@ const Slider = () => {
               <span className="robo">
                 {post.author?.username || <Skeleton />}
               </span>
-              <span>{post.author?.username && " &diams;"}</span>
+              {post.author?.username && <span>&diams;</span>}
 
               <span className="robo">
                 {toDateString(post?.createdAt) || <Skeleton />}

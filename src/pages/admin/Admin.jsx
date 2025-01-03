@@ -13,7 +13,7 @@ const Admin = () => {
           <Sidebar />
           <div className="flex flex-col w-full h-full">
             <DashHeader />
-            <section className="w-full">
+            <section className="w-full bg-[#f6f8ff]">
               {/* <button className="m-2 px-3 py-2  rounded-lg border-2 bg-slate-400">
                 <Link to={-1}>
                   <span>Back</span>

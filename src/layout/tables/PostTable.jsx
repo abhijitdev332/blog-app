@@ -136,15 +136,17 @@ const PostTable = () => {
           <table className={style.table}>
             <thead className="bg-slate-200">
               <td>
-                <input
-                  type="checkbox"
-                  name="check"
-                  className={style.checkbox}
-                  checked={checked}
-                  onChange={(e) => {
-                    setChecked(e.target.checked);
-                  }}
-                />
+                <div className="grid place-items-center">
+                  <input
+                    type="checkbox"
+                    name="check"
+                    className={style.checkbox}
+                    checked={checked}
+                    onChange={(e) => {
+                      setChecked(e.target.checked);
+                    }}
+                  />
+                </div>
               </td>
               <td>Post Title</td>
               <td>

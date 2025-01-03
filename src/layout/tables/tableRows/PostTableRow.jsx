@@ -59,15 +59,17 @@ const PostTableRow = ({ ele, setFetch = "", allCheck, setCheckArr }) => {
     }
   }, [allCheck]);
   return (
-    <tr key={ele?._id} className={cl("relative")}>
+    <tr key={ele?._id} className={cl("relative hover:bg-[#ebfaf0]")}>
       <td>
-        <input
-          type="checkbox"
-          name="check"
-          checked={checked}
-          className={style.checkbox}
-          onChange={handleCheck}
-        />
+        <div className="grid place-items-center">
+          <input
+            type="checkbox"
+            name="check"
+            checked={checked}
+            className={style.checkbox}
+            onChange={handleCheck}
+          />
+        </div>
       </td>
       <td title={ele?.title}>{ele.title.substring(0, 15)}...</td>
       <td>{ele?.author?.username}</td>

@@ -23,9 +23,12 @@ const Sidebar = () => {
       )}
     >
       <div className="lg:container lg:mx-auto h-full md:px-2">
+        <div className="logo">
+          <h2 className="text-center font-bold text-2xl pb-8">BLOG APP</h2>
+        </div>
         <div className=" h-full flex flex-col divide-y-2 gap-2">
           <Link
-            className="lg:text-xl font-semibold flex flex-row gap-1 items-center robo"
+            className="lg:text-xl font-semibold flex flex-row gap-1 py-1 items-center robo"
             to={"/"}
           >
             <span>

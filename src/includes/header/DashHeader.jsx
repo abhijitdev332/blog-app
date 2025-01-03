@@ -10,10 +10,7 @@ const DashHeader = () => {
       <div className="header__wrapper lg:container lg:mx-auto px-2">
         <div className="flex justify-between">
           <div className="logo flex items-center">
-            <Link
-              to={"/admin"}
-              className="py-3 px-2 text-xl text-white robo font-bold"
-            >
+            <Link to={"/admin"} className="py-3 px-2 text-xl">
               Dashbroad
             </Link>
           </div>

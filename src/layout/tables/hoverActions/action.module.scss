@@ -9,6 +9,10 @@
     justify-content: space-around;
   }
   &__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     color: $primary;
     font-family: "roboto";
     font-weight: 500;

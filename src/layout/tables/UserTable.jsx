@@ -86,7 +86,7 @@ const UserTable = () => {
       <div className="lg:container lg:mx-auto p-1 sm:p-5 h-full">
         <div className={style.table__wrapper}>
           <table className={cl("relative", style.table)}>
-            <thead className="bg-slate-300">
+            <thead className="bg-slate-200">
               {/* <td>SL No</td> */}
               <td>
                 {/* <span>Avatar</span> */}
