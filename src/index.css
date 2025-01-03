@@ -11,3 +11,6 @@ p,
 button {
   font-family: "Roboto" !important;
 }
+.unset {
+  all: revert !important;
+}

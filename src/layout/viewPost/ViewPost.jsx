@@ -51,7 +51,7 @@ const ViewPost = () => {
                 <img src={post?.imageUrl} alt="post_image" />
               </div>
               <div
-                className="content__wrapper p-6"
+                className="content__wrapper p-6 unset"
                 dangerouslySetInnerHTML={{ __html: post?.content }}
               ></div>
             </div>

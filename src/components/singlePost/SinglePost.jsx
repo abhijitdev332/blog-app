@@ -62,12 +62,12 @@ const SinglePost = () => {
     setRelated(relatedData);
   }, [id, data, relatedData]);
   useEffect(() => {
-    if (!post) {
+    if (!data) {
       setLoading();
     } else {
       removeLoading();
     }
-  }, [post]);
+  }, [data]);
   if (post == null || post?.status !== "published") {
     return (
       <h3 className="font-medium text-lg text-center">No Post Found !!</h3>
@@ -113,7 +113,7 @@ const SinglePost = () => {
                 <img src={post?.imageUrl} alt="post_image" />
               </div>
               <div
-                className="content__wrapper p-6 list-disc"
+                className="content__wrapper p-6 list-disc unset"
                 dangerouslySetInnerHTML={{
                   __html: post?.content,
                 }}

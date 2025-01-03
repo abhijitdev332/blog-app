@@ -5,7 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import TagsChip from "./TagsChip";
 import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
-import { useUserStore } from "../../services/store/store";
+import { useDataStore, useUserStore } from "../../services/store/store";
 import { useNavigate } from "react-router-dom";
 import AddBtn from "./AddBtn";
 import cl from "classnames";
@@ -25,6 +25,7 @@ const Editor = ({
   const [modalState, setModalState] = useState(false);
   const [err, setErr] = useState(false);
   const { user } = useUserStore();
+  const { setRefetch } = useDataStore();
   const tagsREf = useRef();
   const handleImageInput = (e) => {
     if (e.target.files?.length > 0) {
@@ -140,12 +141,12 @@ const Editor = ({
         return;
       }
     }
-    if (imageUrl == "" || !imageBlob) {
-      console.log(imageUrl);
-      setErr(true);
-      toast("Please upload a image");
-      return;
-    }
+    // if (imageUrl == "" || !imageBlob) {
+    //   console.log(imageUrl);
+    //   setErr(true);
+    //   toast("Please upload a image");
+    //   return;
+    // }
     try {
       schema.parse(inputvalue);
       if (imageBlob) {
@@ -161,6 +162,7 @@ const Editor = ({
             Setinputvalue(inital);
             setImageBlob(null);
             setErr(false);
+            setRefetch();
             return navigate(`/admin/viewPost/${postId}`);
           }
         }
@@ -173,6 +175,7 @@ const Editor = ({
           Setinputvalue(inital);
           setImageBlob(null);
           setErr(false);
+          setRefetch();
           return navigate(`/admin/viewPost/${postId}`);
         }
       }
@@ -196,11 +199,11 @@ const Editor = ({
         return;
       }
     }
-    if (imageUrl == "" || !imageBlob) {
-      setErr(true);
-      toast("Please upload a image");
-      return;
-    }
+    // if (imageUrl == "" || !imageBlob) {
+    //   setErr(true);
+    //   toast("Please upload a image");
+    //   return;
+    // }
     try {
       schema.parse(inputvalue);
       if (imageBlob) {
@@ -216,6 +219,7 @@ const Editor = ({
             Setinputvalue(inital);
             setImageBlob(null);
             setErr(false);
+            setRefetch();
             return navigate(`/admin/viewPost/${postId}`);
           }
         }
@@ -229,6 +233,7 @@ const Editor = ({
           Setinputvalue(inital);
           setImageBlob(null);
           setErr(false);
+          setRefetch();
           return navigate(`/admin/viewPost/${postId}`);
         }
       }

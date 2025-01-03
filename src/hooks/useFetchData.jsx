@@ -27,7 +27,10 @@ const useFetchData = (url = "") => {
   useEffect(() => {
     const abortCon = new AbortController();
     fetchData(abortCon.signal);
-    return () => abortCon.abort();
+    return () => {
+      setData(null);
+      abortCon.abort();
+    };
   }, [url]);
 
   return { data, loading, err, refetch };

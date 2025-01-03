@@ -78,7 +78,12 @@ const UserTable = () => {
 
   // fetch users
   useEffect(() => {
-    setUsers(data);
+    if (!data) {
+      setLoading();
+    } else {
+      setUsers(data);
+      removeLoading();
+    }
   }, [data]);
 
   return (

@@ -21,6 +21,7 @@ const AddBtn = ({ title, updatePost, postUpdateAdmin, sendData, err }) => {
       {title !== "" ? (
         <div className="flex gap-3 ">
           <button
+            disabled={loader}
             className="p-3  rounded w-full text-center flex justify-center gap-1 mt-8 font-semibold bg-indigo-400 robo"
             onClick={() => {
               loaderClick();
@@ -40,6 +41,7 @@ const AddBtn = ({ title, updatePost, postUpdateAdmin, sendData, err }) => {
           </button>
           {isAdmin && (
             <button
+              disabled={loader}
               className="p-3  rounded w-full text-center flex justify-center gap-1 mt-8 font-semibold bg-indigo-400 robo"
               onClick={() => {
                 loaderClick();
@@ -61,6 +63,7 @@ const AddBtn = ({ title, updatePost, postUpdateAdmin, sendData, err }) => {
         </div>
       ) : (
         <button
+          disabled={loader}
           className="p-3  rounded w-full text-center flex justify-center gap-1 mt-8 text-lg font-semibold bg-indigo-400 robo"
           onClick={() => {
             loaderClick();
