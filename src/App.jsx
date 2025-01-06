@@ -30,7 +30,7 @@ import {
   EditPost,
 } from "./layout/layouts";
 // protected route
-import { UserProtected, ProtectedRoute } from "./utils/ProtectedRoute";
+import { ProtectedRoute } from "./utils/ProtectedRoute";
 // toast and scheleton styling
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -55,14 +55,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/user/:userId" element={<ViewUser />} />
 
-      <Route
-        path="/auth"
-        element={
-          <UserProtected>
-            <AuthPage />
-          </UserProtected>
-        }
-      >
+      <Route path="/auth" element={<AuthPage />}>
         <Route index element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route>

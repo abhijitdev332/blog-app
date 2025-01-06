@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { headerNav } from "../../constants/constant";
-import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
-import AxiosInt from "../../services/api/api";
 import { useUserStore, useDataStore } from "../../services/store/store";
 import { toast } from "react-toastify";
 import { Logout } from "../../components/components";
@@ -10,10 +8,10 @@ import { Logout } from "../../components/components";
 import cl from "classnames";
 import style from "./header.module.scss";
 const Header = () => {
-  const [searchParam, setSearchParam] = useSearchParams();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { user } = useUserStore();
-  const { setRefetch, setData } = useDataStore();
+  const { setRefetch } = useDataStore();
   const [searchInput, setSearchInput] = useState("");
   const handleSearch = async () => {
     if (searchInput.trim() == "") {
@@ -100,7 +98,9 @@ const Header = () => {
             ) : (
               <>
                 <button className={cl("rounded-lg", style.login)}>
-                  <Link to={"/auth"}>Log In</Link>
+                  <Link to={"/auth"} state={pathname}>
+                    Log In
+                  </Link>
                 </button>
                 <button
                   className={cl("rounded-lg hidden sm:block", style.signin)}

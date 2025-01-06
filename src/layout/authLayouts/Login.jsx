@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import hand from "../../assets/icons/hand.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
 import { useLoaderStore, useUserStore } from "../../services/store/store";
 import { z } from "zod";
 const Login = () => {
+  const { state } = useLocation();
   const navigate = useNavigate();
   const { setUser } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
@@ -46,7 +47,11 @@ const Login = () => {
         }
         toast.success(res.data?.msg);
         setUser(res.data?.data);
-        return navigate("/admin");
+        if (state == "/") {
+          return navigate("/admin", { replace: true });
+        } else {
+          return navigate(state, { replace: true });
+        }
       }
     } catch (err) {
       if (err instanceof z.ZodError) {

@@ -1,9 +1,7 @@
-import React from "react";
 import { useState } from "react";
-import { userStore } from "../services/store/store";
-
+import { useUserStore } from "../services/store/store";
 const useUserCheck = () => {
-  const { user } = userStore();
+  const { user } = useUserStore();
   const [isUSer, setIsUser] = useState(false);
   if ("email" in user) {
     setIsUser(true);
