@@ -7,7 +7,6 @@ import { IoLogoWhatsapp } from "react-icons/io";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa6";
 import useFetchData from "../../hooks/useFetchData";
-import useParallelFetch from "../../hooks/useParallelFetch";
 import { toDateString } from "../../utils/utils";
 import { useLoaderStore, useUserStore } from "../../services/store/store";
 import AddComment from "./addComment/AddComment";
@@ -36,11 +35,7 @@ const icons = [
 ];
 const SinglePost = () => {
   const { id } = useParams();
-  // const fetchFunctions = [
-  //   () => useFetchData(`/post/${id}`).then((res) => res.data),
-  //   () => useFetchData(`/post/related/${id}`).then((res) => res.data),
-  // ];
-  // const { data } = useParallelFetch(fetchFunctions);
+
   const { data } = useFetchData(`/post/${id}`);
   const { data: relatedData } = useFetchData(`/post/related/${id}`);
   const { setLoading, removeLoading } = useLoaderStore();
