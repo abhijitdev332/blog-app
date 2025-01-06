@@ -16,11 +16,11 @@ const Post = ({ post }) => {
           {post?.title?.substring(0, 35)}
           ...
         </h3>
-        {/* <p className={style.content}>
-          {post.content.substring(0, 20) + "...."}
-        </p> */}
         <p className={style.author}>
-          {post?.author?.username} &diams;
+          <Link to={`/user/${post?.author?._id}`} className="cursor-pointer">
+            {post?.author?.username}
+          </Link>
+          &diams;
           {toDateString(post?.createdAt)}
         </p>
       </div>

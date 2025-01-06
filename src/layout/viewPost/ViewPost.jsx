@@ -34,13 +34,6 @@ const ViewPost = () => {
                       <Chip title={ele} />
                     ))}
                   </div>
-                  {/* <div className="share__group flex gap-3">
-                    {icons.map((ele) => (
-                      <span className="text-2xl cursor-pointer hover:scale-125 hover:text-indigo-600 transition-transform ">
-                        {ele.icon}
-                      </span>
-                    ))}
-                  </div> */}
                 </div>
                 <p className="text-sm flex gap-1 text-slate-400 font-medium robo">
                   <span>{toDateString(post?.createdAt)}</span> &diams;

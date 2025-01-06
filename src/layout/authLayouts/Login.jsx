@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import AxiosInt from "../../services/api/api";
 import { useLoaderStore, useUserStore } from "../../services/store/store";
 import { z } from "zod";
+import { CustomButton } from "../../components/components";
 const Login = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const Login = () => {
         toast.success(res.data?.msg);
         setUser(res.data?.data);
         if (state == "/") {
-          return navigate("/admin", { replace: true });
+          return navigate("/", { replace: true });
         } else {
           return navigate(state, { replace: true });
         }
@@ -121,12 +122,14 @@ const Login = () => {
         />
       </label>
 
-      <button
-        className="bg-gray-900 py-2 px-3 rounded-md text-white my-3 lg:w-8/12 lg:mx-auto"
-        onClick={handleSignIn}
+      <CustomButton
+        func={handleSignIn}
+        classnames={
+          "bg-gray-900 py-2 px-3 rounded-md text-white my-3 lg:w-8/12 lg:mx-auto"
+        }
       >
         Sign in
-      </button>
+      </CustomButton>
       <p className="font-sans text-center font-semibold">
         Don't have an account?
         <Link to={"/auth/register"} className="text-blue-600">

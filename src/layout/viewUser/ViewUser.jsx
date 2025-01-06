@@ -3,16 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import { Header } from "../../includes/includes";
 import { toDateString } from "../../utils/utils";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import cl from "classnames";
 import { useLoaderStore, useUserStore } from "../../services/store/store";
 import AxiosInt from "../../services/api/api";
 import { DataLoader } from "../layouts";
+import { z, ZodError } from "zod";
+import { CustomButton } from "../../components/components";
 const ViewUser = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { data, loading } = useFetchData(`/user/${userId}`);
-  const [buttonShow, setButtonShow] = useState(false);
+  const { data } = useFetchData(`/user/${userId}`);
   const { user } = useUserStore();
   const { setLoading, removeLoading } = useLoaderStore();
   const [userValue, setUserValue] = useState({
@@ -22,6 +23,17 @@ const ViewUser = () => {
     roles: [],
     status: undefined,
     joinDate: "",
+  });
+  const [validUser, setValidUSer] = useState(
+    user?._id == userId || user?.roles?.includes("admin")
+  );
+  const [loader, setLoader] = useState(false);
+  const userSchema = z.object({
+    username: z
+      .string()
+      .min(5, "Username should be 5 charcters long!!")
+      .max(15, "Username can't greater than 15 charcters!!"),
+    email: z.string().email("Please enter a valid email!!"),
   });
   const handleInputChange = (e) => {
     setButtonShow(true);
@@ -33,27 +45,40 @@ const ViewUser = () => {
       return;
     }
     try {
-      let res = await AxiosInt.put(`/user/${userValue?.id}`, {
+      setLoader(true);
+      userSchema.parse({
+        username: userValue.username,
+        email: userValue.email,
+      });
+      let res = await AxiosInt.put(`/user/${userId}`, {
         username: userValue?.username,
         email: userValue?.email,
       });
       if (res.status == 200) {
         toast.success(res.data?.data?.msg);
-        return navigate("/admin/users");
+        return navigate("/admin");
       }
     } catch (err) {
+      if (err instanceof ZodError) {
+        toast.info(err.errors[0].message);
+      }
       toast.error(err?.response?.data?.msg);
+    } finally {
+      setLoader(false);
     }
   };
   const handleDelete = async () => {
     try {
+      setLoader(true);
       let res = await AxiosInt.delete(`/user/${userValue?.id}`);
       if (res.status == 200) {
         toast.success(res.data?.data?.msg);
-        return navigate("/admin/users");
+        return navigate("/admin");
       }
     } catch (err) {
       toast.error(err?.response?.data?.msg);
+    } finally {
+      setLoader(false);
     }
   };
   useEffect(() => {
@@ -86,38 +111,39 @@ const ViewUser = () => {
           </div>
           <div className="my-5 flex items-center gap-5 flex-col ">
             <div className="box w-[30vw] p-4 border-2 rounded-md flex flex-col gap-4">
-              <label htmlFor="" className="flex flex-col gap-1 robo ">
+              <label htmlFor="username" className="flex flex-col gap-1 robo ">
                 <span className="font-semibold text-lg">User Name:</span>
                 <input
                   type="text"
                   name="username"
-                  readOnly={"email" in user ? false : true}
+                  id="username"
+                  readOnly={validUser ? false : true}
                   value={userValue.username}
                   className="border-2 rounded-md border-slate-400 p-2"
                   onChange={handleInputChange}
                 />
               </label>
-              <label htmlFor="" className="flex flex-col gap-1 robo ">
+              <label htmlFor="email" className="flex flex-col gap-1 robo ">
                 <span className="font-semibold text-lg"> Email:</span>
                 <input
                   type="text"
                   name="email"
-                  readOnly={"email" in user ? false : true}
+                  id="email"
+                  readOnly={validUser ? false : true}
                   value={userValue.email}
                   className="border-2 rounded-md border-slate-400 p-2"
                   onChange={handleInputChange}
                 />
               </label>
-
-              <button
-                className={cl(
-                  "bg-green-400 text-white font-medium p-2 rounded-md",
-                  buttonShow ? "visible" : "invisible"
-                )}
-                onClick={handleUpdate}
-              >
-                Update
-              </button>
+              {validUser && (
+                <CustomButton
+                  loader={loader}
+                  func={handleUpdate}
+                  classnames={cl("bg-green-400 p-1 rounded font-medium")}
+                >
+                  Update
+                </CustomButton>
+              )}
             </div>
             <div className="flex flex-col gap-3 w-[30vw] border-2 rounded-md border-slate-400 p-4">
               <div className="flex flex-col gap-2">
@@ -142,18 +168,19 @@ const ViewUser = () => {
                 <span>{userValue?.joinDate}</span>
               </p>
             </div>
-            {"email" in user && (
-              <button
-                className="bg-red-500 text-white rounded-md p-2 font-medium"
-                onClick={handleDelete}
+            {validUser && (
+              <CustomButton
+                func={handleDelete}
+                classnames={"bg-red-500 text-white p-2 rounded"}
               >
                 Delete Account
-              </button>
+              </CustomButton>
             )}
           </div>
         </div>
       </div>
       <DataLoader />
+      <ToastContainer />
     </>
   );
 };

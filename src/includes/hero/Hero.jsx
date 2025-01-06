@@ -40,7 +40,14 @@ const Slider = () => {
               className={cl("flex gap-1 text-[13px] items-center font-medium")}
             >
               <span className="robo">
-                {post.author?.username || <Skeleton />}
+                {(
+                  <Link
+                    to={`/user/${post?.author?._id}`}
+                    className="cursor-pointer"
+                  >
+                    {post?.author?.username}
+                  </Link>
+                ) || <Skeleton />}
               </span>
               {post.author?.username && <span>&diams;</span>}
 
