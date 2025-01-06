@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -5,7 +6,6 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { lazy, Suspense } from "react";
 
 // lazy imports
 const Home = lazy(() => import("./pages/home/Home"));
@@ -24,13 +24,19 @@ import {
   UserPostTable,
   ViewUser,
   SearchPost,
+  Dashbroad,
+  Editor,
+  ViewPost,
+  EditPost,
 } from "./layout/layouts";
-import { Dashbroad, Editor, ViewPost, EditPost } from "./layout/layouts";
+// protected route
 import { UserProtected, ProtectedRoute } from "./utils/ProtectedRoute";
-// styles
-import "./app.scss";
+// toast and scheleton styling
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
+// styles
+import "./app.scss";
+// universal suspense layout
 const SuspenseLayout = () => {
   return (
     <Suspense fallback={<Loader />}>
@@ -38,6 +44,7 @@ const SuspenseLayout = () => {
     </Suspense>
   );
 };
+// router
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<SuspenseLayout />} errorElement={<ErrorPage />}>
@@ -79,7 +86,7 @@ const router = createBrowserRouter(
     </Route>
   )
 );
-
+// app component
 function App() {
   return (
     <Suspense fallback={<Loader />}>

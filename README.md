@@ -2,17 +2,23 @@
 
 [live](https://abhijitdev-blog-app.netlify.app)
 
-**_ Scripts _**
+## Deploy with netlify and backend runs on render server
+
+**Scripts**
 
 ```
 npm install
 
 ```
 
+--PORT :3000
+
 ```
 npm run dev
 
 ```
+
+**Build**
 
 ```
 npm run build

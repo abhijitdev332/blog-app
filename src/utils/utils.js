@@ -8,10 +8,4 @@ function toDateString(date = "") {
   return string.toLocaleDateString("en-GB");
 }
 
-function promiseResolver(promises) {
-  try {
-    return Promise.all([...promises]);
-  } catch (err) {}
-}
-
 export { toDateString };
