@@ -45,7 +45,7 @@ const Register = () => {
       if (res.status == 201) {
         toast.info(res.data?.data?.msg);
         toast.info("Please login!!");
-        return navigate("/auth");
+        return navigate("/auth", { replace: true, state: "/" });
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
